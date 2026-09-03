@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, Image as ImageIcon } from "lucide-react";
 import { supabase, type Product } from "../../lib/supabase";
+import ImageUploader from "../../components/ImageUploader"
 
 export default function ProductsAdmin() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -46,6 +47,19 @@ export default function ProductsAdmin() {
     );
   };
 
+  const [editingImages, setEditingImages] = useState<string | null>(null);
+
+  const updateProductImages = async (productId: string, newImages: string[]) => {
+    await supabase
+      .from("products")
+      .update({ images: newImages })
+      .eq("id", productId);
+    setProducts((prev) =>
+      prev.map((p) => (p.id === productId ? { ...p, images: newImages } : p)),
+    );
+    setEditingImages(null);
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -71,11 +85,34 @@ export default function ProductsAdmin() {
         </Link>
       </div>
 
+      {/* Image Editor Modal */}
+      {editingImages && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-void/80 backdrop-blur-sm">
+          <div className="mx-4 max-h-[80vh] w-full max-w-2xl overflow-y-auto bg-surface p-6">
+            <h2 className="mb-4 font-display text-lg font-bold text-signal">
+              EDIT IMAGES — {products.find(p => p.id === editingImages)?.name}
+            </h2>
+            <ImageUploader
+              images={products.find(p => p.id === editingImages)?.images ?? []}
+              onChange={(newImages) => updateProductImages(editingImages, newImages)}
+              productId={editingImages}
+            />
+            <button
+              onClick={() => setEditingImages(null)}
+              className="mt-4 w-full border border-outline-variant/30 py-3 font-mono text-xs tracking-[0.1em] text-shadow transition-colors hover:text-signal"
+            >
+              CLOSE
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="overflow-x-auto border border-outline-variant/20">
         <table className="w-full">
           <thead>
             <tr className="border-b border-outline-variant/20 bg-surface-container">
               <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">PRODUCT</th>
+              <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">IMAGES</th>
               <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">COLLECTION</th>
               <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">PRICE</th>
               <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">STOCK</th>
@@ -87,14 +124,29 @@ export default function ProductsAdmin() {
             {products.map((p) => (
               <tr key={p.id} className="border-b border-outline-variant/10">
                 <td className="px-4 py-3">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 flex-shrink-0 bg-surface-container">
-                      {p.images[0] && (
-                        <img src={p.images[0]} alt="" className="h-full w-full object-cover" />
-                      )}
-                    </div>
-                    <span className="font-body text-sm text-signal">{p.name}</span>
-                  </div>
+                  <span className="font-body text-sm text-signal">{p.name}</span>
+                </td>
+                <td className="px-4 py-3">
+                  <button
+                    onClick={() => setEditingImages(p.id)}
+                    className="flex items-center gap-2 border border-outline-variant/20 px-2 py-1 transition-colors hover:border-outline-variant/40"
+                  >
+                    {p.images[0] ? (
+                      <div className="flex items-center gap-2">
+                        <div className="h-8 w-8 flex-shrink-0 overflow-hidden bg-surface-container">
+                          <img src={p.images[0]} alt="" className="h-full w-full object-cover" />
+                        </div>
+                        {p.images.length > 1 && (
+                          <span className="font-mono text-[10px] text-outline">+{p.images.length - 1}</span>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1 text-outline/50">
+                        <ImageIcon size={12} />
+                        <span className="font-mono text-[9px]">NONE</span>
+                      </div>
+                    )}
+                  </button>
                 </td>
                 <td className="px-4 py-3 font-mono text-[10px] tracking-[0.1em] text-outline">
                   {p.collection}

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { Plus, Minus, Trash2, ArrowLeft, ShoppingBag } from "lucide-react";
 import { useBag } from "../lib/bag-context";
+import { useCurrency } from "../lib/currency-context";
 
 export default function Bag() {
   const { items, removeFromBag, updateQuantity, clearBag, bagTotal } = useBag();
+  const { formatPrice } = useCurrency();
 
   return (
     <div className="mx-auto max-w-[1400px] px-4 py-12 md:px-16">
@@ -97,7 +99,7 @@ export default function Bag() {
                         </button>
                       </div>
                       <span className="font-mono text-base font-semibold text-signal">
-                        ${item.product.price * item.quantity}
+                        {formatPrice(item.product.price * item.quantity)}
                       </span>
                     </div>
                   </div>
@@ -114,7 +116,7 @@ export default function Bag() {
               <div className="space-y-3 border-b border-outline-variant/20 pb-4">
                 <div className="flex justify-between font-mono text-xs text-shadow">
                   <span className="tracking-[0.1em]">SUBTOTAL</span>
-                  <span>${bagTotal()}</span>
+                  <span>{formatPrice(bagTotal())}</span>
                 </div>
                 <div className="flex justify-between font-mono text-xs text-shadow">
                   <span className="tracking-[0.1em]">SHIPPING</span>
@@ -124,7 +126,7 @@ export default function Bag() {
 
               <div className="flex justify-between py-4">
                 <span className="font-mono text-xs tracking-[0.1em] text-outline">TOTAL</span>
-                <span className="font-display text-xl font-bold text-signal">${bagTotal()}</span>
+                <span className="font-display text-xl font-bold text-signal">{formatPrice(bagTotal())}</span>
               </div>
 
               <button className="w-full bg-gradient-to-r from-primary-container to-secondary-container py-4 font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container transition-opacity hover:opacity-90">

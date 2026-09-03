@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
 import { useBag } from "../lib/bag-context";
+import { useCurrency } from "../lib/currency-context";
 import type { Product } from "../lib/supabase";
 
 type Props = { product: Product };
 
 export default function ProductCard({ product }: Props) {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useBag();
+  const { formatPrice } = useCurrency();
   const wished = isInWishlist(product.id);
 
   return (
@@ -71,11 +73,11 @@ export default function ProductCard({ product }: Props) {
         </div>
         <div className="flex items-center gap-2">
           <span className="font-mono text-sm font-semibold text-signal">
-            ${product.price}
+            {formatPrice(product.price)}
           </span>
           {product.compare_price && product.compare_price > product.price && (
             <span className="font-mono text-xs text-outline line-through">
-              ${product.compare_price}
+              {formatPrice(product.compare_price)}
             </span>
           )}
         </div>

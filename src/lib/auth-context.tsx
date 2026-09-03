@@ -16,6 +16,7 @@ type AuthContextType = {
   isAdmin: boolean;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
   signUp: (email: string, password: string) => Promise<{ error?: string; message?: string }>;
+  signInWithGoogle: () => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
   resendConfirmation: (email: string) => Promise<{ error?: string; message?: string }>;
 };
@@ -50,7 +51,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     if (error) {
-      // Provide more helpful error messages
       if (error.message.includes("Email not confirmed")) {
         return {
           error: "Email not confirmed. Please check your inbox for a confirmation link, or click 'Resend Confirmation' below.",
@@ -90,13 +90,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return { error: error.message };
     }
 
-    // Check if user was auto-confirmed (auto-confirm enabled in Supabase)
     if (data.user && data.user.confirmed_at) {
-      // Auto-confirmed, can sign in immediately
       return { message: "Account created! Signing you in..." };
     }
 
-    // Email confirmation required
     if (data.user && !data.user.confirmed_at) {
       return {
         message: "Account created! Check your email for a confirmation link. If you don't see it, try signing in — auto-confirm may be enabled.",
@@ -104,6 +101,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     return { message: "Account created! Check your email for confirmation." };
+  };
+
+  const signInWithGoogle = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+
+    if (error) {
+      return { error: error.message };
+    }
+    return {};
   };
 
   const signOut = async () => {
@@ -126,7 +137,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, isAdmin, signIn, signUp, signOut, resendConfirmation }}>
+    <AuthContext.Provider value={{ user, loading, isAdmin, signIn, signUp, signInWithGoogle, signOut, resendConfirmation }}>
       {children}
     </AuthContext.Provider>
   );

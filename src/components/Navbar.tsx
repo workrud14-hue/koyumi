@@ -1,15 +1,21 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingBag, Menu, X, User, Search } from "lucide-react";
+import { ShoppingBag, Menu, X, User, Search, Globe, LogOut, ChevronDown } from "lucide-react";
 import { useBag } from "../lib/bag-context";
 import { useAuth } from "../lib/auth-context";
+import { useCurrency } from "../lib/currency-context";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [showCurrency, setShowCurrency] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const location = useLocation();
   const { bagCount } = useBag();
-  const { user } = useAuth();
+  const { user, signOut, isAdmin } = useAuth();
+  const { currency, setCurrency, allCurrencies } = useCurrency();
   const count = bagCount();
+
+  const userInitial = user?.email?.charAt(0).toUpperCase() ?? "?";
 
   const links = [
     { to: "/", label: "HOME" },
@@ -66,6 +72,38 @@ export default function Navbar() {
 
         {/* Icons */}
         <div className="flex items-center gap-3">
+          {/* Currency Selector */}
+          <div className="relative">
+            <button
+              onClick={() => setShowCurrency(!showCurrency)}
+              className="flex items-center gap-1 rounded-sm px-2 py-1.5 font-mono text-[10px] tracking-[0.1em] text-outline/60 transition-colors hover:text-signal"
+              aria-label="Currency"
+            >
+              <Globe size={14} strokeWidth={1.5} />
+              <span className="hidden sm:inline">{currency.code}</span>
+            </button>
+            {showCurrency && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowCurrency(false)} />
+                <div className="absolute right-0 top-full z-50 mt-2 max-h-64 w-48 overflow-y-auto border border-outline-variant/20 bg-surface shadow-lg">
+                  {allCurrencies.map((c) => (
+                    <button
+                      key={c.code}
+                      onClick={() => { setCurrency(c); setShowCurrency(false); }}
+                      className={`flex w-full items-center justify-between px-3 py-2 font-mono text-[11px] transition-colors ${
+                        currency.code === c.code
+                          ? "bg-primary-container/20 text-primary"
+                          : "text-shadow hover:bg-surface-container hover:text-signal"
+                      }`}
+                    >
+                      <span>{c.code}</span>
+                      <span className="text-outline/50">{c.symbol}</span>
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
           <button className="rounded-sm p-1.5 text-outline/50 transition-colors hover:text-signal" aria-label="Search">
             <Search size={18} strokeWidth={1.5} />
           </button>
@@ -91,9 +129,57 @@ export default function Navbar() {
             )}
           </Link>
           {user ? (
-            <Link to="/admin" className="rounded-sm p-1.5 text-outline/50 transition-colors hover:text-signal">
-              <User size={18} strokeWidth={1.5} />
-            </Link>
+            <div className="relative">
+              <button
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className="flex items-center gap-1.5 rounded-sm px-2 py-1.5 transition-colors hover:bg-surface-container"
+              >
+                <div className="flex h-7 w-7 items-center justify-center bg-gradient-to-br from-primary-container to-secondary-container font-mono text-[10px] font-bold text-on-primary-container">
+                  {userInitial}
+                </div>
+                <span className="hidden max-w-[100px] truncate font-mono text-[10px] text-outline sm:inline">
+                  {user.email?.split("@")[0]}
+                </span>
+                <ChevronDown size={12} className={`text-outline transition-transform ${showUserMenu ? "rotate-180" : ""}`} />
+              </button>
+
+              {showUserMenu && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
+                  <div className="absolute right-0 top-full z-50 mt-2 w-56 border border-outline-variant/20 bg-surface shadow-lg">
+                    {/* User Info */}
+                    <div className="border-b border-outline-variant/20 px-4 py-3">
+                      <p className="font-mono text-[10px] tracking-[0.1em] text-outline">SIGNED IN AS</p>
+                      <p className="mt-1 truncate font-body text-sm text-signal">{user.email}</p>
+                      {isAdmin && (
+                        <span className="mt-1.5 inline-block bg-primary-container/20 px-2 py-0.5 font-mono text-[9px] tracking-[0.1em] text-primary">ADMIN</span>
+                      )}
+                    </div>
+
+                    {/* Menu Items */}
+                    <div className="py-1">
+                      {isAdmin && (
+                        <Link
+                          to="/admin"
+                          onClick={() => setShowUserMenu(false)}
+                          className="flex items-center gap-2 px-4 py-2.5 font-mono text-[11px] text-shadow transition-colors hover:bg-surface-container hover:text-signal"
+                        >
+                          <User size={14} />
+                          ADMIN DASHBOARD
+                        </Link>
+                      )}
+                      <button
+                        onClick={async () => { await signOut(); setShowUserMenu(false); }}
+                        className="flex w-full items-center gap-2 px-4 py-2.5 font-mono text-[11px] text-shadow transition-colors hover:bg-surface-container hover:text-error"
+                      >
+                        <LogOut size={14} />
+                        SIGN OUT
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           ) : (
             <Link
               to="/auth"
@@ -141,6 +227,18 @@ export default function Navbar() {
             >
               ADMIN
             </Link>
+          )}
+          {user && (
+            <div className="mt-2 border-t border-outline-variant/20 pt-2">
+              <p className="mb-2 px-3 font-mono text-[10px] text-outline">{user.email}</p>
+              <button
+                onClick={async () => { await signOut(); setOpen(false); }}
+                className="flex w-full items-center gap-2 rounded-sm px-3 py-2.5 font-mono text-xs tracking-[0.15em] text-error/80 transition-colors hover:text-error"
+              >
+                <LogOut size={14} />
+                SIGN OUT
+              </button>
+            </div>
           )}
           {!user && (
             <Link

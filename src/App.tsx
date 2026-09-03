@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./lib/auth-context";
 import { BagProvider } from "./lib/bag-context";
+import { CurrencyProvider } from "./lib/currency-context";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -30,6 +31,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <CurrencyProvider>
         <BagProvider>
           <Routes>
             {/* Store routes */}
@@ -99,6 +101,7 @@ export default function App() {
             </Route>
           </Routes>
         </BagProvider>
+        </CurrencyProvider>
       </AuthProvider>
     </BrowserRouter>
   );

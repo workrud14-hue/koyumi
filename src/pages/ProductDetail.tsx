@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { Heart, ShoppingBag, ArrowLeft, ChevronRight, Minus, Plus } from "lucide-react";
 import { supabase, type Product } from "../lib/supabase";
 import { useBag } from "../lib/bag-context";
+import { useCurrency } from "../lib/currency-context";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -14,6 +15,7 @@ export default function ProductDetail() {
   const [added, setAdded] = useState(false);
 
   const { addToBag, addToWishlist, removeFromWishlist, isInWishlist } = useBag();
+  const { formatPrice } = useCurrency();
 
   useEffect(() => {
     if (!id) return;
@@ -116,15 +118,15 @@ export default function ProductDetail() {
 
           <div className="mt-4 flex items-baseline gap-3">
             <span className="font-display text-2xl font-bold text-signal">
-              ${product.price}
+              {formatPrice(product.price)}
             </span>
             {product.compare_price && product.compare_price > product.price && (
               <>
                 <span className="font-mono text-sm text-outline line-through">
-                  ${product.compare_price}
+                  {formatPrice(product.compare_price)}
                 </span>
                 <span className="font-mono text-xs font-bold tracking-[0.1em] text-error">
-                  SAVE ${product.compare_price - product.price}
+                  SAVE {formatPrice(product.compare_price - product.price)}
                 </span>
               </>
             )}

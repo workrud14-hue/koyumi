@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { supabase } from "../../lib/supabase";
+import ImageUploader from "../../components/ImageUploader";
 
 const COLLECTIONS = [
   "YŌKAI // AFTER DARK",
@@ -12,22 +13,21 @@ const COLLECTIONS = [
   "MIDNIGHT ARCADE",
 ];
 
-const CATEGORIES = ["Tees", "Hoodies & Outerwear", "Bottoms & Accessories"];
-
-const defaultForm = {
-  name: "",
-  price: 0,
-  compare_price: 0,
-  description: "",
-  category: CATEGORIES[0],
-  collection: COLLECTIONS[0],
-  sizes: "S, M, L, XL",
-  colors: "#0A0A0A, #FFFFFF",
-  sku: "",
-  stock: 0,
-  featured: false,
-  gaming_drop: false,
-};
+const CATEGORIES = ["Tees", "Hoodies & Outerwear", "Bottoms & Accessories"];  const defaultForm = {
+    name: "",
+    price: 0,
+    compare_price: 0,
+    description: "",
+    category: CATEGORIES[0],
+    collection: COLLECTIONS[0],
+    sizes: "S, M, L, XL",
+    colors: "#0A0A0A, #FFFFFF",
+    sku: "",
+    stock: 0,
+    featured: false,
+    gaming_drop: false,
+    images: [] as string[],
+  };
 
 export default function AddProduct() {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ export default function AddProduct() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const update = (field: string, value: string | number | boolean) => {
+  const update = (field: string, value: string | number | boolean | string[]) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -57,7 +57,7 @@ export default function AddProduct() {
       stock: form.stock,
       featured: form.featured,
       gaming_drop: form.gaming_drop,
-      images: [],
+      images: form.images,
     });
 
     setLoading(false);
@@ -252,6 +252,12 @@ export default function AddProduct() {
             <span className="font-mono text-xs tracking-[0.1em] text-shadow">GAMING DROP</span>
           </label>
         </div>
+
+        {/* Image Upload */}
+        <ImageUploader
+          images={form.images}
+          onChange={(images) => update("images", images)}
+        />
 
         {error && <p className="font-mono text-xs text-error">{error}</p>}
 
