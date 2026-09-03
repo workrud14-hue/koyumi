@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KOYUMMI - GAMING</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800&amp;family=Geist:wght@500&amp;family=Hanken+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#4c4452",
+                        "on-error": "#690005",
+                        "outline": "#988d9e",
+                        "primary-container": "#6b21a8",
+                        "background": "#161219",
+                        "on-secondary-container": "#ffd8fd",
+                        "error-container": "#93000a",
+                        "tertiary": "#faba72",
+                        "on-secondary-fixed-variant": "#7c008e",
+                        "inverse-primary": "#803abd",
+                        "inverse-on-surface": "#342e37",
+                        "surface-tint": "#dfb7ff",
+                        "primary": "#dfb7ff",
+                        "tertiary-fixed": "#ffddbb",
+                        "primary-fixed": "#f1dbff",
+                        "on-primary-fixed": "#2d0050",
+                        "error": "#ffb4ab",
+                        "on-background": "#e9dfeb",
+                        "surface": "#161219",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#eeaf68",
+                        "inverse-surface": "#e9dfeb",
+                        "surface-bright": "#3d3740",
+                        "surface-container": "#231e26",
+                        "secondary-fixed-dim": "#fbabff",
+                        "surface-container-lowest": "#110c14",
+                        "tertiary-fixed-dim": "#faba72",
+                        "on-primary": "#4a007f",
+                        "secondary-container": "#ae05c6",
+                        "on-tertiary-fixed": "#2b1700",
+                        "on-primary-fixed-variant": "#661aa3",
+                        "on-tertiary-fixed-variant": "#673d00",
+                        "surface-container-low": "#1f1a22",
+                        "on-secondary-fixed": "#36003e",
+                        "on-surface-variant": "#cfc2d4",
+                        "on-secondary": "#580065",
+                        "surface-variant": "#38333c",
+                        "surface-container-highest": "#38333c",
+                        "primary-fixed-dim": "#dfb7ff",
+                        "on-primary-container": "#d7a8ff",
+                        "on-surface": "#e9dfeb",
+                        "surface-container-high": "#2d2831",
+                        "surface-dim": "#161219",
+                        "secondary-fixed": "#ffd6fd",
+                        "on-tertiary": "#482900",
+                        "secondary": "#fbabff",
+                        "tertiary-container": "#6d4100"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "section-gap": "128px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-regular": ["Hanken Grotesk"],
+                        "headline-lg": ["Anybody"],
+                        "label-mono": ["Geist"],
+                        "headline-lg-mobile": ["Anybody"],
+                        "display-xl": ["Anybody"],
+                        "subheading": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-regular": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "700" }],
+                        "display-xl": ["80px", { "lineHeight": "88px", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "subheading": ["20px", { "lineHeight": "28px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Modern-Brutalist Additions */
+        body {
+            background-color: #0A0A0A; /* Deeper than bg-background for cinematic tension */
+            color: #F5F5F5;
+        }
+        .neon-glitch:hover {
+            box-shadow: 0 0 15px 2px rgba(223, 183, 255, 0.4);
+            border-color: #dfb7ff;
+            transform: scale(0.99);
+            transition: all 0.2s ease-in-out;
+        }
+        .button-primary {
+            background: linear-gradient(135deg, #dfb7ff 0%, #ae05c6 100%);
+            color: #0A0A0A;
+            border: none;
+        }
+        .button-primary:hover {
+            opacity: 0.9;
+        }
+        .glass-panel {
+            background: rgba(22, 18, 25, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(76, 68, 82, 0.3);
+        }
+        
+        /* Hide scrollbar for horizontal scrolling containers */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-outline-variant/30 flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop w-full">
+<!-- Logo -->
+<a class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tighter hover:text-primary transition-colors" href="#">
+            KOYUMMI
+        </a>
+<!-- Desktop Navigation Links -->
+<div class="hidden md:flex items-center space-x-8 font-label-mono text-label-mono uppercase tracking-widest">
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">SHOP</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">NEW DROPS</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">COLLECTIONS</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="#">GAMING</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">ABOUT</a>
+</div>
+<!-- Trailing Icons -->
+<div class="flex items-center space-x-4 md:space-x-6 text-on-surface-variant">
+<button class="hover:text-primary transition-all duration-300 scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 400;">search</span>
+</button>
+<button class="hover:text-primary transition-all duration-300 scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 400;">person</span>
+</button>
+<button class="hover:text-primary transition-all duration-300 scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 400;">favorite</span>
+</button>
+<button class="hover:text-primary transition-all duration-300 scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 400;">shopping_bag</span>
+</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative w-full h-[90vh] mt-20 flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-[#0A0A0A]">
+<img class="w-full h-full object-cover opacity-60" data-alt="A cinematic, wide-angle shot of a cyberpunk Tokyo street at midnight, rendered in a high-fashion editorial style. Rain-slicked pavement reflects vibrant neon magenta and deep purple lights. A figure wearing futuristic streetwear stands in the distance. High contrast, sharp definition, moody and atmospheric." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYZMGGOt_RqqbAx02xvF_wTpQfeAHwyE-CB3zf-sYEH3xSU9llDs_0sSau_YU29ZYNuS-3onqXH7mvJdZpyFi13zy592jZI7xPxMUES0WtZW7bMlNTAloL4Lhyh7EYdQbvlwiK2pgG1Ce8Guea9EwBGQlGc0cTmeRJQkhyUjrAw6lx4tpX63CUN9e2PMpc-62Hjx4jmPn4-JVIzjtYE_-CE8AbcddeMe1vT3kODJEDQkKPM1LYL9Z4Gg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop flex flex-col items-center max-w-5xl mx-auto">
+<h1 class="font-display-xl text-display-xl text-on-surface mb-6 tracking-tighter" style="text-shadow: 0 0 20px rgba(223, 183, 255, 0.3);">LEVEL UP YOUR FIT.</h1>
+<p class="font-subheading text-subheading text-on-surface-variant max-w-2xl mb-10">High-performance streetwear engineered for the digital age. Bridge the gap between the arcade and the avenue.</p>
+<button class="button-primary font-label-mono text-label-mono px-8 py-4 uppercase tracking-widest flex items-center space-x-2">
+<span>SHOP THE COLLECTION</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</header>
+<!-- Footer (Shared Component) -->
+<footer class="relative w-full pt-section-gap pb-12 bg-surface-container-lowest border-t border-outline-variant grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto mt-section-gap">
+<div class="col-span-1 md:col-span-4 mb-12 flex justify-center">
+<div class="font-display-xl text-display-xl text-on-surface-variant opacity-10 uppercase text-center w-full overflow-hidden whitespace-nowrap">
+                KOYUMMI
+             </div>
+</div>
+<div class="col-span-1 flex flex-col space-y-4 font-body-regular text-body-regular">
+<p class="text-on-surface-variant">© 2024 KOYUMMI. HIGH-FREQUENCY DESIGN.</p>
+<img alt="Koyummi Logo" class="w-32 opacity-50 grayscale mt-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiN1T4pAGhTcsuvFNqSFqhwb79pQ1O2tohjByk0-ieYssC_7sC2t9R0UfHlfNVvBSiDkOGfwQ3XZ8QLTkVC-gIluYyfducDIzFZa-FoLM0BwTJ_-DlZHPhKbb1iW4EAwJapebv9ZUmjiYjZF21cpfNU2X7NvY8ollDLZprptNNL5pMpPy83w1NznZ-KlxsFSDvWC_BTF4p_xUy3BGxb5GLiVKH2ovF1FZOZ5-F_oF54AcewM4MBnNaeiUckBhMf_1xg2o"/>
+</div>
+<div class="col-span-1 flex flex-col space-y-2 font-body-regular text-body-regular">
+<a class="text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Terms</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Shipping</a>
+</div>
+<div class="col-span-1 flex flex-col space-y-2 font-body-regular text-body-regular">
+<a class="text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Discord</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Instagram</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">TikTok</a>
+</div>
+<div class="col-span-1 flex flex-col items-start md:items-end font-body-regular text-body-regular">
+<div class="w-full max-w-xs">
+<p class="text-on-surface-variant mb-2 font-label-mono text-label-mono uppercase">Join the Grid</p>
+<div class="flex border-b-2 border-[#A0A0A0] focus-within:border-primary transition-colors pb-1">
+<input class="bg-transparent border-none w-full text-on-surface focus:ring-0 px-0 font-label-mono text-label-mono uppercase placeholder:text-outline" placeholder="ENTER EMAIL" type="email"/>
+<button class="text-on-surface hover:text-primary transition-colors"><span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

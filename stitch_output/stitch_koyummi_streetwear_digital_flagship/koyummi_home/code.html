@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KOYUMMI - Exclusive Streetwear</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800&amp;family=Geist:wght@500&amp;family=Hanken+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#4c4452",
+                        "on-error": "#690005",
+                        "outline": "#988d9e",
+                        "primary-container": "#6b21a8",
+                        "background": "#161219",
+                        "on-secondary-container": "#ffd8fd",
+                        "error-container": "#93000a",
+                        "tertiary": "#faba72",
+                        "on-secondary-fixed-variant": "#7c008e",
+                        "inverse-primary": "#803abd",
+                        "inverse-on-surface": "#342e37",
+                        "surface-tint": "#dfb7ff",
+                        "primary": "#dfb7ff",
+                        "tertiary-fixed": "#ffddbb",
+                        "primary-fixed": "#f1dbff",
+                        "on-primary-fixed": "#2d0050",
+                        "error": "#ffb4ab",
+                        "on-background": "#e9dfeb",
+                        "surface": "#161219",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#eeaf68",
+                        "inverse-surface": "#e9dfeb",
+                        "surface-bright": "#3d3740",
+                        "surface-container": "#231e26",
+                        "secondary-fixed-dim": "#fbabff",
+                        "surface-container-lowest": "#110c14",
+                        "tertiary-fixed-dim": "#faba72",
+                        "on-primary": "#4a007f",
+                        "secondary-container": "#ae05c6",
+                        "on-tertiary-fixed": "#2b1700",
+                        "on-primary-fixed-variant": "#661aa3",
+                        "on-tertiary-fixed-variant": "#673d00",
+                        "surface-container-low": "#1f1a22",
+                        "on-secondary-fixed": "#36003e",
+                        "on-surface-variant": "#cfc2d4",
+                        "on-secondary": "#580065",
+                        "surface-variant": "#38333c",
+                        "surface-container-highest": "#38333c",
+                        "primary-fixed-dim": "#dfb7ff",
+                        "on-primary-container": "#d7a8ff",
+                        "on-surface": "#e9dfeb",
+                        "surface-container-high": "#2d2831",
+                        "surface-dim": "#161219",
+                        "secondary-fixed": "#ffd6fd",
+                        "on-tertiary": "#482900",
+                        "secondary": "#fbabff",
+                        "tertiary-container": "#6d4100"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "section-gap": "128px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-regular": ["Hanken Grotesk"],
+                        "headline-lg": ["Anybody"],
+                        "label-mono": ["Geist"],
+                        "headline-lg-mobile": ["Anybody"],
+                        "display-xl": ["Anybody"],
+                        "subheading": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-regular": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "700" }],
+                        "display-xl": ["80px", { "lineHeight": "88px", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "subheading": ["20px", { "lineHeight": "28px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neon-glitch:hover {
+            box-shadow: inset 0 0 0 1px #dfb7ff, 0 0 15px rgba(223, 183, 255, 0.2);
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #dfb7ff, #fbabff);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-regular overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Web) -->
+<nav class="hidden md:flex justify-between items-center h-20 px-margin-desktop w-full fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-outline-variant/30 transition-all duration-300" id="topNav">
+<div class="flex items-center gap-8">
+<a class="font-headline-lg text-headline-lg text-on-surface tracking-tighter" href="#">KOYUMMI</a>
+<div class="flex gap-6 mt-1">
+<a class="font-label-mono text-label-mono uppercase tracking-widest text-primary border-b-2 border-primary pb-1" href="#">SHOP</a>
+<a class="font-label-mono text-label-mono uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors hover:text-primary transition-all duration-300" href="#">NEW DROPS</a>
+<a class="font-label-mono text-label-mono uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors hover:text-primary transition-all duration-300" href="#">COLLECTIONS</a>
+<a class="font-label-mono text-label-mono uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors hover:text-primary transition-all duration-300" href="#">GAMING</a>
+<a class="font-label-mono text-label-mono uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors hover:text-primary transition-all duration-300" href="#">ABOUT</a>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-all duration-300 scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all duration-300 scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all duration-300 scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all duration-300 scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</nav>
+<!-- SideNavBar (Mobile Bottom Nav via Responsive Rules) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface-container-highest border-t border-outline-variant flex justify-around p-4 pb-6">
+<a class="flex flex-col items-center text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-label-mono text-[10px] mt-1">SHOP</span>
+</a>
+<a class="flex flex-col items-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="new_releases">new_releases</span>
+<span class="font-label-mono text-[10px] mt-1">NEW DROPS</span>
+</a>
+<a class="flex flex-col items-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-mono text-[10px] mt-1">COLLECTIONS</span>
+</a>
+<a class="flex flex-col items-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-mono text-[10px] mt-1">ACCOUNT</span>
+</a>
+</nav>
+<!-- Main Content -->
+<main class="pt-20 md:pt-20 pb-section-gap">
+<!-- Hero Section -->
+<section class="relative w-full h-[80vh] md:h-[90vh] flex items-center justify-center overflow-hidden border-b border-outline-variant/30">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60" data-alt="A striking digital installation art piece featuring a futuristic Tokyo street scene at night. The scene is illuminated by neon pink and purple lights reflecting off wet pavement. A stylized anime-inspired streetwear model stands prominently in the foreground, wearing an oversized techwear jacket. High contrast, cinematic lighting, cyberpunk aesthetic, dramatic shadows, glowing accents. The mood is moody, mysterious, and fashion-forward." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOVNqeCGcAyAacRGd9xdbwh_3SOMLX5RnvuBQnah4ETsm3dvXQrtnjTZQqJ8ebAWWSiNuMfG55rjmLPX-rTZX5Ne1BuRP5DnqAV_5TIG-1G9YUNoyhoHL7AwhY4S36PukXd11ewIfLq1M2tqoWJIzGaZ9pR_EyNcXYT9nrect8K5MAMcf9SH7vborIL4twyGD2bjpXEGtpn9lC_5A5AWjAOXVlvJXQc7AkhhcTQrCTm-OgZPR39tQ1Pg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+</div>
+<div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto flex flex-col items-center mt-20">
+<h1 class="font-display-xl text-headline-lg-mobile md:text-display-xl tracking-tighter mb-4 text-gradient">WEAR YOUR WORLD.</h1>
+<p class="font-subheading text-subheading text-on-surface-variant mb-8 max-w-2xl mx-auto">Anime. Streetwear. Gaming. Inspired by Japan.</p>
+<div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+<button class="bg-gradient-to-r from-primary to-secondary text-background font-label-mono text-label-mono uppercase px-8 py-4 tracking-widest hover:brightness-110 transition-all duration-300">
+                        SHOP THE DROP
+                    </button>
+<button class="border border-outline-variant text-on-surface font-label-mono text-label-mono uppercase px-8 py-4 tracking-widest hover:border-primary transition-all duration-300 neon-glitch">
+                        EXPLORE COLLECTIONS
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="relative w-full pt-section-gap pb-12 bg-surface-container-lowest border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto z-10 relative">
+<div class="col-span-1 md:col-span-2 mb-8 md:mb-0">
+<span class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tighter block mb-4">KOYUMMI</span>
+<p class="font-label-mono text-label-mono text-on-surface-variant opacity-80 hover:opacity-100 transition-opacity">HIGH-FREQUENCY DESIGN.</p>
+<p class="font-body-regular text-body-regular text-on-surface-variant mt-4">© 2024 KOYUMMI.</p>
+</div>
+<div class="flex flex-col gap-4">
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Terms</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Shipping</a>
+</div>
+<div class="flex flex-col gap-4">
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Discord</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Instagram</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">TikTok</a>
+</div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+<span class="font-display-xl text-display-xl text-on-surface-variant opacity-10 uppercase whitespace-nowrap select-none scale-150 transform translate-y-10">KOYUMMI</span>
+</div>
+</footer>
+<script>
+        // Simple nav background effect on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('topNav');
+            if(window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-background/95');
+                nav.classList.remove('bg-background/90');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-background/95');
+                nav.classList.add('bg-background/90');
+            }
+        });
+    </script>
+</body></html>
