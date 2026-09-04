@@ -11,6 +11,8 @@ import Gaming from "./pages/Gaming";
 import Auth from "./pages/Auth";
 import Wishlist from "./pages/Wishlist";
 import Bag from "./pages/Bag";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 import AdminLayout from "./pages/Admin";
 import Dashboard from "./pages/admin/Dashboard";
 import ProductsAdmin from "./pages/admin/ProductsAdmin";
@@ -88,6 +90,43 @@ export default function App() {
               element={
                 <StoreLayout>
                   <Bag />
+                </StoreLayout>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <StoreLayout>
+                  <About />
+                </StoreLayout>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <StoreLayout>
+                  <Contact />
+                </StoreLayout>
+              }
+            />
+            {/* 404 */}
+            <Route
+              path="*"
+              element={
+                <StoreLayout>
+                  <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
+                    <p className="font-display text-6xl font-black text-outline/20">404</p>
+                    <h1 className="mt-4 font-display text-2xl font-bold text-signal">PAGE NOT FOUND</h1>
+                    <p className="mt-3 max-w-sm font-body text-sm text-shadow/60">
+                      The page you're looking for doesn't exist or has been moved.
+                    </p>
+                    <a
+                      href="/"
+                      className="mt-8 inline-flex items-center gap-2 bg-gradient-to-r from-primary-container to-secondary-container px-8 py-3 font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container no-underline transition-all hover:shadow-[0_0_20px_rgba(107,33,168,0.2)]"
+                    >
+                      BACK TO HOME
+                    </a>
+                  </div>
                 </StoreLayout>
               }
             />

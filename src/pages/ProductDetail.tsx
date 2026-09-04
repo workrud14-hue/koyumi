@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Heart, ShoppingBag, ArrowLeft, ChevronRight, Minus, Plus } from "lucide-react";
+import { Heart, ShoppingBag, ArrowLeft, ChevronRight, Minus, Plus, Ruler } from "lucide-react";
 import { supabase, type Product } from "../lib/supabase";
 import { useBag } from "../lib/bag-context";
 import { useCurrency } from "../lib/currency-context";
+import SizeGuide from "../components/SizeGuide";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -13,6 +14,7 @@ export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
 
   const { addToBag, addToWishlist, removeFromWishlist, isInWishlist } = useBag();
   const { formatPrice } = useCurrency();
@@ -168,12 +170,24 @@ export default function ProductDetail() {
             </div>
           )}
 
+          {/* Size Guide Modal */}
+          <SizeGuide open={showSizeGuide} onClose={() => setShowSizeGuide(false)} />
+
           {/* Sizes */}
           {product.sizes.length > 0 && (
             <div className="mt-6">
-              <p className="mb-3 font-mono text-[10px] tracking-[0.15em] text-outline">
-                SIZE
-              </p>
+              <div className="mb-3 flex items-center justify-between">
+                <p className="font-mono text-[10px] tracking-[0.15em] text-outline">
+                  SIZE
+                </p>
+                <button
+                  onClick={() => setShowSizeGuide(true)}
+                  className="flex items-center gap-1 font-mono text-[10px] tracking-[0.1em] text-primary transition-colors hover:text-signal"
+                >
+                  <Ruler size={12} />
+                  SIZE GUIDE
+                </button>
+              </div>
               <div className="flex flex-wrap gap-2">
                 {product.sizes.map((s) => (
                   <button
