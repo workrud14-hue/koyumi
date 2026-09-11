@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Heart, ShoppingBag, ArrowLeft, ChevronRight, Minus, Plus, Ruler } from "lucide-react";
 import { supabase, type Product } from "../lib/supabase";
@@ -15,6 +15,8 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const { addToBag, addToWishlist, removeFromWishlist, isInWishlist } = useBag();
   const { formatPrice } = useCurrency();
@@ -35,7 +37,22 @@ export default function ProductDetail() {
         }
         setLoading(false);
       });
+    setActiveImage(0);
   }, [id]);
+
+  // Keep dots in sync with swipe position
+  const handleCarouselScroll = () => {
+    const el = carouselRef.current;
+    if (!el || el.scrollWidth <= el.clientWidth) return;
+    setActiveImage(Math.round(el.scrollLeft / el.clientWidth));
+  };
+
+  // Jump carousel when a thumbnail is clicked (desktop)
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el || el.scrollWidth <= el.clientWidth) return;
+    el.scrollTo({ left: activeImage * el.clientWidth, behavior: "smooth" });
+  }, [activeImage, product?.id]);
 
   if (loading) {
     return (
@@ -83,27 +100,56 @@ export default function ProductDetail() {
       </nav>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-16">
-        {/* Images */}
-        <div>
-          <div className="aspect-[3/4] overflow-hidden bg-surface-container">
-            {product.images[0] ? (
-              <img
-                src={product.images[0]}
-                alt={product.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center font-display text-6xl text-outline-variant/20">
-                KIYUMI
-              </div>
-            )}
-          </div>
-          {product.images.length > 1 && (
-            <div className="mt-4 grid grid-cols-4 gap-2">
-              {product.images.slice(0, 4).map((img, i) => (
-                <div key={i} className="aspect-square overflow-hidden bg-surface-container">
-                  <img src={img} alt="" className="h-full w-full object-cover" loading="lazy" />
+        {/* Images — swipeable carousel on mobile, stacked on desktop */}
+        <div className="md:sticky md:top-24 md:self-start">
+          {/* Mobile: horizontal snap carousel */}
+          <div className="-mx-4 md:mx-0">
+            <div
+              ref={carouselRef}
+              onScroll={handleCarouselScroll}
+              className="flex snap-x snap-mandatory overflow-x-auto scrollbar-hide"
+            >
+              {(product.images.length > 0 ? product.images : [""]).map((img, i) => (
+                <div key={i} className="w-full flex-shrink-0 snap-center px-4 md:px-0">
+                  <div className="aspect-[3/4] overflow-hidden bg-surface-container">
+                    {img ? (
+                      <img src={img} alt={`${product.name} view ${i + 1}`} className="h-full w-full object-cover" />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center font-display text-6xl text-outline-variant/20">
+                        KIYUMI
+                      </div>
+                    )}
+                  </div>
                 </div>
+              ))}
+            </div>
+          </div>
+          {/* Carousel dots (mobile only) */}
+          {product.images.length > 1 && (
+            <div className="mt-3 flex justify-center gap-1.5 md:hidden">
+              {product.images.map((_, i) => (
+                <span
+                  key={i}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === activeImage ? "w-6 bg-primary" : "w-1.5 bg-outline-variant/40"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+          {/* Desktop thumbnails */}
+          {product.images.length > 1 && (
+            <div className="mt-4 hidden grid-cols-4 gap-2 md:grid">
+              {product.images.slice(0, 4).map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveImage(i)}
+                  className={`aspect-square overflow-hidden bg-surface-container transition-all ${
+                    i === activeImage ? "ring-1 ring-primary" : "opacity-70 hover:opacity-100"
+                  }`}
+                >
+                  <img src={img} alt="" className="h-full w-full object-cover" loading="lazy" />
+                </button>
               ))}
             </div>
           )}
@@ -260,6 +306,23 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+
+      {/* Sticky mobile add-to-bag bar */}
+      <div className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-3 border-t border-outline-variant/20 bg-void/95 px-4 py-3 backdrop-blur-xl md:hidden">
+        <div className="min-w-0">
+          <p className="truncate font-body text-xs text-shadow">{product.name}</p>
+          <p className="font-display text-base font-bold text-signal">{formatPrice(product.price)}</p>
+        </div>
+        <button
+          onClick={handleAddToBag}
+          className="ml-auto flex flex-shrink-0 items-center gap-2 bg-gradient-to-r from-primary-container to-secondary-container px-6 py-3.5 font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container active:scale-95 transition-transform"
+        >
+          <ShoppingBag size={15} />
+          {added ? "ADDED!" : "ADD TO BAG"}
+        </button>
+      </div>
+      {/* Spacer so content isn't hidden behind the sticky bar */}
+      <div className="h-20 md:hidden" />
     </div>
   );
 }

@@ -5,14 +5,18 @@
 Go to: **Supabase Dashboard → Authentication → URL Configuration**
 
 ### 1. Site URL
-Set to: `https://kiyumi.freebuff.app/`
+Set to: `https://kiyumi.online`
 
 ### 2. Redirect URLs
 Add these (one per line):
 ```
+https://kiyumi.online/**
 https://kiyumi.freebuff.app/**
 http://localhost:5173/**
 ```
+
+**Note:** For Google OAuth, the Redirect URLs list is what matters — Supabase rejects
+OAuth callbacks from domains not on this list.
 
 ### 3. Email Confirmation
 Go to: **Authentication → Providers → Email**
@@ -55,4 +59,9 @@ Go to **Authentication → Users** and you should see the new user.
 
 ## Environment Variables (Already Set)
 - `VITE_SUPABASE_URL`: https://wnqfdmbypygvrdanosqx.supabase.co
-- `VITE_SUPABASE_ANON_KEY`: (set via freebuff-env)
+- `VITE_SUPABASE_ANON_KEY`: (set via freebuff-env, both sandbox and production)
+
+## Verified Working (Sep 2026)
+- ✅ Password sign-in tested against the live Supabase project — admin account returns a valid session
+- ✅ Admin email `workrud14@gmail.com` confirmed and email-verified
+- ✅ Production env vars now set — the next deploy will include them (this was the cause of auth failing on kiyumi.online)

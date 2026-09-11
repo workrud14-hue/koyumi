@@ -70,23 +70,35 @@ export default function Home() {
     <>
       {/* ── HERO: Full-bleed image, image is the content ── */}
       <section className="relative h-screen w-full overflow-hidden bg-void" style={{backgroundImage: "radial-gradient(ellipse at 40% 60%, rgba(107,33,168,0.15) 0%, transparent 60%), radial-gradient(ellipse at 70% 40%, rgba(217,70,239,0.1) 0%, transparent 60%)"}}>
-        {/* Background Image — no text on top, the image IS the hero */}
-        <img
-          src="/hero-bg.jpg"
-          alt="KIYUMI Streetwear — Shibuya"
-          fetchPriority="high"
-          onLoad={() => setHeroLoaded(true)}
-          className="absolute inset-0 h-full w-full object-cover"
-          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-          style={{
-            transform: `scale(${heroScale})`,
-            transition: "transform 0.05s linear",
-            filter: "brightness(0.65) contrast(1.08) saturate(1.15)",
-          }}
-        />
+        {/* Background image — mobile poster on small screens, desktop shot on large.
+            On mobile the poster has KIYUMI/SHOP NOW baked in, so the whole hero
+            is a tappable link to the shop; overlay branding is hidden. */}
+        <Link
+          to="/shop"
+          aria-label="Shop KIYUMI"
+          className="absolute inset-0 block md:pointer-events-none"
+        >
+          <picture>
+            <source media="(max-width: 767px)" srcSet="/hero-bg-mobile.webp" type="image/webp" />
+            <source media="(max-width: 767px)" srcSet="/hero-bg-mobile.jpg" />
+            <img
+              src="/hero-bg.jpg"
+              alt="KIYUMI Streetwear — Shibuya"
+              fetchPriority="high"
+              decoding="async"
+              onLoad={() => setHeroLoaded(true)}
+              className="hero-img absolute inset-0 h-full w-full object-cover"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+              style={{
+                transform: `scale(${heroScale})`,
+                transition: "transform 0.05s linear",
+              }}
+            />
+          </picture>
+        </Link>
 
-        {/* Bottom gradient fade to page */}
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-void via-void/50 to-transparent" />
+        {/* Bottom gradient fade to page — softer on mobile so poster text stays crisp */}
+        <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-void/90 to-transparent md:h-1/2 md:from-void md:via-void/50" />
 
         {/* Subtle vignette */}
         <div
@@ -97,9 +109,31 @@ export default function Home() {
           }}
         />
 
-        {/* Minimal branding + CTA — bottom left */}
+        {/* Mobile CTA row — sits above the poster's baked-in SHOP NOW area */}
         <div
-          className="absolute bottom-12 left-6 z-10 md:left-14"
+          className={`absolute inset-x-4 bottom-6 z-20 flex gap-3 transition-all duration-1000 md:hidden ${
+            heroLoaded ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
+          <Link
+            to="/shop"
+            className="flex flex-1 items-center justify-center gap-2 bg-white py-3.5 font-mono text-[11px] font-bold tracking-[0.15em] text-void shadow-lg no-underline transition-all active:scale-95"
+          >
+            SHOP NOW
+            <ArrowRight size={13} />
+          </Link>
+          <Link
+            to="/gaming"
+            className="flex items-center justify-center gap-2 border border-white/40 bg-void/60 px-5 py-3.5 font-mono text-[11px] font-bold tracking-[0.15em] text-white no-underline backdrop-blur-md transition-all active:scale-95"
+          >
+            GAMING
+            <Zap size={13} />
+          </Link>
+        </div>
+
+        {/* Minimal branding + CTA — desktop only; mobile uses the baked-in poster text */}
+        <div
+          className="absolute bottom-12 left-6 z-10 hidden md:left-14 md:block"
           style={{
             opacity: heroOpacity,
             transform: `translateY(${scrollY * 0.15}px)`,
@@ -122,7 +156,7 @@ export default function Home() {
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
                 to="/shop"
-                className="group inline-flex items-center gap-3 bg-white px-8 py-3.5 font-mono text-[11px] font-bold tracking-[0.15em] text-void no-underline transition-all hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+                className="group inline-flex items-center justify-center gap-3 bg-white px-6 py-3 font-mono text-[10px] font-bold tracking-[0.15em] text-void no-underline transition-all hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] sm:px-8 sm:py-3.5 sm:text-[11px]"
               >
                 SHOP NOW
                 <ArrowRight
@@ -132,7 +166,7 @@ export default function Home() {
               </Link>
               <Link
                 to="/gaming"
-                className="inline-flex items-center gap-2 border border-white/25 bg-white/5 px-8 py-3.5 font-mono text-[11px] font-bold tracking-[0.15em] text-white/80 no-underline backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10"
+                className="inline-flex items-center justify-center gap-2 border border-white/25 bg-white/5 px-6 py-3 font-mono text-[10px] font-bold tracking-[0.15em] text-white/80 no-underline backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10 sm:px-8 sm:py-3.5 sm:text-[11px]"
               >
                 GAMING DROP
                 <Zap size={13} />
@@ -143,7 +177,7 @@ export default function Home() {
 
         {/* Scroll indicator */}
         <div
-          className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 md:block"
           style={{ opacity: heroOpacity }}
         >
           <div className="flex flex-col items-center gap-2 text-white/30">

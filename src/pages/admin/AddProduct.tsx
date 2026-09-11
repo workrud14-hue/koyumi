@@ -1,39 +1,49 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 import ImageUploader from "../../components/ImageUploader";
 
-const COLLECTIONS = [
-  "YŌKAI // AFTER DARK",
-  "SHIBUYA.EXE",
-  "SAKURA//SYSTEM",
-  "NEO TOKYO",
-  "KITSUNE PROTOCOL",
-  "MIDNIGHT ARCADE",
-];
+const CATEGORIES = ["Tees", "Hoodies & Outerwear", "Bottoms & Accessories"];
 
-const CATEGORIES = ["Tees", "Hoodies & Outerwear", "Bottoms & Accessories"];  const defaultForm = {
-    name: "",
-    price: 0,
-    compare_price: 0,
-    description: "",
-    category: CATEGORIES[0],
-    collection: COLLECTIONS[0],
-    sizes: "S, M, L, XL",
-    colors: "#0A0A0A, #FFFFFF",
-    sku: "",
-    stock: 0,
-    featured: false,
-    gaming_drop: false,
-    images: [] as string[],
-  };
+type Collection = { id: string; name: string };
+
+const defaultForm = {
+  name: "",
+  price: 0,
+  compare_price: 0,
+  description: "",
+  category: CATEGORIES[0],
+  collection: "",
+  sizes: "S, M, L, XL",
+  colors: "#0A0A0A, #FFFFFF",
+  sku: "",
+  stock: 0,
+  featured: false,
+  gaming_drop: false,
+  images: [] as string[],
+};
 
 export default function AddProduct() {
   const navigate = useNavigate();
+  const [collections, setCollections] = useState<Collection[]>([]);
   const [form, setForm] = useState(defaultForm);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    supabase
+      .from("collections")
+      .select("id, name")
+      .order("sort_order", { ascending: true })
+      .then(({ data }) => {
+        const cols = data ?? [];
+        setCollections(cols);
+        if (cols.length > 0) {
+          setForm((prev) => ({ ...prev, collection: prev.collection || cols[0].name }));
+        }
+      });
+  }, []);
 
   const update = (field: string, value: string | number | boolean | string[]) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -50,7 +60,7 @@ export default function AddProduct() {
       compare_price: form.compare_price || null,
       description: form.description,
       category: form.category,
-      collection: form.collection,
+      collection: form.collection || "MIDNIGHT ARCADE",
       sizes: form.sizes.split(",").map((s) => s.trim()).filter(Boolean),
       colors: form.colors.split(",").map((c) => c.trim()).filter(Boolean),
       sku: form.sku || `KY-${Date.now().toString(36).toUpperCase()}`,
@@ -69,7 +79,7 @@ export default function AddProduct() {
   };
 
   return (
-    <div className="p-6 md:p-8">
+    <div className="p-4 pb-24 md:p-8 md:pb-8">
       <button
         onClick={() => navigate("/admin/products")}
         className="mb-6 flex items-center gap-2 font-mono text-xs tracking-[0.1em] text-shadow transition-colors hover:text-signal"
@@ -77,7 +87,7 @@ export default function AddProduct() {
         <ArrowLeft size={14} /> BACK TO PRODUCTS
       </button>
 
-      <h1 className="mb-2 font-display text-2xl font-bold text-signal">ADD PRODUCT</h1>
+      <h1 className="mb-2 font-display text-xl font-bold text-signal md:text-2xl">ADD PRODUCT</h1>
       <p className="mb-8 font-mono text-xs tracking-[0.1em] text-outline">
         Fill in the details to add a new product.
       </p>
@@ -99,7 +109,7 @@ export default function AddProduct() {
         </div>
 
         {/* Price Row */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-2 block font-mono text-[10px] tracking-[0.15em] text-outline">
               PRICE ($)
@@ -144,20 +154,27 @@ export default function AddProduct() {
         </div>
 
         {/* Collection + Category */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-2 block font-mono text-[10px] tracking-[0.15em] text-outline">
               COLLECTION
             </label>
-            <select
-              value={form.collection}
-              onChange={(e) => update("collection", e.target.value)}
-              className="w-full border-b-2 border-outline-variant/50 bg-transparent py-3 font-body text-sm text-signal outline-none transition-colors focus:border-primary"
-            >
-              {COLLECTIONS.map((c) => (
-                <option key={c} value={c} className="bg-surface">{c}</option>
-              ))}
-            </select>
+            {collections.length === 0 ? (
+              <p className="py-3 font-mono text-[11px] text-outline">
+                No collections yet —{" "}
+                <a href="/admin/collections" className="text-primary">create one first →</a>
+              </p>
+            ) : (
+              <select
+                value={form.collection}
+                onChange={(e) => update("collection", e.target.value)}
+                className="w-full border-b-2 border-outline-variant/50 bg-transparent py-3 font-body text-sm text-signal outline-none transition-colors focus:border-primary"
+              >
+                {collections.map((c) => (
+                  <option key={c.id} value={c.name} className="bg-surface">{c.name}</option>
+                ))}
+              </select>
+            )}
           </div>
           <div>
             <label className="mb-2 block font-mono text-[10px] tracking-[0.15em] text-outline">
@@ -176,7 +193,7 @@ export default function AddProduct() {
         </div>
 
         {/* Sizes + Colors */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-2 block font-mono text-[10px] tracking-[0.15em] text-outline">
               SIZES (comma separated)
@@ -204,7 +221,7 @@ export default function AddProduct() {
         </div>
 
         {/* SKU + Stock */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-2 block font-mono text-[10px] tracking-[0.15em] text-outline">
               SKU

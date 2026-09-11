@@ -15,7 +15,7 @@ export default function ProductCard({ product }: Props) {
     <div className="group relative">
       <Link
         to={`/product/${product.id}`}
-        className="block overflow-hidden bg-structure"
+        className="active:scale-[0.99] transition-transform duration-300 group-hover:-translate-y-1 block overflow-hidden bg-structure"
       >
         <div className="relative aspect-[3/4] overflow-hidden bg-surface-container">
           {product.images[0] ? (
@@ -49,7 +49,7 @@ export default function ProductCard({ product }: Props) {
             ? removeFromWishlist(product.id)
             : addToWishlist(product)
         }
-        className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center bg-void/70 backdrop-blur-sm transition-colors hover:bg-void"
+        className="absolute right-2 top-2 z-10 flex h-9 w-9 items-center justify-center bg-void/70 backdrop-blur-sm transition-colors active:scale-90 hover:bg-void"
         aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
       >
         <Heart

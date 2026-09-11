@@ -18,6 +18,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import ProductsAdmin from "./pages/admin/ProductsAdmin";
 import PriceManager from "./pages/admin/PriceManager";
 import AddProduct from "./pages/admin/AddProduct";
+import CollectionsAdmin from "./pages/admin/Collections";
 
 function StoreLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -135,6 +136,7 @@ export default function App() {
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="products" element={<ProductsAdmin />} />
+              <Route path="collections" element={<CollectionsAdmin />} />
               <Route path="pricing" element={<PriceManager />} />
               <Route path="add-product" element={<AddProduct />} />
             </Route>

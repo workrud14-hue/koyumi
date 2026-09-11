@@ -8,11 +8,11 @@ export default function Bag() {
   const { formatPrice } = useCurrency();
 
   return (
-    <div className="mx-auto max-w-[1400px] px-4 py-12 md:px-16">
+    <div className="mx-auto max-w-[1400px] px-4 py-8 md:px-16 md:py-12">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <p className="mb-2 font-mono text-xs tracking-[0.3em] text-primary">CHECKOUT</p>
-          <h1 className="font-display text-4xl font-bold text-signal">YOUR BAG</h1>
+          <p className="mb-2 font-mono text-[10px] tracking-[0.3em] text-primary md:text-xs">CHECKOUT</p>
+          <h1 className="font-display text-3xl font-bold text-signal md:text-4xl">YOUR BAG</h1>
         </div>
         {items.length > 0 && (
           <button
@@ -43,11 +43,11 @@ export default function Bag() {
               {items.map((item, i) => (
                 <div
                   key={`${item.product.id}-${item.size}-${item.color}-${i}`}
-                  className="flex gap-6 border-b border-outline-variant/20 pb-6"
+                  className="flex gap-4 border-b border-outline-variant/20 pb-6 sm:gap-6"
                 >
                   <Link
                     to={`/product/${item.product.id}`}
-                    className="h-32 w-24 flex-shrink-0 overflow-hidden bg-surface-container"
+                    className="h-28 w-20 flex-shrink-0 overflow-hidden bg-surface-container sm:h-32 sm:w-24"
                   >
                     {item.product.images[0] && (
                       <img

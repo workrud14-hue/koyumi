@@ -8,12 +8,14 @@ import {
   LogOut,
   Store,
   ShieldOff,
+  Layers,
 } from "lucide-react";
 import { useAuth } from "../lib/auth-context";
 
 const sidebarLinks = [
   { to: "/admin", icon: LayoutDashboard, label: "DASHBOARD", exact: true },
   { to: "/admin/products", icon: Package, label: "PRODUCTS" },
+  { to: "/admin/collections", icon: Layers, label: "COLLECTIONS" },
   { to: "/admin/pricing", icon: DollarSign, label: "PRICING" },
   { to: "/admin/add-product", icon: PlusCircle, label: "ADD PRODUCT" },
 ];

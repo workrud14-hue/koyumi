@@ -25,7 +25,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-outline-variant/20 bg-void/80 backdrop-blur-xl">
-      <nav className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-4 md:px-16">
+      <nav className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-4 md:h-16 md:px-16">
         {/* Logo */}
         <Link
           to="/"
@@ -201,7 +201,7 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div
         className={`overflow-hidden border-t border-outline-variant/20 bg-void/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
-          open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+          open ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="flex flex-col gap-1 px-4 py-4">

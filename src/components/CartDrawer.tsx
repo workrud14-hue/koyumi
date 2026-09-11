@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { X, Plus, Minus, Trash2 } from "lucide-react";
 import { useBag } from "../lib/bag-context";
+import { useCurrency } from "../lib/currency-context";
 
 type Props = {
   open: boolean;
@@ -9,6 +10,7 @@ type Props = {
 
 export default function CartDrawer({ open, onClose }: Props) {
   const { items, removeFromBag, updateQuantity, bagTotal } = useBag();
+  const { formatPrice } = useCurrency();
 
   if (!open) return null;
 
@@ -84,7 +86,7 @@ export default function CartDrawer({ open, onClose }: Props) {
                       </div>
                       <div className="flex items-center gap-3">
                         <span className="font-mono text-sm font-semibold text-signal">
-                          ${item.product.price * item.quantity}
+                          {formatPrice(item.product.price * item.quantity)}
                         </span>
                         <button
                           onClick={() => removeFromBag(i)}
@@ -108,7 +110,7 @@ export default function CartDrawer({ open, onClose }: Props) {
             <div className="mb-4 flex items-center justify-between">
               <span className="font-mono text-xs tracking-[0.1em] text-outline">SUBTOTAL</span>
               <span className="font-display text-xl font-bold text-signal">
-                ${bagTotal()}
+                {formatPrice(bagTotal())}
               </span>
             </div>
             <Link
