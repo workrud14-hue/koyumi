@@ -12,6 +12,10 @@ const supabaseAnonKey =
   (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined) ||
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InducWZkbWJ5cHlndnJkYW5vc3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNTc2MjgsImV4cCI6MjEwMzkzMzYyOH0.RvL2SP20pHo_EYoMUqFlRhIgpQYkenNK1aHyT5nUY-8";
 
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error("Missing Supabase env vars: VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY");
+}
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
