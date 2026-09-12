@@ -13,6 +13,8 @@ import Wishlist from "./pages/Wishlist";
 import Bag from "./pages/Bag";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import AdminLayout from "./pages/Admin";
 import Dashboard from "./pages/admin/Dashboard";
 import ProductsAdmin from "./pages/admin/ProductsAdmin";
@@ -107,6 +109,22 @@ export default function App() {
               element={
                 <StoreLayout>
                   <Contact />
+                </StoreLayout>
+              }
+            />
+            <Route
+              path="/privacy"
+              element={
+                <StoreLayout>
+                  <Privacy />
+                </StoreLayout>
+              }
+            />
+            <Route
+              path="/terms"
+              element={
+                <StoreLayout>
+                  <Terms />
                 </StoreLayout>
               }
             />

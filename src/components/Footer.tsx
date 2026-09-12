@@ -127,9 +127,13 @@ export default function Footer() {
               <Link to="/contact" className="font-body text-sm text-shadow/70 no-underline transition-colors hover:text-signal">
                 Contact
               </Link>
+              <Link to="/privacy" className="font-body text-sm text-shadow/70 no-underline transition-colors hover:text-signal">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="font-body text-sm text-shadow/70 no-underline transition-colors hover:text-signal">
+                Terms of Service
+              </Link>
               <span className="font-body text-sm text-shadow/70">Shipping & Returns</span>
-              <span className="font-body text-sm text-shadow/70">Privacy Policy</span>
-              <span className="font-body text-sm text-shadow/70">Terms of Service</span>
             </div>
           </div>
 
@@ -197,14 +201,12 @@ export default function Footer() {
               © 2026 KIYUMI. ALL RIGHTS RESERVED.
             </p>
             <div className="flex gap-4">
-              <Link to="/about" className="font-mono text-[10px] tracking-[0.1em] text-outline-variant no-underline transition-colors hover:text-signal">
-                ABOUT
+              <Link to="/privacy" className="font-mono text-[10px] tracking-[0.1em] text-outline-variant no-underline transition-colors hover:text-signal">
+                PRIVACY
               </Link>
-              <Link to="/contact" className="font-mono text-[10px] tracking-[0.1em] text-outline-variant no-underline transition-colors hover:text-signal">
-                CONTACT
+              <Link to="/terms" className="font-mono text-[10px] tracking-[0.1em] text-outline-variant no-underline transition-colors hover:text-signal">
+                TERMS
               </Link>
-              <span className="font-mono text-[10px] tracking-[0.1em] text-outline-variant">PRIVACY</span>
-              <span className="font-mono text-[10px] tracking-[0.1em] text-outline-variant">TERMS</span>
             </div>
           </div>
         </div>

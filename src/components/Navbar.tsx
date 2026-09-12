@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingBag, Menu, X, User, Search, Globe, LogOut, ChevronDown } from "lucide-react";
+import { ShoppingBag, Menu, X, User, Search, LogOut, ChevronDown } from "lucide-react";
 import { useBag } from "../lib/bag-context";
 import { useAuth } from "../lib/auth-context";
-import { useCurrency } from "../lib/currency-context";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [showCurrency, setShowCurrency] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const location = useLocation();
   const { bagCount } = useBag();
   const { user, signOut, isAdmin } = useAuth();
-  const { currency, setCurrency, allCurrencies } = useCurrency();
   const count = bagCount();
 
   const userInitial = user?.email?.charAt(0).toUpperCase() ?? "?";
@@ -53,7 +50,7 @@ export default function Navbar() {
               )}
             </Link>
           ))}
-          {user && (
+          {isAdmin && (
             <Link
               to="/admin"
               className={`relative font-mono text-[11px] font-medium tracking-[0.15em] no-underline transition-colors ${
@@ -72,38 +69,6 @@ export default function Navbar() {
 
         {/* Icons */}
         <div className="flex items-center gap-3">
-          {/* Currency Selector */}
-          <div className="relative">
-            <button
-              onClick={() => setShowCurrency(!showCurrency)}
-              className="flex items-center gap-1 rounded-sm px-2 py-1.5 font-mono text-[10px] tracking-[0.1em] text-outline/60 transition-colors hover:text-signal"
-              aria-label="Currency"
-            >
-              <Globe size={14} strokeWidth={1.5} />
-              <span className="hidden sm:inline">{currency.code}</span>
-            </button>
-            {showCurrency && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setShowCurrency(false)} />
-                <div className="absolute right-0 top-full z-50 mt-2 max-h-64 w-48 overflow-y-auto border border-outline-variant/20 bg-surface shadow-lg">
-                  {allCurrencies.map((c) => (
-                    <button
-                      key={c.code}
-                      onClick={() => { setCurrency(c); setShowCurrency(false); }}
-                      className={`flex w-full items-center justify-between px-3 py-2 font-mono text-[11px] transition-colors ${
-                        currency.code === c.code
-                          ? "bg-primary-container/20 text-primary"
-                          : "text-shadow hover:bg-surface-container hover:text-signal"
-                      }`}
-                    >
-                      <span>{c.code}</span>
-                      <span className="text-outline/50">{c.symbol}</span>
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
           <button className="rounded-sm p-1.5 text-outline/50 transition-colors hover:text-signal" aria-label="Search">
             <Search size={18} strokeWidth={1.5} />
           </button>
@@ -219,7 +184,7 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
-          {user && (
+          {isAdmin && (
             <Link
               to="/admin"
               onClick={() => setOpen(false)}

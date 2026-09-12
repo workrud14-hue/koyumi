@@ -16,7 +16,9 @@ type AuthContextType = {
   isAdmin: boolean;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
   signUp: (email: string, password: string) => Promise<{ error?: string; message?: string }>;
-  signInWithGoogle: () => Promise<{ error?: string }>;
+  signInWithGoogle: (redirectToPath?: string) => Promise<{ error?: string }>;
+  signInWithApple: (redirectToPath?: string) => Promise<{ error?: string }>;
+  verifyOtp: (email: string, token: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
   resendConfirmation: (email: string) => Promise<{ error?: string; message?: string }>;
 };
@@ -91,27 +93,71 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     if (data.user && data.user.confirmed_at) {
-      return { message: "Account created! Signing you in..." };
+      return { message: "Account created! Welcome to the arcade." };
     }
 
     if (data.user && !data.user.confirmed_at) {
       return {
-        message: "Account created! Check your email for a confirmation link. If you don't see it, try signing in — auto-confirm may be enabled.",
+        message: `Account created! We sent a 6-digit code to ${email}.`,
       };
     }
 
-    return { message: "Account created! Check your email for confirmation." };
+    return { message: "Account created! Check your email for your verification code." };
   };
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (redirectToPath?: string) => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: window.location.origin,
+        // Send the user back to where they started (e.g. /auth?returnTo=/wishlist)
+        // so the intended destination survives the Google round-trip.
+        redirectTo: redirectToPath
+          ? `${window.location.origin}${redirectToPath}`
+          : window.location.origin,
       },
     });
 
     if (error) {
+      return { error: error.message };
+    }
+    return {};
+  };
+
+  const signInWithApple = async (redirectToPath?: string) => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "apple",
+      options: {
+        // Same pattern as Google: the intended destination survives the OAuth round-trip.
+        redirectTo: redirectToPath
+          ? `${window.location.origin}${redirectToPath}`
+          : window.location.origin,
+      },
+    });
+
+    if (error) {
+      return { error: error.message };
+    }
+    return {};
+  };
+
+  const verifyOtp = async (email: string, token: string) => {
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: "signup",
+    });
+
+    if (error) {
+      const msg = error.message.toLowerCase();
+      if (msg.includes("expired")) {
+        return { error: "This code has expired. Request a new one below." };
+      }
+      if (msg.includes("already confirmed")) {
+        return { error: "Email already verified — just sign in." };
+      }
+      if (msg.includes("invalid") || msg.includes("not found")) {
+        return { error: "Invalid code. Double-check the 6 digits and try again." };
+      }
       return { error: error.message };
     }
     return {};
@@ -133,11 +179,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (error) {
       return { error: error.message };
     }
-    return { message: "Confirmation email sent! Check your inbox." };
+    return { message: "New code sent! Check your inbox." };
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, isAdmin, signIn, signUp, signInWithGoogle, signOut, resendConfirmation }}>
+    <AuthContext.Provider value={{ user, loading, isAdmin, signIn, signUp, signInWithGoogle, signInWithApple, verifyOtp, signOut, resendConfirmation }}>
       {children}
     </AuthContext.Provider>
   );
