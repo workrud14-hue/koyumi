@@ -18,9 +18,9 @@ const defaultForm = {
   sizes: "S, M, L, XL",
   colors: "#0A0A0A, #FFFFFF",
   sku: "",
+  qikink_sku: "",
   stock: 0,
   featured: false,
-  gaming_drop: false,
   images: [] as string[],
 };
 
@@ -60,13 +60,13 @@ export default function AddProduct() {
       compare_price: form.compare_price || null,
       description: form.description,
       category: form.category,
-      collection: form.collection || "MIDNIGHT ARCADE",
+      collection: form.collection || "YŌKAI // AFTER DARK",
       sizes: form.sizes.split(",").map((s) => s.trim()).filter(Boolean),
       colors: form.colors.split(",").map((c) => c.trim()).filter(Boolean),
       sku: form.sku || `KY-${Date.now().toString(36).toUpperCase()}`,
+      qikink_sku: form.qikink_sku.trim() || null,
       stock: form.stock,
       featured: form.featured,
-      gaming_drop: form.gaming_drop,
       images: form.images,
     });
 
@@ -248,6 +248,26 @@ export default function AddProduct() {
           </div>
         </div>
 
+        {/* Qikink POD SKU */}
+        <div>
+          <label className="mb-2 block font-mono text-[10px] tracking-[0.15em] text-outline">
+            QIKINK POD SKU (OPTIONAL)
+          </label>
+          <input
+            type="text"
+            value={form.qikink_sku}
+            onChange={(e) => update("qikink_sku", e.target.value)}
+            className="w-full border-b-2 border-outline-variant/50 bg-transparent py-3 font-mono text-sm text-signal outline-none transition-colors placeholder:text-outline-variant focus:border-primary"
+            placeholder="Qikink catalog SKU — auto-fulfills orders containing this product"
+          />
+          <p className="mt-2 font-mono text-[10px] leading-relaxed text-outline/70">
+            Leave empty unless the product is fulfilled by Qikink. A plain SKU
+            applies to every size/color; a JSON map like
+            {" {\"black:M\":\"SKU\", \"L\":\"SKU2\"} "}
+            maps per variant.
+          </p>
+        </div>
+
         {/* Toggles */}
         <div className="flex gap-6">
           <label className="flex items-center gap-3 cursor-pointer">
@@ -258,15 +278,6 @@ export default function AddProduct() {
               className="accent-primary"
             />
             <span className="font-mono text-xs tracking-[0.1em] text-shadow">FEATURED</span>
-          </label>
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={form.gaming_drop}
-              onChange={(e) => update("gaming_drop", e.target.checked)}
-              className="accent-secondary"
-            />
-            <span className="font-mono text-xs tracking-[0.1em] text-shadow">GAMING DROP</span>
           </label>
         </div>
 

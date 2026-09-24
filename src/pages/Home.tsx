@@ -4,6 +4,7 @@ import { ArrowRight, Zap, Ghost, ChevronDown } from "lucide-react";
 import { supabase, type Product } from "../lib/supabase";
 import ProductCard from "../components/ProductCard";
 import { useInView, useStaggeredInView } from "../lib/animations";
+import { useRatingSummaries } from "../lib/reviews";
 
 function FadeIn({
   children,
@@ -32,8 +33,10 @@ function FadeIn({
 
 export default function Home() {
   const [featured, setFeatured] = useState<Product[]>([]);
+  const [productsLoaded, setProductsLoaded] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [heroLoaded, setHeroLoaded] = useState(false);
+  const ratings = useRatingSummaries();
 
   const { containerRef: productsRef, visibleItems } = useStaggeredInView(
     featured.length || 8,
@@ -51,6 +54,7 @@ export default function Home() {
         if (all.filter((p) => p.featured).length === 0) {
           setFeatured(all.slice(0, 8));
         }
+        setProductsLoaded(true);
       });
 
     const onScroll = () => setScrollY(window.scrollY);
@@ -117,17 +121,10 @@ export default function Home() {
         >
           <Link
             to="/shop"
-            className="flex flex-1 items-center justify-center gap-2 bg-white py-3.5 font-mono text-[11px] font-bold tracking-[0.15em] text-void shadow-lg no-underline transition-all active:scale-95"
+            className="flex flex-1 items-center justify-center gap-2 bg-white py-3.5 font-mono text-[11px] font-bold tracking-[0.15em] text-black shadow-lg no-underline transition-all active:scale-95"
           >
             SHOP NOW
             <ArrowRight size={13} />
-          </Link>
-          <Link
-            to="/gaming"
-            className="flex items-center justify-center gap-2 border border-white/40 bg-void/60 px-5 py-3.5 font-mono text-[11px] font-bold tracking-[0.15em] text-white no-underline backdrop-blur-md transition-all active:scale-95"
-          >
-            GAMING
-            <Zap size={13} />
           </Link>
         </div>
 
@@ -156,20 +153,13 @@ export default function Home() {
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
                 to="/shop"
-                className="group inline-flex items-center justify-center gap-3 bg-white px-6 py-3 font-mono text-[10px] font-bold tracking-[0.15em] text-void no-underline transition-all hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] sm:px-8 sm:py-3.5 sm:text-[11px]"
+                className="group inline-flex items-center justify-center gap-3 bg-white px-6 py-3 font-mono text-[10px] font-bold tracking-[0.15em] text-black no-underline transition-all hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] sm:px-8 sm:py-3.5 sm:text-[11px]"
               >
                 SHOP NOW
                 <ArrowRight
                   size={13}
                   className="transition-transform group-hover:translate-x-1"
                 />
-              </Link>
-              <Link
-                to="/gaming"
-                className="inline-flex items-center justify-center gap-2 border border-white/25 bg-white/5 px-6 py-3 font-mono text-[10px] font-bold tracking-[0.15em] text-white/80 no-underline backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10 sm:px-8 sm:py-3.5 sm:text-[11px]"
-              >
-                GAMING DROP
-                <Zap size={13} />
               </Link>
             </div>
           </div>
@@ -191,9 +181,9 @@ export default function Home() {
       <div className="relative overflow-hidden border-y border-outline-variant/20 bg-surface-container py-4">
         <div className="animate-[marquee_25s_linear_infinite] whitespace-nowrap">
           <span className="inline-block px-6 font-mono text-[11px] tracking-[0.25em] text-outline/70">
-            YŌKAI COLLECTION • MIDNIGHT ARCADE • SHIBUYA.EXE • SAKURA//SYSTEM • NEO TOKYO • KITSUNE PROTOCOL •{" "}
-            YŌKAI COLLECTION • MIDNIGHT ARCADE • SHIBUYA.EXE • SAKURA//SYSTEM • NEO TOKYO • KITSUNE PROTOCOL •{" "}
-            YŌKAI COLLECTION • MIDNIGHT ARCADE • SHIBUYA.EXE • SAKURA//SYSTEM • NEO TOKYO • KITSUNE PROTOCOL •
+            YŌKAI COLLECTION • SHIBUYA.EXE • SAKURA//SYSTEM • NEO TOKYO • KITSUNE PROTOCOL •{" "}
+            YŌKAI COLLECTION • SHIBUYA.EXE • SAKURA//SYSTEM • NEO TOKYO • KITSUNE PROTOCOL •{" "}
+            YŌKAI COLLECTION • SHIBUYA.EXE • SAKURA//SYSTEM • NEO TOKYO • KITSUNE PROTOCOL •
           </span>
         </div>
       </div>
@@ -227,6 +217,14 @@ export default function Home() {
           ref={productsRef}
           className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 md:gap-x-6 md:gap-y-14"
         >
+          {!productsLoaded &&
+            Array.from({ length: 8 }).map((_, i) => (
+              <div key={`sk-${i}`} className="animate-pulse">
+                <div className="aspect-[3/4] bg-surface-container" />
+                <div className="mt-3 h-4 w-3/4 bg-surface-container" />
+                <div className="mt-2 h-3 w-1/2 bg-surface-container" />
+              </div>
+            ))}
           {featured.map((product, i) => (
             <div
               key={product.id}
@@ -238,7 +236,7 @@ export default function Home() {
                 transition: `all 0.6s cubic-bezier(0.16, 1, 0.3, 1)`,
               }}
             >
-              <ProductCard product={product} />
+              <ProductCard product={product} rating={ratings.get(product.id)} />
             </div>
           ))}
         </div>
@@ -323,51 +321,132 @@ export default function Home() {
           {[
             {
               name: "YŌKAI",
-              sub: " AFTER DARK",
+              sub: " // AFTER DARK",
+              num: "01",
               desc: "Supernatural streetwear for night crawlers. Ghosts don't follow trends.",
               color: "from-primary-container/15 via-surface-container to-surface",
-              link: "/shop?collection=yokai",
+              link: "/shop?collection=Y%C5%8DKAI%20%2F%2F%20AFTER%20DARK",
               accent: "text-primary",
             },
             {
               name: "SHIBUYA",
-              sub: " .EXE",
+              sub: ".EXE",
+              num: "02",
               desc: "Digital noise meets physical form. Code running through cotton.",
               color: "from-secondary-container/15 via-surface-container to-surface",
-              link: "/shop?collection=shibuya",
+              link: "/shop?collection=SHIBUYA.EXE",
               accent: "text-secondary",
             },
             {
-              name: "MIDNIGHT",
-              sub: " ARCADE",
-              desc: "Gaming-grade construction for the street. Hitboxes: zero. Fits: perfect.",
+              name: "SAKURA",
+              sub: "//SYSTEM",
+              num: "03",
+              desc: "Cherry blossom meets circuit board. Softness, weaponized.",
               color: "from-tertiary-container/15 via-surface-container to-surface",
-              link: "/gaming",
+              link: "/shop?collection=SAKURA%2F%2FSYSTEM",
               accent: "text-tertiary",
             },
+            {
+              name: "NEO",
+              sub: " TOKYO",
+              num: "04",
+              desc: "Neon-lit future-tech essentials. Reflective by design.",
+              color: "from-primary/10 via-surface-container to-surface",
+              link: "/shop?collection=NEO%20TOKYO",
+              accent: "text-primary",
+            },
+            {
+              name: "KITSUNE",
+              sub: " PROTOCOL",
+              num: "05",
+              desc: "Fox-spirit folklore in heavyweight cotton. Nine tails, zero mercy.",
+              color: "from-error/10 via-surface-container to-surface",
+              link: "/shop?collection=KITSUNE%20PROTOCOL",
+              accent: "text-error",
+            },
           ].map((c, i) => (
-            <FadeIn key={c.name} delay={i * 120}>
+            <FadeIn key={c.num} delay={i * 90}>
               <Link
                 to={c.link}
-                className={`group relative flex min-h-[300px] flex-col justify-end bg-gradient-to-br ${c.color} p-8 no-underline transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]`}
+                className={`group relative flex min-h-[260px] flex-col justify-end bg-gradient-to-br ${c.color} p-8 no-underline transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]`}
               >
-                <p className="mb-4 font-body text-[13px] leading-relaxed text-shadow/80">
+                <span className="absolute left-8 top-6 font-mono text-[10px] tracking-[0.25em] text-outline/50">
+                  {c.num}
+                </span>
+                <div className="absolute right-6 top-6 flex h-9 w-9 items-center justify-center border border-outline-variant/20 text-outline/40 transition-all duration-300 group-hover:border-signal/40 group-hover:text-signal/80">
+                  <ArrowRight size={14} />
+                </div>
+                <p className="mb-4 mt-8 font-body text-[13px] leading-relaxed text-shadow/80">
                   {c.desc}
                 </p>
                 <div className="flex items-baseline gap-2">
                   <h3 className="font-display text-2xl font-bold text-signal">
                     {c.name}
                   </h3>
-                  <span className={`font-display text-2xl font-bold ${c.accent}`}>
+                  <span className={`font-display text-xl font-bold ${c.accent}`}>
                     {c.sub}
                   </span>
-                </div>
-                <div className="absolute right-6 top-6 flex h-9 w-9 items-center justify-center border border-outline-variant/20 text-outline/40 transition-all duration-300 group-hover:border-signal/40 group-hover:text-signal/80">
-                  <ArrowRight size={14} />
                 </div>
               </Link>
             </FadeIn>
           ))}
+        </div>
+      </section>
+
+      {/* UGC / Instagram wall */}
+      <section className="border-y border-outline-variant/20 bg-surface-container/40">
+        <div className="mx-auto max-w-[1400px] px-4 py-20 md:px-16">
+          <FadeIn>
+            <div className="mb-10 text-center">
+              <p className="mb-2 font-mono text-[10px] tracking-[0.3em] text-primary/70">
+                IN THE WILD
+              </p>
+              <h2 className="font-display text-3xl font-bold tracking-tight text-signal md:text-4xl">
+                #KIYUMIONLINE
+              </h2>
+              <p className="mx-auto mt-3 max-w-sm font-body text-sm leading-relaxed text-shadow/70">
+                Tag @kiyumi.official in your fit pics — the best ones get featured
+                (and a discount code).
+              </p>
+            </div>
+          </FadeIn>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+            {[
+              { tag: "鬼", label: "ONI SZN" },
+              { tag: "渋", label: "SHIBUYA" },
+              { tag: "桜", label: "SAKURA" },
+              { tag: "狐", label: "KITSUNE" },
+              { tag: "電", label: "NEON" },
+              { tag: "夢", label: "DREAM" },
+            ].map((t, i) => (
+              <FadeIn key={t.label} delay={i * 70}>
+                <a
+                  href="https://instagram.com/kiyumi.official"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex aspect-square flex-col items-center justify-center gap-2 border border-outline-variant/15 bg-surface transition-colors no-underline hover:border-primary/40"
+                >
+                  <span className="font-display text-3xl text-outline/40 transition-colors group-hover:text-primary">
+                    {t.tag}
+                  </span>
+                  <span className="font-mono text-[9px] tracking-[0.2em] text-outline/60">
+                    {t.label}
+                  </span>
+                </a>
+              </FadeIn>
+            ))}
+          </div>
+          <FadeIn className="mt-10 text-center" delay={200}>
+            <a
+              href="https://instagram.com/kiyumi.official"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 border border-outline-variant/30 px-6 py-3 font-mono text-[10px] font-bold tracking-[0.15em] text-signal no-underline transition-colors hover:border-primary hover:text-primary"
+            >
+              FOLLOW @KIYUMI.OFFICIAL
+              <ArrowRight size={12} />
+            </a>
+          </FadeIn>
         </div>
       </section>
 
@@ -378,12 +457,12 @@ export default function Home() {
             {
               icon: <Zap size={20} strokeWidth={1.5} />,
               title: "BUILT DIFFERENT",
-              desc: "Every stitch engineered with the precision of competitive gaming hardware.",
+              desc: "Every stitch engineered with obsessive, uncompromising precision.",
             },
             {
               icon: <Ghost size={20} strokeWidth={1.5} />,
               title: "CULTURE FIRST",
-              desc: "Born from anime, gaming, and Tokyo street culture. Not trend-chasing.",
+              desc: "Born from anime and Tokyo street culture. Not trend-chasing.",
             },
             {
               icon: (
@@ -430,7 +509,7 @@ export default function Home() {
             JOIN THE GRID
           </p>
           <h2 className="mb-6 font-display text-3xl font-bold tracking-tight text-signal md:text-5xl">
-            ENTER THE ARCADE
+            ENTER THE VOID
           </h2>
           <p className="mx-auto mb-10 max-w-md font-body text-sm leading-relaxed text-shadow/70">
             Early drops. Exclusive colorways. Member-only pricing.

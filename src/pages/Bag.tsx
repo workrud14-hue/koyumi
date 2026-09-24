@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
-import { Plus, Minus, Trash2, ArrowLeft, ShoppingBag } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Plus, Minus, Trash2, ArrowLeft, ShoppingBag, Truck } from "lucide-react";
 import { useBag } from "../lib/bag-context";
 import { useCurrency } from "../lib/currency-context";
+import { FREE_SHIPPING_THRESHOLD } from "../lib/constants";
 
 export default function Bag() {
   const { items, removeFromBag, updateQuantity, clearBag, bagTotal } = useBag();
   const { formatPrice } = useCurrency();
+  const navigate = useNavigate();
 
   return (
     <div className="mx-auto max-w-[1400px] px-4 py-8 md:px-16 md:py-12">
@@ -113,6 +115,27 @@ export default function Bag() {
             <div className="sticky top-24 border border-outline-variant/30 bg-surface-container p-6">
               <h2 className="mb-6 font-display text-lg font-bold text-signal">ORDER SUMMARY</h2>
 
+              {/* Free-shipping progress */}
+              <div className="mb-6">
+                {bagTotal() >= FREE_SHIPPING_THRESHOLD ? (
+                  <p className="mb-2 flex items-center gap-2 font-mono text-[10px] tracking-[0.1em] text-primary">
+                    <Truck size={12} /> FREE SHIPPING UNLOCKED
+                  </p>
+                ) : (
+                  <p className="mb-2 font-mono text-[10px] tracking-[0.1em] text-shadow">
+                    ADD {formatPrice(FREE_SHIPPING_THRESHOLD - bagTotal())} MORE FOR FREE SHIPPING
+                  </p>
+                )}
+                <div className="h-1.5 w-full overflow-hidden bg-surface-container-high">
+                  <div
+                    className="h-full bg-gradient-to-r from-primary-container to-secondary-container transition-all duration-500"
+                    style={{
+                      width: `${Math.min(100, (bagTotal() / FREE_SHIPPING_THRESHOLD) * 100)}%`,
+                    }}
+                  />
+                </div>
+              </div>
+
               <div className="space-y-3 border-b border-outline-variant/20 pb-4">
                 <div className="flex justify-between font-mono text-xs text-shadow">
                   <span className="tracking-[0.1em]">SUBTOTAL</span>
@@ -129,7 +152,10 @@ export default function Bag() {
                 <span className="font-display text-xl font-bold text-signal">{formatPrice(bagTotal())}</span>
               </div>
 
-              <button className="w-full bg-gradient-to-r from-primary-container to-secondary-container py-4 font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container transition-opacity hover:opacity-90">
+              <button
+                onClick={() => navigate("/checkout")}
+                className="w-full bg-gradient-to-r from-primary-container to-secondary-container py-4 font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container transition-opacity hover:opacity-90"
+              >
                 PROCEED TO CHECKOUT
               </button>
 

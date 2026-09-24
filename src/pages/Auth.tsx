@@ -67,7 +67,7 @@ export default function Auth() {
       setLoading(false);
       if (result.error) {
         setError(result.error);
-      } else if (result.message?.includes("6-digit code")) {
+      } else if (result.message?.includes("verification code")) {
         // OTP flow: show the code entry view.
         setOtpEmail(email);
         setShowOtp(true);
@@ -153,11 +153,11 @@ export default function Auth() {
             </span>
           </div>
           <h1 className="font-display text-3xl font-bold tracking-tight text-signal">
-            {showOtp ? "ENTER CODE" : showResend ? "RESEND EMAIL" : isSignUp ? "JOIN THE ARCADE" : "SIGN IN"}
+            {showOtp ? "ENTER CODE" : showResend ? "RESEND EMAIL" : isSignUp ? "CREATE ACCOUNT" : "SIGN IN"}
           </h1>
           <p className="mt-3 font-body text-sm text-shadow/70">
             {showOtp
-              ? `Enter the 6-digit code we sent to ${otpEmail}.`
+              ? `Enter the code we sent to ${otpEmail}.`
               : showResend
                 ? "Enter your email to get a new verification code."
                 : isSignUp
@@ -171,14 +171,14 @@ export default function Auth() {
           <form onSubmit={handleVerifyOtp} className="mt-10 flex flex-col gap-6">
             <div>
               <label className="mb-2 block font-mono text-[10px] tracking-[0.15em] text-outline">
-                6-DIGIT CODE
+                VERIFICATION CODE
               </label>
               <input
                 type="text"
                 inputMode="numeric"
                 autoComplete="one-time-code"
                 pattern="[0-9]*"
-                maxLength={6}
+                maxLength={8}
                 value={otpCode}
                 onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ""))}
                 required
@@ -203,7 +203,7 @@ export default function Auth() {
 
             <button
               type="submit"
-              disabled={loading || otpCode.length < 6}
+              disabled={loading || otpCode.length < 4}
               className="mt-4 w-full bg-gradient-to-r from-primary-container to-secondary-container py-4 font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container transition-all hover:shadow-[0_0_20px_rgba(107,33,168,0.2)] disabled:opacity-50"
             >
               {loading ? "VERIFYING..." : "VERIFY CODE"}

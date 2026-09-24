@@ -32,6 +32,45 @@
   --font-mono: "Geist", monospace;
 }
 
+/* ------------------------------------------------------------------
+   LIGHT THEME — overrides every semantic token under html.light.
+   The dark palette above stays the default; a pre-paint script in
+   index.html adds the `light` class before first paint when the
+   device (or a saved visitor choice) prefers it, so there is no flash.
+   ------------------------------------------------------------------ */
+html.light {
+  --color-void: #fafafb;
+  --color-structure: #ece9ee;
+  --color-surface: #f7f5f8;
+  --color-surface-dim: #ded8e2;
+  --color-surface-bright: #fdfcfe;
+  --color-surface-container: #f0ecf3;
+  --color-surface-container-high: #eae5ee;
+  --color-surface-container-highest: #e4dfe8;
+  --color-on-surface: #1c1920;
+  --color-on-surface-variant: #48444e;
+  --color-signal: #19181c;
+  --color-shadow: #5e5866;
+  --color-primary: #7a1cb8;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #f2dbff;
+  --color-on-primary-container: #43007a;
+  --color-secondary: #a50e9a;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fbd5f7;
+  --color-on-secondary-container: #4b0047;
+  --color-tertiary: #7e5200;
+  --color-tertiary-container: #ffdda6;
+  --color-error: #b3261e;
+  --color-outline: #7c7482;
+  --color-outline-variant: #bcb4c2;
+  color-scheme: light;
+}
+
+html {
+  color-scheme: dark;
+}
+
 @font-face {
   font-family: "Anybody";
   src: url("https://fonts.googleapis.com/css2?family=Anybody:wght@400;500;600;700;800;900&display=swap");
@@ -74,10 +113,21 @@ body {
   background: var(--color-outline-variant);
 }
 
+/* Light-mode image treatments — darken photos slightly so white text
+   overlays stay readable, and soften harsh whites next to the light page. */
+html.light .hero-img {
+  filter: brightness(0.82) contrast(1.05) saturate(1.05);
+}
+html.light .img-on-light {
+  filter: brightness(0.96);
+}
+html.light .img-on-dark {
+  filter: brightness(0.94);
+}
 /* Selection */
 ::selection {
-  background: var(--color-primary-container);
-  color: var(--color-signal);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
 }
 
 /* Fade-in animation utility */

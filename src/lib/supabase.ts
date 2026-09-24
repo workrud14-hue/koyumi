@@ -37,9 +37,9 @@ export type Product = {
   sizes: string[];
   colors: string[];
   sku: string;
+  qikink_sku?: string | null;
   stock: number;
   featured: boolean;
-  gaming_drop: boolean;
   created_at: string;
 };
 

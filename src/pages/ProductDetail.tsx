@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Heart, ShoppingBag, ArrowLeft, ChevronRight, Minus, Plus, Ruler } from "lucide-react";
+import { Heart, ShoppingBag, ArrowLeft, ChevronRight, ChevronDown, Minus, Plus, Ruler } from "lucide-react";
 import { supabase, type Product } from "../lib/supabase";
 import { useBag } from "../lib/bag-context";
 import { useCurrency } from "../lib/currency-context";
 import SizeGuide from "../components/SizeGuide";
+import ReviewsSection from "../components/ReviewsSection";
+import ProductCard from "../components/ProductCard";
+import { useRatingSummaries } from "../lib/reviews";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -16,7 +19,11 @@ export default function ProductDetail() {
   const [added, setAdded] = useState(false);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
+  const [zoomed, setZoomed] = useState(false);
+  const [zoomOrigin, setZoomOrigin] = useState("50% 50%");
+  const [related, setRelated] = useState<Product[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const ratings = useRatingSummaries();
 
   const { addToBag, addToWishlist, removeFromWishlist, isInWishlist } = useBag();
   const { formatPrice } = useCurrency();
@@ -39,6 +46,24 @@ export default function ProductDetail() {
       });
     setActiveImage(0);
   }, [id]);
+
+  // Cross-sell: other pieces from the same collection
+  useEffect(() => {
+    if (!product?.collection) return;
+    let cancelled = false;
+    supabase
+      .from("products")
+      .select("*")
+      .eq("collection", product.collection)
+      .neq("id", product.id)
+      .limit(4)
+      .then(({ data }) => {
+        if (!cancelled) setRelated(data ?? []);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [product?.id, product?.collection]);
 
   // Keep dots in sync with swipe position
   const handleCarouselScroll = () => {
@@ -111,9 +136,24 @@ export default function ProductDetail() {
             >
               {(product.images.length > 0 ? product.images : [""]).map((img, i) => (
                 <div key={i} className="w-full flex-shrink-0 snap-center px-4 md:px-0">
-                  <div className="aspect-[3/4] overflow-hidden bg-surface-container">
+                  <div
+                    className="aspect-[3/4] overflow-hidden bg-surface-container"
+                    onMouseMove={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      setZoomOrigin(
+                        `${((e.clientX - rect.left) / rect.width) * 100}% ${((e.clientY - rect.top) / rect.height) * 100}%`,
+                      );
+                    }}
+                    onMouseEnter={() => setZoomed(true)}
+                    onMouseLeave={() => setZoomed(false)}
+                  >
                     {img ? (
-                      <img src={img} alt={`${product.name} view ${i + 1}`} className="h-full w-full object-cover" />
+                      <img
+                        src={img}
+                        alt={`${product.name} view ${i + 1}`}
+                        className={`h-full w-full object-cover transition-transform duration-200 ${zoomed ? "scale-[1.75]" : "scale-100"}`}
+                        style={{ transformOrigin: zoomOrigin }}
+                      />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center font-display text-6xl text-outline-variant/20">
                         KIYUMI
@@ -239,10 +279,13 @@ export default function ProductDetail() {
                   <button
                     key={s}
                     onClick={() => setSelectedSize(s)}
+                    disabled={product.stock <= 0}
                     className={`min-w-[44px] px-4 py-2.5 font-mono text-xs font-medium tracking-[0.1em] transition-all ${
-                      selectedSize === s
-                        ? "border border-primary bg-primary-container/20 text-primary"
-                        : "border border-outline-variant/30 text-shadow hover:border-signal hover:text-signal"
+                      product.stock <= 0
+                        ? "cursor-not-allowed border border-outline-variant/20 text-outline-variant/50 line-through decoration-1"
+                        : selectedSize === s
+                          ? "border border-primary bg-primary-container/20 text-primary"
+                          : "border border-outline-variant/30 text-shadow hover:border-signal hover:text-signal"
                     }`}
                   >
                     {s}
@@ -306,6 +349,49 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+
+      {/* Spec accordions */}
+      <div className="mt-12 border-t border-outline-variant/20">
+        {[
+          { title: "SHIPPING & DELIVERY", body: "Made to order — production starts immediately. Standard delivery 7–14 business days worldwide. Free shipping on orders over $150. Tracking number emailed the moment your order ships." },
+          { title: "RETURNS & EXCHANGES", body: "Defects, misprints, or wrong items are covered for 30 days after delivery — free replacement or full refund. See our Refund Policy for details. Made-to-order means we can't accept size-swap returns, so check the size guide before ordering." },
+          { title: "FABRIC & CARE", body: "Heavyweight 220–380gsm cotton depending on the piece. Cold machine wash inside-out, hang dry, do not iron directly on prints. All-over-print pieces are cut & sewn from the pattern — slight seam alignment variation is intentional." },
+        ].map((sec) => (
+          <details key={sec.title} className="group border-b border-outline-variant/20">
+            <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-mono text-[11px] font-medium tracking-[0.15em] text-shadow transition-colors hover:text-signal">
+              {sec.title}
+              <ChevronDown size={14} className="transition-transform group-open:rotate-180" />
+            </summary>
+            <p className="pb-5 font-body text-[13px] leading-relaxed text-on-surface-variant">
+              {sec.body}
+            </p>
+          </details>
+        ))}
+      </div>
+
+      {/* Reviews & ratings */}
+      <ReviewsSection productId={product.id} />
+
+      {/* You may also like — same collection */}
+      {related.length > 0 && (
+        <section className="mt-20 border-t border-outline-variant/20 pt-12">
+          <div className="mb-8 flex items-end justify-between">
+            <div>
+              <p className="mb-2 font-mono text-[10px] tracking-[0.3em] text-primary/80">
+                COMPLETE THE FIT
+              </p>
+              <h2 className="font-display text-2xl font-bold tracking-tight text-signal md:text-3xl">
+                YOU MAY ALSO LIKE
+              </h2>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 md:gap-x-6">
+            {related.map((p) => (
+              <ProductCard key={p.id} product={p} rating={ratings.get(p.id)} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Sticky mobile add-to-bag bar */}
       <div className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-3 border-t border-outline-variant/20 bg-void/95 px-4 py-3 backdrop-blur-xl md:hidden">

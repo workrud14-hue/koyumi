@@ -61,18 +61,18 @@ export default function About() {
                 KIYUMI started as a late-night conversation between friends who
                 were tired of wearing the same mass-produced streetwear that
                 everyone else was wearing. We wanted something that spoke our
-                language — anime, gaming, Tokyo underground culture, and the raw
+                language — anime, Tokyo underground culture, and the raw
                 energy of Shibuya at 2 AM.
               </p>
               <p>
                 Every piece in our collection is designed to make a statement.
                 We don't follow trends — we set them. Our designers draw
-                inspiration from yōkai folklore, arcade aesthetics, sakura
+                inspiration from yōkai folklore, sakura
                 blossoms, and the digital noise of Japanese pop culture.
               </p>
               <p>
-                We believe getting dressed should feel like loading into a match.
-                Every outfit is a character build. Every drop is a new season.
+                We believe getting dressed should feel like putting on armor.
+                Every piece tells a story. Every drop is a new chapter.
               </p>
             </div>
           </div>
@@ -116,12 +116,12 @@ export default function About() {
             {
               num: "01",
               title: "CULTURE FIRST",
-              desc: "Every design is rooted in anime, gaming, and Tokyo street culture. We don't chase trends — we create movements.",
+              desc: "Every design is rooted in anime and Tokyo street culture. We don't chase trends — we create movements.",
             },
             {
               num: "02",
               title: "BUILT DIFFERENT",
-              desc: "Premium materials, heavyweight cotton, construction quality that matches competitive gaming hardware. No shortcuts.",
+              desc: "Premium materials, heavyweight cotton, construction quality built to outlast trends. No shortcuts.",
             },
             {
               num: "03",
@@ -153,7 +153,7 @@ export default function About() {
             JOIN THE MOVEMENT
           </p>
           <h2 className="mb-6 font-display text-3xl font-bold tracking-tight text-signal md:text-4xl">
-            READY TO PLAY?
+            READY TO WEAR?
           </h2>
           <Link
             to="/shop"

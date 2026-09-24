@@ -52,7 +52,7 @@ const sections: { title: string; body: string[] }[] = [
     title: "7. INTELLECTUAL PROPERTY",
     body: [
       "All designs, artwork, logos, and content on this site belong to KIYUMI. You may not reproduce, copy, or resell our designs or products without written permission.",
-      "Our collections are inspired by Japanese folklore, gaming, and Tokyo street culture. If you believe any design infringes your rights, contact support@kiyumi.online and we will review it promptly.",
+      "Our collections are inspired by Japanese folklore and Tokyo street culture. If you believe any design infringes your rights, contact support@kiyumi.online and we will review it promptly.",
     ],
   },
   {

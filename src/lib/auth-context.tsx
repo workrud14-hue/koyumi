@@ -93,12 +93,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     if (data.user && data.user.confirmed_at) {
-      return { message: "Account created! Welcome to the arcade." };
+      return { message: "Account created! Welcome to KIYUMI." };
     }
 
     if (data.user && !data.user.confirmed_at) {
       return {
-        message: `Account created! We sent a 6-digit code to ${email}.`,
+        message: `Account created! We sent a verification code to ${email}.`,
       };
     }
 
@@ -156,7 +156,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { error: "Email already verified — just sign in." };
       }
       if (msg.includes("invalid") || msg.includes("not found")) {
-        return { error: "Invalid code. Double-check the 6 digits and try again." };
+        return { error: "Invalid code. Double-check the digits and try again." };
       }
       return { error: error.message };
     }

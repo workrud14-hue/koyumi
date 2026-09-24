@@ -1,8 +1,16 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingBag, Menu, X, User, Search, LogOut, ChevronDown } from "lucide-react";
+import { ShoppingBag, Menu, X, User, Search, LogOut, ChevronDown, Sun, Moon, MonitorSmartphone } from "lucide-react";
 import { useBag } from "../lib/bag-context";
 import { useAuth } from "../lib/auth-context";
+import { useTheme, type ThemeChoice } from "../lib/theme-context";
+
+const THEME_ORDER: ThemeChoice[] = ["system", "light", "dark"];
+const THEME_META: Record<ThemeChoice, { icon: typeof Sun; label: string }> = {
+  system: { icon: MonitorSmartphone, label: "AUTO (FOLLOWS DEVICE)" },
+  light: { icon: Sun, label: "LIGHT MODE" },
+  dark: { icon: Moon, label: "DARK MODE" },
+};
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -10,6 +18,7 @@ export default function Navbar() {
   const location = useLocation();
   const { bagCount } = useBag();
   const { user, signOut, isAdmin } = useAuth();
+  const { choice, theme, setChoice } = useTheme();
   const count = bagCount();
 
   const userInitial = user?.email?.charAt(0).toUpperCase() ?? "?";
@@ -17,7 +26,6 @@ export default function Navbar() {
   const links = [
     { to: "/", label: "HOME" },
     { to: "/shop", label: "SHOP ALL" },
-    { to: "/gaming", label: "GAMING DROP" },
   ];
 
   return (
@@ -69,6 +77,14 @@ export default function Navbar() {
 
         {/* Icons */}
         <div className="flex items-center gap-3">
+          <button
+            onClick={() => setChoice(THEME_ORDER[(THEME_ORDER.indexOf(choice) + 1) % 3])}
+            className="rounded-sm p-1.5 text-outline/60 transition-colors hover:text-signal"
+            aria-label={`Theme: ${THEME_META[choice].label}. Click to change.`}
+            title={`Theme: ${THEME_META[choice].label}`}
+          >
+            {theme === "light" ? <Sun size={17} strokeWidth={1.5} /> : <Moon size={17} strokeWidth={1.5} />}
+          </button>
           <button className="rounded-sm p-1.5 text-outline/50 transition-colors hover:text-signal" aria-label="Search">
             <Search size={18} strokeWidth={1.5} />
           </button>
@@ -88,7 +104,7 @@ export default function Navbar() {
           >
             <ShoppingBag size={18} strokeWidth={1.5} />
             {count > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center bg-gradient-to-r from-primary-container to-secondary-container px-1 text-[9px] font-bold text-signal">
+              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center bg-gradient-to-r from-primary-container to-secondary-container px-1 text-[9px] font-bold text-on-primary-container">
                 {count}
               </span>
             )}

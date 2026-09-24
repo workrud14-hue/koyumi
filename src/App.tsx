@@ -2,12 +2,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./lib/auth-context";
 import { BagProvider } from "./lib/bag-context";
 import { CurrencyProvider } from "./lib/currency-context";
+import { ThemeProvider } from "./lib/theme-context";
+import AnnouncementBar from "./components/AnnouncementBar";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
-import Gaming from "./pages/Gaming";
 import Auth from "./pages/Auth";
 import Wishlist from "./pages/Wishlist";
 import Bag from "./pages/Bag";
@@ -15,16 +16,21 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import Shipping from "./pages/Shipping";
+import Refund from "./pages/Refund";
 import AdminLayout from "./pages/Admin";
 import Dashboard from "./pages/admin/Dashboard";
 import ProductsAdmin from "./pages/admin/ProductsAdmin";
 import PriceManager from "./pages/admin/PriceManager";
 import AddProduct from "./pages/admin/AddProduct";
 import CollectionsAdmin from "./pages/admin/Collections";
+import Fulfillment from "./pages/admin/Fulfillment";
+import Checkout from "./pages/Checkout";
 
 function StoreLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <AnnouncementBar />
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
@@ -35,6 +41,7 @@ function StoreLayout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <BrowserRouter>
+      <ThemeProvider>
       <AuthProvider>
         <CurrencyProvider>
         <BagProvider>
@@ -65,14 +72,6 @@ export default function App() {
               }
             />
             <Route
-              path="/gaming"
-              element={
-                <StoreLayout>
-                  <Gaming />
-                </StoreLayout>
-              }
-            />
-            <Route
               path="/auth"
               element={
                 <StoreLayout>
@@ -93,6 +92,14 @@ export default function App() {
               element={
                 <StoreLayout>
                   <Bag />
+                </StoreLayout>
+              }
+            />
+            <Route
+              path="/checkout"
+              element={
+                <StoreLayout>
+                  <Checkout />
                 </StoreLayout>
               }
             />
@@ -128,6 +135,22 @@ export default function App() {
                 </StoreLayout>
               }
             />
+            <Route
+              path="/shipping"
+              element={
+                <StoreLayout>
+                  <Shipping />
+                </StoreLayout>
+              }
+            />
+            <Route
+              path="/refund"
+              element={
+                <StoreLayout>
+                  <Refund />
+                </StoreLayout>
+              }
+            />
             {/* 404 */}
             <Route
               path="*"
@@ -157,11 +180,13 @@ export default function App() {
               <Route path="collections" element={<CollectionsAdmin />} />
               <Route path="pricing" element={<PriceManager />} />
               <Route path="add-product" element={<AddProduct />} />
+              <Route path="fulfillment" element={<Fulfillment />} />
             </Route>
           </Routes>
         </BagProvider>
         </CurrencyProvider>
       </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

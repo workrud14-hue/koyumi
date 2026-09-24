@@ -7,7 +7,7 @@ const sections: { title: string; body: string[] }[] = [
   {
     title: "1. WHO WE ARE",
     body: [
-      "KIYUMI (\"we\", \"us\", \"our\") operates kiyumi.online, a digital flagship store for limited-run streetwear. This policy explains what personal data we collect, why we collect it, and how we protect it. Questions about this policy can be sent to support@kiyumi.online.",
+      "KIYUMI (\"we\", \"us\", \"our\") operates kiyumi.online, an apparel brand for limited-run streetwear. This policy explains what personal data we collect, why we collect it, and how we protect it. Questions about this policy can be sent to support@kiyumi.online.",
     ],
   },
   {

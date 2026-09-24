@@ -36,7 +36,7 @@ export default function Footer() {
               <span className="ml-0.5 text-[8px] align-top text-primary/50">™</span>
             </h3>
             <p className="font-body text-sm leading-relaxed text-shadow/70">
-              Digital flagship for the neo-street movement. Where gaming
+              Apparel brand for the neo-street movement. Where Tokyo
               aesthetics meet premium streetwear.
             </p>
 
@@ -100,9 +100,6 @@ export default function Footer() {
               <Link to="/shop" className="font-body text-sm text-shadow/70 no-underline transition-colors hover:text-signal">
                 All Products
               </Link>
-              <Link to="/gaming" className="font-body text-sm text-shadow/70 no-underline transition-colors hover:text-signal">
-                Gaming Drop
-              </Link>
               <Link to="/shop?collection=yokai" className="font-body text-sm text-shadow/70 no-underline transition-colors hover:text-signal">
                 YŌKAI Collection
               </Link>
@@ -133,7 +130,12 @@ export default function Footer() {
               <Link to="/terms" className="font-body text-sm text-shadow/70 no-underline transition-colors hover:text-signal">
                 Terms of Service
               </Link>
-              <span className="font-body text-sm text-shadow/70">Shipping & Returns</span>
+              <Link to="/shipping" className="font-body text-sm text-shadow/70 no-underline transition-colors hover:text-signal">
+                Shipping Policy
+              </Link>
+              <Link to="/refund" className="font-body text-sm text-shadow/70 no-underline transition-colors hover:text-signal">
+                Refund Policy
+              </Link>
             </div>
           </div>
 
@@ -206,6 +208,12 @@ export default function Footer() {
               </Link>
               <Link to="/terms" className="font-mono text-[10px] tracking-[0.1em] text-outline-variant no-underline transition-colors hover:text-signal">
                 TERMS
+              </Link>
+              <Link to="/shipping" className="font-mono text-[10px] tracking-[0.1em] text-outline-variant no-underline transition-colors hover:text-signal">
+                SHIPPING
+              </Link>
+              <Link to="/refund" className="font-mono text-[10px] tracking-[0.1em] text-outline-variant no-underline transition-colors hover:text-signal">
+                REFUNDS
               </Link>
             </div>
           </div>

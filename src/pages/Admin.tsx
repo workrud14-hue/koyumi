@@ -9,6 +9,7 @@ import {
   Store,
   ShieldOff,
   Layers,
+  Printer,
 } from "lucide-react";
 import { useAuth } from "../lib/auth-context";
 
@@ -18,6 +19,7 @@ const sidebarLinks = [
   { to: "/admin/collections", icon: Layers, label: "COLLECTIONS" },
   { to: "/admin/pricing", icon: DollarSign, label: "PRICING" },
   { to: "/admin/add-product", icon: PlusCircle, label: "ADD PRODUCT" },
+  { to: "/admin/fulfillment", icon: Printer, label: "FULFILLMENT" },
 ];
 
 export default function AdminLayout() {

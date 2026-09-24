@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Edit, Trash2, Image as ImageIcon } from "lucide-react";
+import { Edit, Trash2, Image as ImageIcon, Printer, RefreshCw, DownloadCloud } from "lucide-react";
 import { supabase, type Product } from "../../lib/supabase";
+import { callPrintifyFunction } from "../../lib/printify-client";
 import ImageUploader from "../../components/ImageUploader"
 
 export default function ProductsAdmin() {
@@ -37,17 +38,126 @@ export default function ProductsAdmin() {
     );
   };
 
-  const toggleGaming = async (product: Product) => {
-    await supabase
-      .from("products")
-      .update({ gaming_drop: !product.gaming_drop })
-      .eq("id", product.id);
-    setProducts((prev) =>
-      prev.map((p) => (p.id === product.id ? { ...p, gaming_drop: !p.gaming_drop } : p)),
-    );
+  const [editingImages, setEditingImages] = useState<string | null>(null);
+  const [mappings, setMappings] = useState<Record<string, string>>({}); // sku → printify product id
+  const [publishingId, setPublishingId] = useState<string | null>(null);
+  const [publishMsg, setPublishMsg] = useState("");
+  const [syncing, setSyncing] = useState(false);
+
+  // Pull every visible Printify product into the storefront catalog so items
+  // created on Printify (or by any other tool) become buyable on the site.
+  const syncFromPrintify = async () => {
+    setSyncing(true);
+    setPublishMsg("");
+    try {
+      const res = await callPrintifyFunction<{
+        total_remote: number;
+        imported: number;
+        updated: number;
+        skipped: Array<Record<string, unknown>>;
+        errors: Array<Record<string, unknown>>;
+      }>({ route: "catalog.syncProducts" });
+      const notes = [
+        `PRINTIFY SYNC — ${res.imported} new, ${res.updated} refreshed (${res.total_remote} on Printify).`,
+        ...res.errors.slice(0, 3).map((e) => `⚠ ${JSON.stringify(e)}`),
+      ];
+      setPublishMsg(notes.join(" "));
+      load();
+      loadMappings();
+    } catch (err) {
+      setPublishMsg(`Sync failed: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setSyncing(false);
+    }
   };
 
-  const [editingImages, setEditingImages] = useState<string | null>(null);
+  const loadMappings = () => {
+    callPrintifyFunction<{ rows: Array<{ storefront_sku: string; printify_product_id: string }> }>({
+      route: "db.mappings",
+    })
+      .then(({ rows }) => {
+        const map: Record<string, string> = {};
+        for (const r of rows ?? []) map[r.storefront_sku] = r.printify_product_id;
+        setMappings(map);
+      })
+      .catch(() => setMappings({}));
+  };
+
+  useEffect(() => {
+    loadMappings();
+  }, []);
+
+  const publishToPrintify = async (product: Product) => {
+    const designUrl = product.images[0];
+    if (!designUrl) {
+      setPublishMsg(`"${product.name}" has no image — add one first (it becomes the AOP print).`);
+      return;
+    }
+    if (!confirm(`Create this product on Printify as an All-Over-Print tee?\n\n${product.name}\nDesign: its first product image\nPrice: $${product.price}`)) return;
+
+    setPublishingId(product.id);
+    setPublishMsg("");
+    try {
+      const res = await callPrintifyFunction<{
+        printify_product_id: string;
+        persisted: boolean;
+        persistence_error?: string;
+      }>({
+        route: "products.createAop",
+        title: product.name,
+        description: product.description || "",
+        design_image_url: designUrl,
+        image_file_name: `${product.sku || product.id}.png`,
+        storefront_sku: product.sku,
+        retail_price_usd: product.price,
+      });
+      if (res.persisted === false) {
+        setPublishMsg(`Created ${res.printify_product_id}, but DB save failed: ${res.persistence_error ?? "?"}`);
+      } else {
+        setPublishMsg(`"${product.name}" created on Printify (${res.printify_product_id}).`);
+      }
+      loadMappings();
+    } catch (err) {
+      setPublishMsg(err instanceof Error ? err.message : String(err));
+    } finally {
+      setPublishingId(null);
+    }
+  };
+
+  // ---- Qikink POD SKU (products.qikink_sku) ----
+  // Plain SKU routes every size/color; a JSON map like {"black:M":"ABC-1"}
+  // routes per variant. Empty = product is not POD-routed.
+  const [editingSku, setEditingSku] = useState<string | null>(null);
+  const [skuDraft, setSkuDraft] = useState("");
+  const [skuSaving, setSkuSaving] = useState(false);
+
+  const saveQikinkSku = async (product: Product) => {
+    setSkuSaving(true);
+    const value = skuDraft.trim();
+    if (value.startsWith("{")) {
+      try {
+        JSON.parse(value);
+      } catch {
+        setSkuSaving(false);
+        setPublishMsg(`Invalid JSON map for "${product.name}" — use {"black:M":"SKU"} or a plain SKU.`);
+        return;
+      }
+    }
+    const { error } = await supabase
+      .from("products")
+      .update({ qikink_sku: value || null })
+      .eq("id", product.id);
+    setSkuSaving(false);
+    if (error) {
+      setPublishMsg(error.message);
+      return;
+    }
+    setProducts((prev) =>
+      prev.map((p) => (p.id === product.id ? { ...p, qikink_sku: value || null } : p)),
+    );
+    setEditingSku(null);
+    setPublishMsg(`QIKINK SKU saved for "${product.name}" — new orders with it will auto-push to Qikink.`);
+  };
 
   const updateProductImages = async (productId: string, newImages: string[]) => {
     await supabase
@@ -77,12 +187,22 @@ export default function ProductsAdmin() {
             {products.length} products total
           </p>
         </div>
-        <Link
-          to="/admin/add-product"
-          className="bg-gradient-to-r from-primary-container to-secondary-container px-4 py-2 font-mono text-xs font-bold tracking-[0.1em] text-on-primary-container no-underline transition-opacity hover:opacity-90"
-        >
-          + ADD PRODUCT
-        </Link>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={syncFromPrintify}
+            disabled={syncing}
+            className="flex items-center gap-2 border border-primary/40 px-4 py-2 font-mono text-xs font-bold tracking-[0.1em] text-primary transition-colors hover:bg-primary/10 disabled:opacity-50"
+          >
+            <DownloadCloud size={14} className={syncing ? "animate-bounce" : ""} />
+            {syncing ? "SYNCING…" : "SYNC PRINTIFY"}
+          </button>
+          <Link
+            to="/admin/add-product"
+            className="bg-gradient-to-r from-primary-container to-secondary-container px-4 py-2 font-mono text-xs font-bold tracking-[0.1em] text-on-primary-container no-underline transition-opacity hover:opacity-90"
+          >
+            + ADD PRODUCT
+          </Link>
+        </div>
       </div>
 
       {/* Image Editor Modal */}
@@ -108,6 +228,11 @@ export default function ProductsAdmin() {
       )}
 
       <div className="overflow-x-auto border border-outline-variant/20">
+        {publishMsg && (
+          <p className="border-b border-outline-variant/20 bg-surface-container px-4 py-3 font-mono text-[11px] text-primary">
+            {publishMsg}
+          </p>
+        )}
         <table className="w-full">
           <thead>
             <tr className="border-b border-outline-variant/20 bg-surface-container">
@@ -116,6 +241,8 @@ export default function ProductsAdmin() {
               <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">COLLECTION</th>
               <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">PRICE</th>
               <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">STOCK</th>
+              <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">PRINTIFY</th>
+              <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">QIKINK SKU</th>
               <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">FLAGS</th>
               <th className="px-4 py-3 text-left font-mono text-[10px] tracking-[0.1em] text-outline">ACTIONS</th>
             </tr>
@@ -158,6 +285,84 @@ export default function ProductsAdmin() {
                   </span>
                 </td>
                 <td className="px-4 py-3">
+                  {mappings[p.sku] ? (
+                    <a
+                      href={`https://printify.com/app/products/${mappings[p.sku]}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 bg-primary/10 px-2 py-1 font-mono text-[9px] tracking-[0.1em] text-primary transition-colors hover:bg-primary/20"
+                    >
+                      <Printer size={10} /> LIVE ↗
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => publishToPrintify(p)}
+                      disabled={publishingId === p.id || !p.sku}
+                      className="inline-flex items-center gap-1.5 border border-outline-variant/30 px-2 py-1 font-mono text-[9px] tracking-[0.1em] text-shadow transition-colors hover:border-primary hover:text-primary disabled:opacity-40"
+                    >
+                      {publishingId === p.id ? (
+                        <>
+                          <RefreshCw size={10} className="animate-spin" /> PUBLISHING…
+                        </>
+                      ) : (
+                        <>
+                          <Printer size={10} /> PUBLISH
+                        </>
+                      )}
+                    </button>
+                  )}
+                </td>
+                <td className="px-4 py-3">
+                  {editingSku === p.id ? (
+                    <div className="flex items-center gap-1">
+                      <input
+                        autoFocus
+                        type="text"
+                        value={skuDraft}
+                        onChange={(e) => setSkuDraft(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            saveQikinkSku(p);
+                          } else if (e.key === "Escape") {
+                            setEditingSku(null);
+                          }
+                        }}
+                        className="w-32 border border-primary/50 bg-surface px-2 py-1 font-mono text-[10px] text-signal outline-none"
+                        placeholder="e.g. MVnHs or JSON map"
+                      />
+                      <button
+                        onClick={() => saveQikinkSku(p)}
+                        disabled={skuSaving}
+                        className="px-2 py-1 font-mono text-[9px] text-primary transition-colors hover:underline disabled:opacity-50"
+                      >
+                        {skuSaving ? "…" : "SAVE"}
+                      </button>
+                      <button
+                        onClick={() => setEditingSku(null)}
+                        className="px-1 py-1 font-mono text-[9px] text-outline transition-colors hover:text-shadow"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setEditingSku(p.id);
+                        setSkuDraft(p.qikink_sku ?? "");
+                      }}
+                      className={`inline-flex items-center gap-1 px-2 py-1 font-mono text-[9px] tracking-[0.1em] transition-colors ${
+                        p.qikink_sku
+                          ? "bg-secondary/10 text-secondary hover:bg-secondary/20"
+                          : "border border-outline-variant/30 text-outline hover:border-secondary hover:text-secondary"
+                      }`}
+                      title={p.qikink_sku || "Set the Qikink catalog SKU to enable POD auto-fulfillment"}
+                    >
+                      {p.qikink_sku ? `SET · ${p.qikink_sku.slice(0, 12)}` : "SET SKU"}
+                    </button>
+                  )}
+                </td>
+                <td className="px-4 py-3">
                   <div className="flex gap-2">
                     <button
                       onClick={() => toggleFeatured(p)}
@@ -168,16 +373,6 @@ export default function ProductsAdmin() {
                       }`}
                     >
                       FEAT
-                    </button>
-                    <button
-                      onClick={() => toggleGaming(p)}
-                      className={`px-2 py-0.5 font-mono text-[9px] tracking-[0.1em] transition-colors ${
-                        p.gaming_drop
-                          ? "bg-secondary-container text-on-secondary-container"
-                          : "border border-outline-variant/30 text-outline"
-                      }`}
-                    >
-                      GAME
                     </button>
                   </div>
                 </td>
@@ -196,8 +391,7 @@ export default function ProductsAdmin() {
                       <Trash2 size={14} />
                     </button>
                   </div>
-                </td>
-              </tr>
+                </td>              </tr>
             ))}
           </tbody>
         </table>

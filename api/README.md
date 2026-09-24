@@ -3,19 +3,56 @@
 Server-side service for **automated product creation (AOP)**, **order
 submission**, and **shipment webhook handling** on kiyumi.online.
 
-Runs on Freebuff hosting via the Python API runner (`api/*.py` +
-`requirements.txt`). Flask + requests only — no heavy dependencies.
+## ⚠️ Production deployment: Supabase Edge Function
+
+The static host (Vercel) serves only the Vite build — Python API routes are
+not routed there. The **production backend is the Supabase Edge Function**:
+
+- Source: `supabase/functions/printify-fulfillment/index.ts` (single-file Deno
+  port of this entire `api/` module — same routes, same behavior)
+- Live URL: `https://wnqfdmbypygvrdanosqx.supabase.co/functions/v1/printify-fulfillment`
+- Deploy + set secrets: `node scripts/deploy-printify-function.mjs`
+  (uses the Management API — no CLI/Docker needed)
+- **Verified live** (Sep 2026): health, admin auth gating, webhook secret
+  gating, E2E draft AOP product creation + DB persistence, live shipping
+  quotes (IN: `{standard: 1249}`, US: `{standard: 609, express: 2899,
+  priority: 2899}`), and webhook registration on Printify.
+
+### Calling the function
+
+All POSTs take `{"route": "...", ...}` JSON bodies.
+- `health` — public
+- `checkout.submit` — **public**: guest checkout. Body: `{customer:{email,
+  first_name,last_name,phone}, shipping_address:{address1,address2,city,
+  region,zip,country}, items:[{sku,size,color,quantity,unit_price_cents}],
+  currency, payment_status}`. Persists the order, maps SKUs→Printify
+  variants, creates a draft Printify order, returns `{order_id, status,
+  printify_order_id, unrouted[]}`.
+- Admin routes (`catalog.*`, `products.createAop`, `shipping.quote`,
+  `orders.create`, `orders.sendToProduction`, `db.mappings`, `db.orders`,
+  `webhooks.register`, `qikink.retry`, `qikink.syncStatus`,
+  `qikink.webhookUrl`, `db.qikinkOrders`) require
+  `Authorization: Bearer <supabase access token>` of the admin email
+- Webhook: `GET|POST .../webhook?secret=...` (registered on Printify)
+- Qikink webhook: `GET|POST .../qikink/webhook?token=...` (paste into Qikink
+  dashboard; copy the full URL from Admin → Fulfillment → COPY WEBHOOK URL)
+
+The Python module below is kept as the reference implementation / local dev
+alternative (runs under the Freebuff Python API runner when the platform
+routes `api/*.py`).
 
 ## Files
 
 | File | Role |
 |---|---|
-| `api/printify_client.py` | Authenticated Printify REST wrapper (retries, timeouts, error typing) |
-| `api/printify_service.py` | Workflow logic: AOP layout builder, shipping quote, order submit, webhook parser |
-| `api/app.py` | Flask routes (the API surface) |
-| `api/supabase_db.py` | Service-role persistence into `printify_*` tables |
-| `api/run.py` | Local dev entrypoint |
-| `supabase/printify_schema.sql` | DB schema — run once in the Supabase SQL editor |
+| `supabase/functions/printify-fulfillment/index.ts` | **PRODUCTION** — Edge Function (Deno) |
+| `scripts/deploy-printify-function.mjs` | Deploy + secrets via Management API |
+| `api/printify_client.py` | Reference: authenticated Printify REST wrapper |
+| `api/printify_service.py` | Reference: AOP layout builder, shipping quote, order submit, webhook parser |
+| `api/app.py` | Reference: Flask routes |
+| `api/supabase_db.py` | Reference: service-role persistence into `printify_*` tables |
+| `api/run.py` | Local dev entrypoint for the Python variant |
+| `supabase/printify_schema.sql` | DB schema — already applied to the live project |
 
 ## Environment variables
 
@@ -109,16 +146,38 @@ Printify pointing at this route:
 {"public_base_url": "https://kiyumi.online"}
 ```
 
-## Setup checklist
+### Qikink POD integration (IND orders)
 
-1. Run `supabase/printify_schema.sql` in the Supabase SQL editor.
-2. Env vars are provisioned (token, shop id, service key) in the Freebuff
-   environment — see deploy env.
-3. Deploy, then `GET /api/printify/health` → expect `{"status":"ok"}`.
-4. Register the webhook via `/api/printify/webhooks/register` with the prod
-   base URL (include `?secret=` matching `PRINTIFY_WEBHOOK_SECRET`).
-5. Create one test AOP product → verify it appears in Printify → place a test
-   order → confirm the webhook marks it fulfilled.
+Orders whose items reference a product with `products.qikink_sku` set are
+**auto-pushed to Qikink** right after `checkout.submit` persists them (Qikink
+India Print-on-Demand: `https://api.qikink.com`, token auth, `/api/order/create`).
+
+- `qikink.retry` — re-push an order (`{"order_id", "dry_run"}`); failures mark
+  `orders.fulfillment_status = 'failed'` with `qikink_sync_error`, retryable
+  from Admin → Fulfillment.
+- `qikink.syncStatus` — pull Qikink's order list and reconcile
+  status/tracking/AWB into `orders`.
+- `qikink.webhookUrl` — full webhook URL including its `?token=` secret.
+- `db.qikinkOrders` — storefront orders tracked through Qikink.
+- Qikink webhook `.../qikink/webhook?token=...` — flips orders to SHIPPED with
+  tracking + courier and triggers the shipping email.
+
+Secrets: `QIKINK_CLIENT_ID`, `QIKINK_CLIENT_SECRET`, `QIKINK_BASE_URL`,
+`QIKINK_WEBHOOK_SECRET` (set as function secrets + sandbox `.env.local`).
+
+## Setup checklist — DONE ✅ (Sep 2026)
+
+1. ~~Run `supabase/printify_schema.sql`~~ — applied via Management API
+   (`scripts/apply-printify-schema.mjs`); 4 tables live, RLS-locked.
+2. ~~Provision env/secrets~~ — function secrets set: `PRINTIFY_API_TOKEN`,
+   `PRINTIFY_WEBHOOK_SECRET` (`SUPABASE_URL` + service key are auto-injected).
+3. ~~Deploy~~ — function is ACTIVE (version 3+); health returns
+   `shop_id 28915362, printify_reachable: true, db_configured: true`.
+4. ~~Register the webhook~~ — Printify webhook `6aa670af9ea14bb1d4066355`
+   (`order:shipment:created`) points at the function's `/webhook` route with
+   the secret query param.
+5. Remaining human test: place a real order → confirm the shipment webhook
+   flips `printify_orders.status` to `fulfilled` with tracking stored.
 
 ## Security notes
 

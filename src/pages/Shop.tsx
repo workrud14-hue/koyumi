@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { SlidersHorizontal, X } from "lucide-react";
 import { supabase, type Product } from "../lib/supabase";
 import ProductCard from "../components/ProductCard";
+import { useRatingSummaries } from "../lib/reviews";
 
 const DEFAULT_COLLECTIONS = [
   "YŌKAI // AFTER DARK",
@@ -10,7 +11,6 @@ const DEFAULT_COLLECTIONS = [
   "SAKURA//SYSTEM",
   "NEO TOKYO",
   "KITSUNE PROTOCOL",
-  "MIDNIGHT ARCADE",
 ];
 
 const CATEGORIES = ["ALL", "Tees", "Hoodies & Outerwear", "Bottoms & Accessories"];
@@ -24,13 +24,33 @@ const SORT_OPTIONS = [
 export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
+  const ratings = useRatingSummaries();
   const [collections, setCollections] = useState<string[]>(DEFAULT_COLLECTIONS);
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
 
-  const activeCollection = searchParams.get("collection") ?? "ALL";
   const activeCategory = searchParams.get("category") ?? "ALL";
   const sort = searchParams.get("sort") ?? "newest";
+
+  // Resolve a URL slug (e.g. "yokai" or the full DB name) to the exact
+  // collection name, diacritic- and punctuation-safe. Fixes collection links
+  // from the home tiles and footer that previously matched nothing.
+  const activeCollection = useMemo(() => {
+    const raw = searchParams.get("collection") ?? "ALL";
+    if (raw === "ALL") return "ALL";
+    const norm = (s: string) =>
+      s
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+    const target = norm(raw);
+    return (
+      collections.find((c) => norm(c) === target) ??
+      collections.find((c) => norm(c).includes(target) || target.includes(norm(c))) ??
+      raw
+    );
+  }, [searchParams, collections]);
 
   const setFilter = (key: string, value: string) => {
     const next = new URLSearchParams(searchParams);
@@ -226,7 +246,7 @@ export default function Shop() {
       ) : (
         <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:gap-x-4 md:grid-cols-4 md:gap-x-6 md:gap-y-12">
           {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+            <ProductCard key={p.id} product={p} rating={ratings.get(p.id)} />
           ))}
         </div>
       )}

@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 __pycache__/
+
+# Supabase access token temp file (secrets — never commit)
+scripts/.sb_token.tmp
