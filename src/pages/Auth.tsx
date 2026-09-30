@@ -14,19 +14,11 @@ function GoogleIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function AppleIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-      <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
-    </svg>
-  );
-}
-
 export default function Auth() {
   const [searchParams] = useSearchParams();
   const returnTo = searchParams.get("returnTo") ?? "/shop";
   const navigate = useNavigate();
-  const { signIn, signUp, signInWithGoogle, signInWithApple, verifyOtp, resendConfirmation, loading: authLoading, user } = useAuth();
+  const { signIn, signUp, signInWithGoogle, verifyOtp, resendConfirmation, loading: authLoading, user } = useAuth();
 
   const [isSignUp, setIsSignUp] = useState(false);
   const [showResend, setShowResend] = useState(false);
@@ -67,7 +59,7 @@ export default function Auth() {
       setLoading(false);
       if (result.error) {
         setError(result.error);
-      } else if (result.message?.includes("verification code")) {
+      } else if (result.message?.includes("6-digit code")) {
         // OTP flow: show the code entry view.
         setOtpEmail(email);
         setShowOtp(true);
@@ -97,17 +89,6 @@ export default function Auth() {
     setLoading(true);
     // Carry the intended destination through the Google OAuth round-trip.
     const result = await signInWithGoogle(`/auth?returnTo=${encodeURIComponent(returnTo)}`);
-    if (result.error) {
-      setError(result.error);
-      setLoading(false);
-    }
-    // OAuth redirects, so no need to navigate here
-  };
-
-  const handleAppleSignIn = async () => {
-    setError("");
-    setLoading(true);
-    const result = await signInWithApple(`/auth?returnTo=${encodeURIComponent(returnTo)}`);
     if (result.error) {
       setError(result.error);
       setLoading(false);
@@ -157,7 +138,7 @@ export default function Auth() {
           </h1>
           <p className="mt-3 font-body text-sm text-shadow/70">
             {showOtp
-              ? `Enter the code we sent to ${otpEmail}.`
+              ? `Enter the 6-digit code we sent to ${otpEmail}.`
               : showResend
                 ? "Enter your email to get a new verification code."
                 : isSignUp
@@ -171,14 +152,14 @@ export default function Auth() {
           <form onSubmit={handleVerifyOtp} className="mt-10 flex flex-col gap-6">
             <div>
               <label className="mb-2 block font-mono text-[10px] tracking-[0.15em] text-outline">
-                VERIFICATION CODE
+                6-DIGIT CODE
               </label>
               <input
                 type="text"
                 inputMode="numeric"
                 autoComplete="one-time-code"
                 pattern="[0-9]*"
-                maxLength={8}
+                maxLength={6}
                 value={otpCode}
                 onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ""))}
                 required
@@ -203,7 +184,7 @@ export default function Auth() {
 
             <button
               type="submit"
-              disabled={loading || otpCode.length < 4}
+              disabled={loading || otpCode.length !== 6}
               className="mt-4 w-full bg-gradient-to-r from-primary-container to-secondary-container py-4 font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container transition-all hover:shadow-[0_0_20px_rgba(107,33,168,0.2)] disabled:opacity-50"
             >
               {loading ? "VERIFYING..." : "VERIFY CODE"}
@@ -286,23 +267,15 @@ export default function Auth() {
           </form>
         ) : (
           <>
-            {/* Social Sign In Buttons */}
-            <div className="mt-10 grid grid-cols-2 gap-3">
+            {/* Social Sign In Button */}
+            <div className="mt-10">
               <button
                 onClick={handleGoogleSignIn}
                 disabled={loading}
                 className="flex w-full items-center justify-center gap-2 border border-outline-variant/40 bg-white py-3.5 font-mono text-[10px] font-bold tracking-[0.08em] text-void transition-all hover:bg-gray-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] disabled:opacity-50"
               >
                 <GoogleIcon />
-                GOOGLE
-              </button>
-              <button
-                onClick={handleAppleSignIn}
-                disabled={loading}
-                className="flex w-full items-center justify-center gap-2 border border-outline-variant/40 bg-black py-3.5 font-mono text-[10px] font-bold tracking-[0.08em] text-white transition-all hover:bg-[#111] hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] disabled:opacity-50"
-              >
-                <AppleIcon />
-                APPLE
+                CONTINUE WITH GOOGLE
               </button>
             </div>
 

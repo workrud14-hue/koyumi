@@ -10,6 +10,11 @@ import type { CartItem, Product } from "./supabase";
 type BagContextType = {
   items: CartItem[];
   wishlist: Product[];
+  /** Cart drawer visibility + whether the last change was an add (shows "ADDED TO BAG ✓"). */
+  cartOpen: boolean;
+  justAdded: boolean;
+  openCart: (options?: { justAdded?: boolean }) => void;
+  closeCart: () => void;
   addToBag: (item: Omit<CartItem, "quantity"> & { quantity?: number }) => void;
   removeFromBag: (index: number) => void;
   updateQuantity: (index: number, quantity: number) => void;
@@ -32,6 +37,9 @@ export function BagProvider({ children }: { children: ReactNode }) {
     }
   });
 
+  const [cartOpen, setCartOpen] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
+
   const [wishlist, setWishlist] = useState<Product[]>(() => {
     try {
       return JSON.parse(localStorage.getItem("kiyumi_wishlist") || "[]");
@@ -39,6 +47,16 @@ export function BagProvider({ children }: { children: ReactNode }) {
       return [];
     }
   });
+
+  const openCart = useCallback((options?: { justAdded?: boolean }) => {
+    setCartOpen(true);
+    setJustAdded(options?.justAdded ?? false);
+  }, []);
+
+  const closeCart = useCallback(() => {
+    setCartOpen(false);
+    setJustAdded(false);
+  }, []);
 
   const addToBag = useCallback(
     (item: Omit<CartItem, "quantity"> & { quantity?: number }) => {
@@ -62,8 +80,10 @@ export function BagProvider({ children }: { children: ReactNode }) {
         localStorage.setItem("kiyumi_bag", JSON.stringify(next));
         return next;
       });
+      // Pop the confirmation drawer after every add.
+      openCart({ justAdded: true });
     },
-    [],
+    [openCart],
   );
 
   const removeFromBag = useCallback((index: number) => {
@@ -127,6 +147,10 @@ export function BagProvider({ children }: { children: ReactNode }) {
       value={{
         items,
         wishlist,
+        cartOpen,
+        justAdded,
+        openCart,
+        closeCart,
         addToBag,
         removeFromBag,
         updateQuantity,

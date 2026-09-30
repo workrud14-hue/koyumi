@@ -1,27 +1,45 @@
 import { Link } from "react-router-dom";
-import { X, Plus, Minus, Trash2 } from "lucide-react";
+import { X, Plus, Minus, Trash2, Check } from "lucide-react";
 import { useBag } from "../lib/bag-context";
 import { useCurrency } from "../lib/currency-context";
 
 type Props = {
-  open: boolean;
-  onClose: () => void;
+  /** Kept for any external open/close control; the bag context drives the drawer after adds. */
+  open?: boolean;
+  onClose?: () => void;
 };
 
-export default function CartDrawer({ open, onClose }: Props) {
-  const { items, removeFromBag, updateQuantity, bagTotal } = useBag();
+export default function CartDrawer({ open: openProp, onClose }: Props) {
+  const { items, removeFromBag, updateQuantity, bagTotal, cartOpen, justAdded, closeCart } = useBag();
   const { formatPrice } = useCurrency();
 
-  if (!open) return null;
+  const isOpen = openProp ?? cartOpen;
+  const handleClose = () => {
+    closeCart();
+    onClose?.();
+  };
+
+  if (!isOpen) return null;
 
   return (
     <>
-      <div className="fixed inset-0 z-[60] bg-black/60" onClick={onClose} />
-      <div className="fixed bottom-0 right-0 top-0 z-[70] w-full max-w-md bg-surface border-l border-outline-variant/30 flex flex-col">
-        {/* Header */}
+      <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm" onClick={handleClose} />
+      <div className="fixed bottom-0 right-0 top-0 z-[70] flex w-full max-w-md flex-col border-l border-outline-variant/30 bg-surface shadow-2xl">
+        {/* Header — celebrates the add */}
         <div className="flex items-center justify-between border-b border-outline-variant/30 px-6 py-4">
-          <h2 className="font-display text-lg font-bold text-signal">YOUR BAG</h2>
-          <button onClick={onClose} className="text-shadow hover:text-signal" aria-label="Close">
+          <div className="flex items-center gap-2.5">
+            {justAdded ? (
+              <>
+                <span className="flex h-6 w-6 items-center justify-center bg-primary text-on-primary">
+                  <Check size={15} strokeWidth={3} />
+                </span>
+                <h2 className="font-display text-lg font-bold tracking-tight text-signal">ADDED TO BAG</h2>
+              </>
+            ) : (
+              <h2 className="font-display text-lg font-bold text-signal">YOUR BAG</h2>
+            )}
+          </div>
+          <button onClick={handleClose} className="text-shadow transition-colors hover:text-signal" aria-label="Close">
             <X size={20} />
           </button>
         </div>
@@ -33,14 +51,19 @@ export default function CartDrawer({ open, onClose }: Props) {
               <p className="font-display text-lg text-shadow">Your bag is empty</p>
               <Link
                 to="/shop"
-                onClick={onClose}
+                onClick={handleClose}
                 className="mt-4 inline-block border border-signal bg-transparent px-6 py-2.5 font-mono text-xs font-medium tracking-[0.15em] text-signal no-underline transition-colors hover:bg-signal hover:text-void"
               >
-                SHOP NOW
+                CONTINUE SHOPPING
               </Link>
             </div>
           ) : (
             <div className="flex flex-col gap-4">
+              {justAdded && (
+                <p className="font-mono text-[10px] tracking-[0.15em] text-outline">
+                  {items.length === 1 ? "1 ITEM IN YOUR BAG" : `${items.length} ITEMS IN YOUR BAG`}
+                </p>
+              )}
               {items.map((item, i) => (
                 <div
                   key={`${item.product.id}-${item.size}-${item.color}-${i}`}
@@ -104,7 +127,7 @@ export default function CartDrawer({ open, onClose }: Props) {
           )}
         </div>
 
-        {/* Footer */}
+        {/* Footer — the post-add options */}
         {items.length > 0 && (
           <div className="border-t border-outline-variant/30 px-6 py-4">
             <div className="mb-4 flex items-center justify-between">
@@ -113,13 +136,21 @@ export default function CartDrawer({ open, onClose }: Props) {
                 {formatPrice(bagTotal())}
               </span>
             </div>
-            <Link
-              to="/bag"
-              onClick={onClose}
-              className="block w-full bg-gradient-to-r from-primary-container to-secondary-container py-3 text-center font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container no-underline transition-opacity hover:opacity-90"
-            >
-              CHECKOUT
-            </Link>
+            <div className="flex flex-col gap-2.5">
+              <Link
+                to="/checkout"
+                onClick={handleClose}
+                className="block w-full bg-gradient-to-r from-primary-container to-secondary-container py-3.5 text-center font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container no-underline transition-opacity hover:opacity-90"
+              >
+                CHECKOUT
+              </Link>
+              <button
+                onClick={handleClose}
+                className="w-full border border-outline-variant/40 py-3 text-center font-mono text-xs font-bold tracking-[0.15em] text-signal transition-colors hover:border-signal hover:bg-surface-container"
+              >
+                CONTINUE SHOPPING
+              </button>
+            </div>
           </div>
         )}
       </div>

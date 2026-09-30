@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "./lib/auth-context";
 import { BagProvider } from "./lib/bag-context";
 import { CurrencyProvider } from "./lib/currency-context";
@@ -6,6 +7,7 @@ import { ThemeProvider } from "./lib/theme-context";
 import AnnouncementBar from "./components/AnnouncementBar";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import CartDrawer from "./components/CartDrawer";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
@@ -27,6 +29,16 @@ import CollectionsAdmin from "./pages/admin/Collections";
 import Fulfillment from "./pages/admin/Fulfillment";
 import Checkout from "./pages/Checkout";
 
+// Client-side navigation preserves the previous page's scroll offset —
+// this resets it so every route change starts at the top of the page.
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function StoreLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
@@ -41,6 +53,7 @@ function StoreLayout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <ThemeProvider>
       <AuthProvider>
         <CurrencyProvider>
@@ -183,6 +196,7 @@ export default function App() {
               <Route path="fulfillment" element={<Fulfillment />} />
             </Route>
           </Routes>
+          <CartDrawer />
         </BagProvider>
         </CurrencyProvider>
       </AuthProvider>

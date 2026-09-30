@@ -17,7 +17,6 @@ type AuthContextType = {
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
   signUp: (email: string, password: string) => Promise<{ error?: string; message?: string }>;
   signInWithGoogle: (redirectToPath?: string) => Promise<{ error?: string }>;
-  signInWithApple: (redirectToPath?: string) => Promise<{ error?: string }>;
   verifyOtp: (email: string, token: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
   resendConfirmation: (email: string) => Promise<{ error?: string; message?: string }>;
@@ -98,7 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (data.user && !data.user.confirmed_at) {
       return {
-        message: `Account created! We sent a verification code to ${email}.`,
+        message: `Account created! We sent a 6-digit code to ${email}.`,
       };
     }
 
@@ -111,23 +110,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       options: {
         // Send the user back to where they started (e.g. /auth?returnTo=/wishlist)
         // so the intended destination survives the Google round-trip.
-        redirectTo: redirectToPath
-          ? `${window.location.origin}${redirectToPath}`
-          : window.location.origin,
-      },
-    });
-
-    if (error) {
-      return { error: error.message };
-    }
-    return {};
-  };
-
-  const signInWithApple = async (redirectToPath?: string) => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "apple",
-      options: {
-        // Same pattern as Google: the intended destination survives the OAuth round-trip.
         redirectTo: redirectToPath
           ? `${window.location.origin}${redirectToPath}`
           : window.location.origin,
@@ -156,7 +138,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { error: "Email already verified — just sign in." };
       }
       if (msg.includes("invalid") || msg.includes("not found")) {
-        return { error: "Invalid code. Double-check the digits and try again." };
+        return { error: "Invalid code. Double-check the 6 digits and try again." };
       }
       return { error: error.message };
     }
@@ -183,7 +165,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, isAdmin, signIn, signUp, signInWithGoogle, signInWithApple, verifyOtp, signOut, resendConfirmation }}>
+    <AuthContext.Provider value={{ user, loading, isAdmin, signIn, signUp, signInWithGoogle, verifyOtp, signOut, resendConfirmation }}>
       {children}
     </AuthContext.Provider>
   );

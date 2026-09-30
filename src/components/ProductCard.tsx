@@ -66,11 +66,6 @@ export default function ProductCard({ product, rating }: Props) {
               SALE
             </div>
           )}
-          {product.stock > 0 && product.stock <= 5 && (
-            <div className="absolute bottom-0 left-0 bg-tertiary-container px-2 py-1 font-mono text-[10px] font-bold tracking-[0.1em] text-on-primary-container">
-              {product.stock === 1 ? "LAST ONE" : `ONLY ${product.stock} LEFT`}
-            </div>
-          )}
           {soldOut && (
             <div className="absolute bottom-0 left-0 bg-error px-2 py-1 font-mono text-[10px] font-bold tracking-[0.1em] text-on-error">
               SOLD OUT

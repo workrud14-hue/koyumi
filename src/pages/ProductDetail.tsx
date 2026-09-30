@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Heart, ShoppingBag, ArrowLeft, ChevronRight, ChevronDown, Minus, Plus, Ruler } from "lucide-react";
-import { supabase, type Product } from "../lib/supabase";
+import { Heart, ShoppingBag, ArrowLeft, ChevronRight, ChevronDown, Minus, Plus, Ruler } from "lucide-react";import { supabase, type Product } from "../lib/supabase";
 import { useBag } from "../lib/bag-context";
 import { useCurrency } from "../lib/currency-context";
 import SizeGuide from "../components/SizeGuide";
@@ -324,7 +323,7 @@ export default function ProductDetail() {
               className="flex flex-1 items-center justify-center gap-2 bg-gradient-to-r from-primary-container to-secondary-container py-4 font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container transition-all hover:opacity-90"
             >
               <ShoppingBag size={16} />
-              {added ? "ADDED!" : "ADD TO BAG"}
+              {added ? "ADDED!" : "ADD TO CART"}
             </button>
             <button
               onClick={() =>
@@ -340,20 +339,20 @@ export default function ProductDetail() {
             </button>
           </div>
 
-          {/* Stock */}
-          <div className="mt-6 flex items-center gap-2">
-            <div className={`h-2 w-2 ${product.stock > 0 ? "bg-green-500" : "bg-error"}`} />
-            <span className="font-mono text-[10px] tracking-[0.1em] text-outline">
-              {product.stock > 0 ? `IN STOCK — ${product.stock} LEFT` : "SOLD OUT"}
-            </span>
-          </div>
+          {/* Stock — only surface when sold out */}
+          {product.stock <= 0 && (
+            <div className="mt-6 flex items-center gap-2">
+              <div className="h-2 w-2 bg-error" />
+              <span className="font-mono text-[10px] tracking-[0.1em] text-outline">SOLD OUT</span>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Spec accordions */}
       <div className="mt-12 border-t border-outline-variant/20">
         {[
-          { title: "SHIPPING & DELIVERY", body: "Made to order — production starts immediately. Standard delivery 7–14 business days worldwide. Free shipping on orders over $150. Tracking number emailed the moment your order ships." },
+          { title: "SHIPPING & DELIVERY", body: "Made to order — production starts immediately. Standard delivery 7–14 business days worldwide. Free shipping on orders over $50. Tracking number emailed the moment your order ships." },
           { title: "RETURNS & EXCHANGES", body: "Defects, misprints, or wrong items are covered for 30 days after delivery — free replacement or full refund. See our Refund Policy for details. Made-to-order means we can't accept size-swap returns, so check the size guide before ordering." },
           { title: "FABRIC & CARE", body: "Heavyweight 220–380gsm cotton depending on the piece. Cold machine wash inside-out, hang dry, do not iron directly on prints. All-over-print pieces are cut & sewn from the pattern — slight seam alignment variation is intentional." },
         ].map((sec) => (
@@ -404,7 +403,7 @@ export default function ProductDetail() {
           className="ml-auto flex flex-shrink-0 items-center gap-2 bg-gradient-to-r from-primary-container to-secondary-container px-6 py-3.5 font-mono text-xs font-bold tracking-[0.15em] text-on-primary-container active:scale-95 transition-transform"
         >
           <ShoppingBag size={15} />
-          {added ? "ADDED!" : "ADD TO BAG"}
+          {added ? "ADDED!" : "ADD TO CART"}
         </button>
       </div>
       {/* Spacer so content isn't hidden behind the sticky bar */}
