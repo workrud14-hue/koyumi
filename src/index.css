@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #0A0A0A;
+  --color-structure: #1A1A1A;
+  --color-surface: #161219;
+  --color-surface-dim: #161219;
+  --color-surface-bright: #3d3740;
+  --color-surface-container: #231e26;
+  --color-surface-container-high: #2d2831;
+  --color-surface-container-highest: #38333c;
+  --color-on-surface: #e9dfeb;
+  --color-on-surface-variant: #cfc2d4;
+  --color-signal: #F5F5F5;
+  --color-shadow: #A0A0A0;
+  --color-primary: #dfb7ff;
+  --color-on-primary: #4a007f;
+  --color-primary-container: #6b21a8;
+  --color-on-primary-container: #d7a8ff;
+  --color-secondary: #fbabff;
+  --color-on-secondary: #580065;
+  --color-secondary-container: #ae05c6;
+  --color-on-secondary-container: #ffd8fd;
+  --color-tertiary: #faba72;
+  --color-tertiary-container: #6d4100;
+  --color-error: #ffb4ab;
+  --color-outline: #988d9e;
+  --color-outline-variant: #4c4452;
+
+  --font-display: "Anybody", sans-serif;
+  --font-body: "Hanken Grotesk", sans-serif;
+  --font-mono: "Geist", monospace;
+}
+
+/* ------------------------------------------------------------------
+   LIGHT THEME — overrides every semantic token under html.light.
+   The dark palette above stays the default; a pre-paint script in
+   index.html adds the `light` class before first paint when the
+   device (or a saved visitor choice) prefers it, so there is no flash.
+   ------------------------------------------------------------------ */
+html.light {
+  --color-void: #fafafb;
+  --color-structure: #ece9ee;
+  --color-surface: #f7f5f8;
+  --color-surface-dim: #ded8e2;
+  --color-surface-bright: #fdfcfe;
+  --color-surface-container: #f0ecf3;
+  --color-surface-container-high: #eae5ee;
+  --color-surface-container-highest: #e4dfe8;
+  --color-on-surface: #1c1920;
+  --color-on-surface-variant: #48444e;
+  --color-signal: #19181c;
+  --color-shadow: #5e5866;
+  --color-primary: #7a1cb8;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #f2dbff;
+  --color-on-primary-container: #43007a;
+  --color-secondary: #a50e9a;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fbd5f7;
+  --color-on-secondary-container: #4b0047;
+  --color-tertiary: #7e5200;
+  --color-tertiary-container: #ffdda6;
+  --color-error: #b3261e;
+  --color-outline: #7c7482;
+  --color-outline-variant: #bcb4c2;
+  color-scheme: light;
+}
+
+html {
+  color-scheme: dark;
+}
+
+@font-face {
+  font-family: "Anybody";
+  src: url("https://fonts.googleapis.com/css2?family=Anybody:wght@400;500;600;700;800;900&display=swap");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-void);
+  color: var(--color-signal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+}
+
+/* Light-mode image treatments — darken photos slightly so white text
+   overlays stay readable, and soften harsh whites next to the light page. */
+html.light .hero-img {
+  filter: brightness(0.82) contrast(1.05) saturate(1.05);
+}
+html.light .img-on-light {
+  filter: brightness(0.96);
+}
+html.light .img-on-dark {
+  filter: brightness(0.94);
+}
+/* Selection */
+::selection {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* Fade-in animation utility */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(107, 33, 168, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(107, 33, 168, 0.15);
+  }
+}
+
+/* Smooth page transitions */
+.animate-in {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-in-delay-1 { animation-delay: 100ms; }
+.animate-in-delay-2 { animation-delay: 200ms; }
+.animate-in-delay-3 { animation-delay: 300ms; }
+.animate-in-delay-4 { animation-delay: 400ms; }
+
+/* Mobile polish */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hero image treatment — darker on desktop (text overlays it),
+   lighter on mobile where the poster artwork carries its own text */
+.hero-img {
+  filter: brightness(0.65) contrast(1.08) saturate(1.15);
+}
+@media (max-width: 767px) {
+  .hero-img {
+    filter: brightness(0.88) contrast(1.04) saturate(1.08);
+  }
+}
+
+/* Respect reduced-motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Comfortable tap targets & no iOS input zoom on small screens */
+@media (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+  button,
+  a {
+    touch-action: manipulation;
+  }
+}

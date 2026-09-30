@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SHOP KOYUMMI | Premium Anime Streetwear</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800&amp;family=Hanken+Grotesk:wght@400;500&amp;family=Geist:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#3d3740",
+                        "surface-variant": "#38333c",
+                        "on-surface": "#e9dfeb",
+                        "on-tertiary-fixed-variant": "#673d00",
+                        "secondary-fixed": "#ffd6fd",
+                        "on-primary-fixed-variant": "#661aa3",
+                        "surface-container-high": "#2d2831",
+                        "on-secondary-fixed-variant": "#7c008e",
+                        "surface-dim": "#161219",
+                        "secondary-container": "#ae05c6",
+                        "primary-fixed-dim": "#dfb7ff",
+                        "surface-tint": "#dfb7ff",
+                        "outline-variant": "#4c4452",
+                        "background": "#161219",
+                        "on-secondary-container": "#ffd8fd",
+                        "surface-container": "#231e26",
+                        "secondary-fixed-dim": "#fbabff",
+                        "surface-container-highest": "#38333c",
+                        "outline": "#988d9e",
+                        "on-background": "#e9dfeb",
+                        "on-tertiary": "#482900",
+                        "surface-container-low": "#1f1a22",
+                        "primary-fixed": "#f1dbff",
+                        "inverse-on-surface": "#342e37",
+                        "on-surface-variant": "#cfc2d4",
+                        "on-secondary-fixed": "#36003e",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#d7a8ff",
+                        "primary-container": "#6b21a8",
+                        "on-tertiary-container": "#eeaf68",
+                        "surface": "#161219",
+                        "on-tertiary-fixed": "#2b1700",
+                        "on-error": "#690005",
+                        "inverse-primary": "#803abd",
+                        "on-primary": "#4a007f",
+                        "on-primary-fixed": "#2d0050",
+                        "on-error-container": "#ffdad6",
+                        "primary": "#dfb7ff",
+                        "inverse-surface": "#e9dfeb",
+                        "secondary": "#fbabff",
+                        "tertiary-container": "#6d4100",
+                        "tertiary-fixed": "#ffddbb",
+                        "tertiary-fixed-dim": "#faba72",
+                        "on-secondary": "#580065",
+                        "tertiary": "#faba72",
+                        "surface-container-lowest": "#110c14",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "section-gap": "128px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "subheading": ["Hanken Grotesk"],
+                        "label-mono": ["Geist"],
+                        "body-regular": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Anybody"],
+                        "display-xl": ["Anybody"],
+                        "headline-lg": ["Anybody"]
+                    },
+                    "fontSize": {
+                        "subheading": ["20px", { "lineHeight": "28px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "body-regular": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "700" }],
+                        "display-xl": ["80px", { "lineHeight": "88px", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        .btn-primary {
+            background: linear-gradient(to right, theme('colors.secondary-container'), theme('colors.primary-container'));
+            color: theme('colors.background');
+            font-family: theme('fontFamily.label-mono');
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 10px theme('colors.primary-container');
+        }
+        .btn-secondary {
+            border: 1px solid theme('colors.on-surface');
+            color: theme('colors.on-surface');
+            background: transparent;
+            font-family: theme('fontFamily.label-mono');
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .btn-secondary:hover {
+            border-image: linear-gradient(to right, theme('colors.secondary-container'), theme('colors.primary-container')) 1;
+            color: theme('colors.primary');
+        }
+        .glitch-hover:hover {
+            text-shadow: 2px 0 theme('colors.secondary-container'), -2px 0 theme('colors.primary-container');
+            color: theme('colors.primary');
+        }
+        .product-card-hover:hover .quick-add {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .product-card-hover:hover .wishlist-btn {
+            opacity: 1;
+        }
+        /* Custom Checkbox */
+        [type="checkbox"] {
+            appearance: none;
+            background-color: transparent;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.15em;
+            height: 1.15em;
+            border: 1px solid theme('colors.outline');
+            border-radius: 0;
+            display: grid;
+            place-content: center;
+        }
+        [type="checkbox"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em theme('colors.primary');
+            background-color: transform;
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+        [type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+        [type="checkbox"]:checked {
+            border-color: theme('colors.primary');
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="bg-surface-dim/90 backdrop-blur-md fixed top-0 w-full z-50 border-b border-outline-variant flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop transition-all duration-300 ease-in-out">
+<a class="font-display-xl text-headline-lg-mobile md:text-headline-lg text-primary tracking-tighter italic" href="#">KOYUMMI</a>
+<div class="hidden md:flex gap-gutter items-center">
+<a class="font-subheading text-subheading uppercase tracking-widest text-primary border-b-2 border-primary pb-1" href="#">SHOP</a>
+<a class="font-subheading text-subheading uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-300" href="#">NEW DROPS</a>
+<a class="font-subheading text-subheading uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-300" href="#">COLLECTIONS</a>
+<a class="font-subheading text-subheading uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-300" href="#">GAMING</a>
+<a class="font-subheading text-subheading uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-300" href="#">ABOUT</a>
+</div>
+<div class="flex gap-4 items-center">
+<button class="text-on-surface-variant hover:text-secondary transition-colors duration-300">
+<span class="material-symbols-outlined font-subheading">search</span>
+</button>
+<button class="text-on-surface-variant hover:text-secondary transition-colors duration-300">
+<span class="material-symbols-outlined font-subheading">shopping_bag</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-[120px] px-margin-mobile md:px-margin-desktop pb-section-gap">
+<!-- Header Section -->
+<header class="mb-gutter md:mb-section-gap text-center md:text-left flex flex-col md:flex-row justify-between items-end border-b border-outline-variant pb-8">
+<div class="max-w-2xl">
+<h1 class="font-display-xl text-headline-lg-mobile md:text-display-xl text-on-surface mb-4">SHOP KOYUMMI</h1>
+<p class="font-body-regular text-body-regular text-on-surface-variant">WEAR YOUR WORLD. Anime-inspired streetwear for those who live between worlds.</p>
+</div>
+<!-- Category Navigation (Horizontal) -->
+<div class="w-full md:w-auto mt-8 md:mt-0 overflow-x-auto no-scrollbar">
+<ul class="flex gap-6 md:gap-8 font-label-mono text-label-mono whitespace-nowrap">
+<li><a class="text-primary border-b border-primary pb-1" href="#">ALL</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors pb-1 border-b border-transparent hover:border-primary" href="#">NEW ARRIVALS</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors pb-1 border-b border-transparent hover:border-primary" href="#">TEES</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors pb-1 border-b border-transparent hover:border-primary" href="#">HOODIES</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors pb-1 border-b border-transparent hover:border-primary" href="#">JACKETS</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors pb-1 border-b border-transparent hover:border-primary" href="#">PANTS</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors pb-1 border-b border-transparent hover:border-primary" href="#">ACCESSORIES</a></li>
+</ul>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Sidebar Filters -->
+<aside class="lg:col-span-3 hidden lg:block sticky top-32 h-fit">
+<div class="space-y-8 pr-8 border-r border-outline-variant">
+<!-- Collection Filter -->
+<div>
+<h3 class="font-subheading text-subheading text-on-surface mb-4">COLLECTION</h3>
+<div class="space-y-3 font-body-regular text-body-regular text-on-surface-variant">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">YŌKAI // AFTER DARK</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">NEO TOKYO</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">MECHA CORE</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">ESSENTIALS</span>
+</label>
+</div>
+</div>
+<!-- Size Filter -->
+<div>
+<h3 class="font-subheading text-subheading text-on-surface mb-4">SIZE</h3>
+<div class="flex flex-wrap gap-2">
+<button class="w-10 h-10 border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-mono text-label-mono transition-colors bg-[#1A1A1A]">S</button>
+<button class="w-10 h-10 border border-primary text-primary font-label-mono text-label-mono transition-colors bg-[#1A1A1A]">M</button>
+<button class="w-10 h-10 border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-mono text-label-mono transition-colors bg-[#1A1A1A]">L</button>
+<button class="w-10 h-10 border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-mono text-label-mono transition-colors bg-[#1A1A1A]">XL</button>
+<button class="w-10 h-10 border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-mono text-label-mono transition-colors bg-[#1A1A1A]">XXL</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Product Grid -->
+<div class="lg:col-span-9">
+<div class="flex justify-between items-center mb-6">
+<span class="font-label-mono text-label-mono text-on-surface-variant">SHOWING 24 ITEMS</span>
+<button class="flex items-center gap-2 font-label-mono text-label-mono text-on-surface hover:text-primary transition-colors">
+                        SORT BY <span class="material-symbols-outlined" style="font-size: 16px;">keyboard_arrow_down</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-12">
+<!-- Product Card 1 -->
+<div class="group product-card-hover cursor-pointer relative">
+<div class="relative w-full aspect-[3/4] bg-[#1A1A1A] mb-4 overflow-hidden border border-transparent group-hover:border-primary/30 transition-colors">
+<div class="absolute top-4 left-4 z-10">
+<span class="bg-[#1A1A1A] text-[#F5F5F5] font-label-mono text-label-mono px-2 py-1 border border-outline-variant">NEW</span>
+</div>
+<button class="wishlist-btn absolute top-4 right-4 z-10 opacity-0 transition-opacity duration-300 text-on-surface hover:text-error">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A male model standing in a dark, moody studio with subtle neon purple backlighting. He is wearing the Kuro Oni Oversized Tee, a heavy black t-shirt featuring a stylized, glitch-art depiction of an Oni mask in bright magenta. The aesthetic is high-fashion streetwear mixed with cyberpunk elements, sharp focus, cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcPmKjrXcOMr8xLZipRJFAklOsXn-qMPJNLVaG3J-np-N7rGqcGLsgUUW6Y--CgtOPBZ5dZi4q0o4lV9NNnEIyxGS56vEr27iXIfx64A9CljxioaDVkC87VViauzr9CNBeUC30pN7UhiCGb5OPVqMwgJlep5uqGMAXp8gKGGS_aq4374QBJ9TRyTwXY-9WztRy1_CIrrvk5sCeEhgkXSHbEhppHkftPJzjUhE-4QtJQGVjep_OkiNCRA"/>
+<!-- Quick Add Overlay -->
+<div class="quick-add absolute bottom-0 left-0 w-full p-4 opacity-0 transform translate-y-4 transition-all duration-300 bg-gradient-to-t from-background/90 to-transparent flex justify-center">
+<button class="btn-primary w-full py-3">QUICK ADD</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-subheading text-subheading text-on-surface group-hover:text-primary transition-colors">Kuro Oni Oversized Tee</h4>
+<p class="font-label-mono text-label-mono text-on-surface-variant mt-1">YŌKAI // AFTER DARK</p>
+</div>
+<span class="font-subheading text-subheading text-on-surface">$48</span>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group product-card-hover cursor-pointer relative">
+<div class="relative w-full aspect-[3/4] bg-[#1A1A1A] mb-4 overflow-hidden border border-transparent group-hover:border-primary/30 transition-colors">
+<div class="absolute top-4 left-4 z-10">
+<span class="bg-primary text-background font-label-mono text-label-mono px-2 py-1">LIMITED</span>
+</div>
+<button class="wishlist-btn absolute top-4 right-4 z-10 opacity-0 transition-opacity duration-300 text-on-surface hover:text-error">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A female model captured in motion, turning away from the camera in a wet, neon-lit alleyway. She wears the Tokyo Afterdark Hoodie, a voluminous off-white hoodie with a massive structural hood and subtle charcoal tech-wear strapping. The scene is lit by cyan and magenta light spill, emphasizing the heavy drape of the fabric. High contrast, editorial streetwear photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNKZfDzsHVMniq2XRs_lWRDNYPeHJDpZZzyeRfCZ2Q1deDyzyDq2aTRUl3CYFrXdNsv2MyTsOiClICTK5A_OL6Rvf3Mu2_eSOII_MN0WIX-whCthCNgm-I_ii84xMcI1OCqsERW2lCBMX3akOwzWiTFJKSwTGISJ-4mRJK9XbiG2tg-zXwo7hxko21uzSHmAX0uPzsK8v1QzBYKea1ef00yy4pTcSkO-nA3XZ-gLmmriQcDmyX0chkng"/>
+<!-- Quick Add Overlay -->
+<div class="quick-add absolute bottom-0 left-0 w-full p-4 opacity-0 transform translate-y-4 transition-all duration-300 bg-gradient-to-t from-background/90 to-transparent flex justify-center">
+<button class="btn-primary w-full py-3">QUICK ADD</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-subheading text-subheading text-on-surface group-hover:text-primary transition-colors">Tokyo Afterdark Hoodie</h4>
+<p class="font-label-mono text-label-mono text-on-surface-variant mt-1">NEO TOKYO</p>
+</div>
+<span class="font-subheading text-subheading text-on-surface">$95</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest w-full mt-section-gap border-t border-outline-variant grid grid-cols-1 md:grid-cols-12 gap-gutter px-margin-mobile md:px-margin-desktop py-section-gap max-w-7xl mx-auto">
+<div class="md:col-span-4 flex flex-col justify-between">
+<span class="font-display-xl text-headline-lg text-on-surface mb-8">KOYUMMI</span>
+<span class="font-body-regular text-body-regular text-primary font-bold">© 2024 KOYUMMI ARCHIVE. ALL RIGHTS RESERVED.</span>
+</div>
+<div class="md:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8 font-body-regular text-body-regular">
+<div class="flex flex-col gap-4">
+<a class="text-on-surface-variant hover:text-secondary transition-colors opacity-80 hover:opacity-100" href="#">Newsletter</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors opacity-80 hover:opacity-100" href="#">Instagram</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors opacity-80 hover:opacity-100" href="#">Twitter</a>
+</div>
+<div class="flex flex-col gap-4">
+<a class="text-on-surface-variant hover:text-secondary transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+</body></html>

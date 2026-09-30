@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Koyummi - Kuro Oni Oversized Tee</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800&amp;family=Geist:wght@500&amp;family=Hanken+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#4c4452",
+                        "on-error": "#690005",
+                        "outline": "#988d9e",
+                        "primary-container": "#6b21a8",
+                        "background": "#161219",
+                        "on-secondary-container": "#ffd8fd",
+                        "error-container": "#93000a",
+                        "tertiary": "#faba72",
+                        "on-secondary-fixed-variant": "#7c008e",
+                        "inverse-primary": "#803abd",
+                        "inverse-on-surface": "#342e37",
+                        "surface-tint": "#dfb7ff",
+                        "primary": "#dfb7ff",
+                        "tertiary-fixed": "#ffddbb",
+                        "primary-fixed": "#f1dbff",
+                        "on-primary-fixed": "#2d0050",
+                        "error": "#ffb4ab",
+                        "on-background": "#e9dfeb",
+                        "surface": "#161219",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#eeaf68",
+                        "inverse-surface": "#e9dfeb",
+                        "surface-bright": "#3d3740",
+                        "surface-container": "#231e26",
+                        "secondary-fixed-dim": "#fbabff",
+                        "surface-container-lowest": "#110c14",
+                        "tertiary-fixed-dim": "#faba72",
+                        "on-primary": "#4a007f",
+                        "secondary-container": "#ae05c6",
+                        "on-tertiary-fixed": "#2b1700",
+                        "on-primary-fixed-variant": "#661aa3",
+                        "on-tertiary-fixed-variant": "#673d00",
+                        "surface-container-low": "#1f1a22",
+                        "on-secondary-fixed": "#36003e",
+                        "on-surface-variant": "#cfc2d4",
+                        "on-secondary": "#580065",
+                        "surface-variant": "#38333c",
+                        "surface-container-highest": "#38333c",
+                        "primary-fixed-dim": "#dfb7ff",
+                        "on-primary-container": "#d7a8ff",
+                        "on-surface": "#e9dfeb",
+                        "surface-container-high": "#2d2831",
+                        "surface-dim": "#161219",
+                        "secondary-fixed": "#ffd6fd",
+                        "on-tertiary": "#482900",
+                        "secondary": "#fbabff",
+                        "tertiary-container": "#6d4100"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "section-gap": "128px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-regular": ["Hanken Grotesk"],
+                        "headline-lg": ["Anybody"],
+                        "label-mono": ["Geist"],
+                        "headline-lg-mobile": ["Anybody"],
+                        "display-xl": ["Anybody"],
+                        "subheading": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-regular": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "700" }],
+                        "display-xl": ["80px", { "lineHeight": "88px", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "subheading": ["20px", { "lineHeight": "28px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glitch-hover:hover {
+            box-shadow: inset 0 0 0 1px #dfb7ff, 0 0 10px rgba(223, 183, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .gradient-btn {
+            background: linear-gradient(90deg, #dfb7ff 0%, #fbabff 100%);
+            color: #161219;
+            transition: all 0.3s ease;
+        }
+        .gradient-btn:hover {
+            background: linear-gradient(90deg, #fbabff 0%, #dfb7ff 100%);
+            box-shadow: 0 0 15px rgba(223, 183, 255, 0.4);
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-regular antialiased min-h-screen flex flex-col">
+<!-- TopNavBar (Desktop) -->
+<nav class="hidden md:flex justify-between items-center h-20 px-margin-desktop w-full fixed top-0 z-50 bg-background/90 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex items-center space-x-8">
+<span class="font-headline-lg text-headline-lg text-on-surface tracking-tighter cursor-pointer">
+<img alt="KOYUMMI" class="h-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEJ9UN13gDmc_auXMx2v7twlkCqRSyeG1YiM-Vms4LoW5xZfEcZiZdE0dY6Ge2xbKqpE-elUKjQugXYP6DbbxyDE00AL7iQ3-8rsfijLBeR1OVvPNS5exI5CBYIP_Ag3DfUnhQ5E-GK-lp1mHerHhqtVNzqd2BJDaZ2wUKBOLnXwi8sQVgBbvg855P8r2Znu8dk5YIeUFZ32aHKtlWW_UhLh_vEL5ohmfZTqizCFEJPRJozTFHTalZf0ZyZcrHJrO-mP0"/>
+</span>
+<div class="hidden lg:flex space-x-6">
+<a class="font-label-mono text-label-mono text-primary border-b-2 border-primary pb-1 uppercase tracking-widest scale-95 duration-200 ease-in-out" href="#">SHOP</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-all duration-300 uppercase tracking-widest scale-95 ease-in-out" href="#">NEW DROPS</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-all duration-300 uppercase tracking-widest scale-95 ease-in-out" href="#">COLLECTIONS</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-all duration-300 uppercase tracking-widest scale-95 ease-in-out" href="#">GAMING</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-all duration-300 uppercase tracking-widest scale-95 ease-in-out" href="#">ABOUT</a>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="text-on-surface-variant hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">search</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all duration-300 relative">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-background font-label-mono text-[10px] w-4 h-4 flex items-center justify-center rounded-full">2</span>
+</button>
+</div>
+</nav>
+<!-- SideNavBar (Mobile) - Triggered by menu -->
+<div class="md:hidden flex justify-between items-center h-20 px-margin-mobile w-full fixed top-0 z-50 bg-background/90 backdrop-blur-md border-b border-outline-variant/30">
+<button class="text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tighter">
+<img alt="KOYUMMI" class="h-6 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBODWBOqe9bznnxZYxCKl5Jqzm3eHrXmhty5uj2gi553HcNb5p3Q41G13irJo_xIcFmRH3CQhYtb9_sqB28A2vvMVc84ydXC3_TDh8A0qmHSMAkaDfl_2sDuSxP83ifGiKuhmZtgTzbst9c-1mJc3yXJuvZaWXCbGp-VCQeMagtRfK-Ed_rr3qVEJOcXXHJbB7Q1Vbvu5PNfs1A6lPlXR1yRKPaDMkyagbMEQp7lGnmiD7e_YVqXZrv42fteAi71XhhSI0"/>
+</span>
+<button class="text-on-surface relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-background font-label-mono text-[10px] w-4 h-4 flex items-center justify-center rounded-full">2</span>
+</button>
+</div>
+<!-- Main Content -->
+<main class="flex-grow pt-24 md:pt-32 pb-section-gap px-margin-mobile md:px-margin-desktop max-w-[1920px] mx-auto w-full">
+<!-- Product Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Gallery (Left) -->
+<div class="lg:col-span-7 flex flex-col md:flex-row gap-4 h-[60vh] md:h-[80vh]">
+<div class="hidden md:flex flex-col gap-4 overflow-y-auto hide-scrollbar w-24 flex-shrink-0">
+<img alt="Thumbnail 1" class="w-24 h-32 object-cover border border-outline-variant hover:border-primary cursor-pointer transition-colors" data-alt="Close up shot of the Kuro Oni Oversized Tee highlighting the dark texture and premium stitching. Deep charcoal black setting with stark, moody lighting, showcasing modern brutalist fashion photography aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFazZTzaIT1TUFi20p-jAvTYLuWhBtyBzBtUlS3Vb4YGc7R9PIWwTMBiWirTXWD08KoD3ROjsScjflQqxPyaoBWjJ-oUurMKxmyEXaD0ZIXrJOeiFpVXoM2g2Lfj_6mD23YN5EsjUKpn-eQHmWiKPgWowbFXum22p9QSSk5baEnpu-Vln6wOZg0ScIDFgrq-NwtghJdy7m183sZiwtp30KCQozuoJNvWc0uLfRHbPsaFGNDzB_rCy1qA"/>
+<img alt="Thumbnail 2" class="w-24 h-32 object-cover border border-transparent hover:border-primary cursor-pointer transition-colors opacity-60 hover:opacity-100" data-alt="Back view of a model wearing the Kuro Oni Oversized Tee, revealing a subtle neon purple graphic glitch design. Set in a dimly lit, neon-drenched Tokyo-inspired environment emphasizing high-fashion streetwear vibes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBzd4rznl8E4zKaRaDG5Oeejh8LB8tYAXow0decRMCC39CoPJOdkKseRXMYaRKBzFtoEYJnU-OLPSuhztb2AU-A-oD7-jRSBm04ya583HYiI3c61E5rM-2F8rC6kyEfACGD9WCsw9iDefxWea5vwTwpOQk5lGFR0KNUfCZ59XuEcE9r92YgHKM2mxvLWrfFRKwbaO6N7p5pawx2HdGirYX8abMfM8_aPY5wFy1YXvPmXk9MTDrsP-54A"/>
+<img alt="Thumbnail 3" class="w-24 h-32 object-cover border border-transparent hover:border-primary cursor-pointer transition-colors opacity-60 hover:opacity-100" data-alt="Side profile of the Kuro Oni Oversized Tee draped loosely on a mannequin, emphasizing its oversized, relaxed fit. Minimalist dark background with dramatic spotlighting that accentuates the fabric's heavy drape and silhouette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvmHyofuWbsx7H_roiyPP_N_tFekymEah4_0_C1Lskuu190ilI5eTVEC0Q4SSQzn6lnDOgMHwNQ8mg-m1qs0rQPVnaVMhqdT6aZZYoUYEx_AIwhDyOYKuvCHWyMIrO4xy0FbMQkqZsiyYJQZhI7JgTbg8WyjnOR0QDMfCx0sTcbUgACF__64Cu4y-w3LiDZH6UxP-JHtRi3xjK0GOkA9ZDM_18q5unwdnry8rJO1uNA9aM43iVa2MeMA"/>
+</div>
+<div class="flex-grow relative h-full bg-surface-container-low group overflow-hidden">
+<img alt="Main Product Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Full front view of a fashion model wearing the Kuro Oni Oversized Tee. The setting is a minimalist, concrete-textured room illuminated by high-contrast, moody lighting with faint neon accents, capturing the core Modern-Brutalist brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2Nf7jsmOvYNSgRWeMppAkKSZ3CjkHuoWVFEhbHdmrDaVIhv3pdtbcSfPoPPdUdCaQN6jR-LFF9bmlZNUxxBKXfIu9kKztd3MSFGWloJrQyl3Oasc69try-hNfBopNl9UA7O5zU5cpBHOkKndIKS1k6FCxhekyoGf9wzMA25UzxqzAwmLczICI2cNSCkKVqmQi3Y6lwv_0Symi53COdJcyspUnfP_vW8e6yLVJJZdsqA_cDRfFI9vzWA"/>
+<button class="absolute top-4 right-4 bg-background/50 backdrop-blur rounded-full p-2 text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+<!-- Product Info (Right) -->
+<div class="lg:col-span-5 flex flex-col pt-8 lg:pt-0 lg:pl-8">
+<!-- Breadcrumb -->
+<div class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest mb-4">
+<span>SHOP</span> <span class="mx-2">/</span> <span class="text-on-surface">TEES</span>
+</div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tighter mb-2 uppercase">Kuro Oni Oversized Tee</h1>
+<div class="flex items-center justify-between mb-6">
+<span class="font-subheading text-subheading text-primary">$45.00 USD</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" style="font-variation-settings: 'FILL' 1;">star_half</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant ml-2">(4.8 / 124 REVIEWS)</span>
+</div>
+</div>
+<p class="font-body-regular text-body-regular text-on-surface-variant mb-8">
+                    Forged in the shadows of Neo-Tokyo. Heavyweight premium cotton cut in our signature relaxed box fit. Features a high-density, tonal screen print that catches the light like dark matter.
+                </p>
+<!-- Color Selector -->
+<div class="mb-8">
+<div class="flex justify-between items-end mb-3">
+<span class="font-label-mono text-label-mono text-on-surface uppercase tracking-widest">COLOR: <span class="text-on-surface-variant ml-1">VOID BLACK</span></span>
+</div>
+<div class="flex gap-3">
+<button class="w-10 h-10 rounded-full bg-[#111] border-2 border-primary focus:outline-none ring-2 ring-primary/20"></button>
+<button class="w-10 h-10 rounded-full bg-[#333] border-2 border-transparent hover:border-outline-variant focus:outline-none"></button>
+<button class="w-10 h-10 rounded-full bg-[#eee] border-2 border-transparent hover:border-outline-variant focus:outline-none"></button>
+</div>
+</div>
+<!-- Size Selector -->
+<div class="mb-8">
+<div class="flex justify-between items-end mb-3">
+<span class="font-label-mono text-label-mono text-on-surface uppercase tracking-widest">SIZE</span>
+<button class="font-label-mono text-label-mono text-primary underline hover:text-on-surface transition-colors">SIZE GUIDE</button>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<button class="py-3 border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-all font-label-mono text-label-mono uppercase glitch-hover disabled:opacity-30 disabled:hover:border-outline-variant disabled:cursor-not-allowed">S</button>
+<button class="py-3 border border-primary bg-surface-container-high text-primary transition-all font-label-mono text-label-mono uppercase shadow-[inset_0_0_0_1px_#dfb7ff,0_0_10px_rgba(223,183,255,0.1)]">M</button>
+<button class="py-3 border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-all font-label-mono text-label-mono uppercase glitch-hover">L</button>
+<button class="py-3 border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-all font-label-mono text-label-mono uppercase glitch-hover">XL</button>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-4 mb-12">
+<button class="w-full py-4 bg-transparent border border-outline-variant text-on-surface font-label-mono text-label-mono uppercase tracking-widest hover:border-primary hover:text-primary transition-all duration-300 flex justify-center items-center gap-2 glitch-hover">
+                        ADD TO BAG
+                    </button>
+<button class="w-full py-4 gradient-btn font-label-mono text-label-mono uppercase tracking-widest font-bold">
+                        BUY NOW
+                    </button>
+</div>
+<!-- Accordions -->
+<div class="border-t border-outline-variant/30 divide-y divide-outline-variant/30">
+<details class="group py-4 cursor-pointer" open="">
+<summary class="flex justify-between items-center font-label-mono text-label-mono text-on-surface uppercase tracking-widest list-none">
+                            DESCRIPTION
+                            <span class="material-symbols-outlined transition duration-300 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="pt-4 font-body-regular text-body-regular text-on-surface-variant text-sm">
+<p>The Kuro Oni tee is an exploration of form and void. The dropped shoulder and widened chest create a brutalist silhouette, while the 240gsm jersey provides structural integrity.</p>
+</div>
+</details>
+<details class="group py-4 cursor-pointer">
+<summary class="flex justify-between items-center font-label-mono text-label-mono text-on-surface uppercase tracking-widest list-none">
+                            MATERIALS
+                            <span class="material-symbols-outlined transition duration-300 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="pt-4 font-body-regular text-body-regular text-on-surface-variant text-sm">
+<ul class="list-disc pl-4 space-y-1">
+<li>100% Premium Organic Cotton</li>
+<li>240 GSM Heavyweight Jersey</li>
+<li>Pre-shrunk for consistent fit</li>
+</ul>
+</div>
+</details>
+<details class="group py-4 cursor-pointer">
+<summary class="flex justify-between items-center font-label-mono text-label-mono text-on-surface uppercase tracking-widest list-none">
+                            FIT &amp; CARE
+                            <span class="material-symbols-outlined transition duration-300 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="pt-4 font-body-regular text-body-regular text-on-surface-variant text-sm">
+<p>Oversized boxy fit. Take your normal size for the intended look, or size down for a standard fit.</p>
+<p class="mt-2">Machine wash cold inside out. Lay flat to dry. Do not iron print.</p>
+</div>
+</details>
+</div>
+</div>
+</div>
+<!-- You May Also Like Section -->
+<section class="mt-section-gap">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tighter uppercase mb-8 border-b border-outline-variant/30 pb-4">YOU MAY ALSO LIKE</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="Product" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A model wearing dark cargo pants with excessive strappy detailing and functional pockets. Shot in a moody, industrial setting reflecting tech-wear and cyberpunk aesthetics. High contrast lighting emphasizes the garment's texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdW66BCNR8kIoMZvphRLADFpHnFsQTiLg6TW1_acF4ivaJeTNjQzvwYbWuEw122oZzPB5snkO3jBXQbjCUG63VWdJcMlfzzxraHoimwGQM29wJGR1IBUVn-q6nQvSZRDuZsW4dSTXTrpwhRwALmJ3Z2KQb7Hlzs4XN2e3FGro3iXilQWXi4tMgv_gb6qzDJnLm5VOqYaZCtuxpeVAX1zBuV5zk7SOcttGi_bi7MJbtv2vCgDqRtR_7Cw"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-label-mono text-label-mono text-on-surface uppercase tracking-widest">Ronin Cargo Pants</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant mt-1">BLACK</p>
+</div>
+<span class="font-subheading text-subheading text-primary">$120</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="Product" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A minimalist tech-wear hoodie in a dark slate grey, featuring an asymmetrical zip and a high cowl neck. The lighting is harsh and directional, creating deep shadows that fit the modern-brutalist fashion brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBbAOmTxxwpF5JNjbgUFAgOLcISdu0LkrpUV3VSzcMOMGu--k7P0kOdxBUlbgiLd_OhvmhqactRUGZ-XD264xh7W6KRU0YbEoBx7Nuci3PqAXB1i_qKEWxL7c1-_Qj_7AWaaDSmW9l_F928o1uoQ7Wb3wy81al-414CxNVBSjD5-QuMXR6KH-9XFDNts1NwHmAy7C1_8vPsFHmKuPHu8Z9JZmz6EhD8fl5ycjHBIkkPB0B3ocvR8w19Q"/>
+<div class="absolute top-2 left-2 px-2 py-1 bg-primary text-background font-label-mono text-[10px] uppercase">NEW</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-label-mono text-label-mono text-on-surface uppercase tracking-widest">Syntax Hoodie</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant mt-1">SLATE</p>
+</div>
+<span class="font-subheading text-subheading text-primary">$85</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group cursor-pointer hidden sm:block">
+<div class="relative aspect-[3/4] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="Product" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A sleek, black tactical crossbody bag with matte metal hardware and subtle neon stitching. Displayed against a deep charcoal background with a single streak of neon purple light hinting at a Tokyo nightlife vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdH1MKjMcmMSOFmZ2LT1UTEuIEX4sSg_O9MLTlomBCAU-_u60Zk7EQUaLkmo_AtB1hNQ_PhHs4SR-AhXhPAUyDHkSzqLcNn53ZMThmtkRFM-y_8c793jBKm6M4--NjdhIxp3VsrJOAbe3-WVL4rla-j0Q7CKspjXl7RiZWQF516fwM3P2leanEiljfQwtmStkwksFISZD0OZXOU1X4fBgJPbub_x2LFXucmALDNxC0MxrQ8tHSIXZZFw"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-label-mono text-label-mono text-on-surface uppercase tracking-widest">Sector Crossbody</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant mt-1">OBSIDIAN</p>
+</div>
+<span class="font-subheading text-subheading text-primary">$55</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="relative w-full pt-section-gap pb-12 bg-surface-container-lowest border-t border-outline-variant mt-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+<div class="md:col-span-4 flex justify-center mb-12">
+<span class="font-display-xl text-display-xl text-on-surface-variant opacity-10 uppercase text-center block w-full truncate">KOYUMMI</span>
+</div>
+<div class="col-span-1 text-center md:text-left">
+<span class="font-body-regular text-body-regular text-on-surface-variant opacity-80 hover:opacity-100">© 2024 KOYUMMI. HIGH-FREQUENCY DESIGN.</span>
+</div>
+<div class="col-span-1 md:col-span-3 flex flex-wrap justify-center md:justify-end gap-6">
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Terms</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Shipping</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Discord</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Instagram</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">TikTok</a>
+</div>
+</div>
+</footer>
+</body></html>

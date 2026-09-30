@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KOYUMMI Admin - Dashboard</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800&amp;family=Geist:wght@500&amp;family=Hanken+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "on-tertiary-fixed-variant": "#673d00",
+                            "surface-tint": "#dfb7ff",
+                            "on-secondary-container": "#ffd8fd",
+                            "surface-bright": "#3d3740",
+                            "secondary-fixed": "#ffd6fd",
+                            "surface-variant": "#38333c",
+                            "outline-variant": "#4c4452",
+                            "on-secondary": "#580065",
+                            "on-tertiary": "#482900",
+                            "secondary": "#fbabff",
+                            "on-background": "#e9dfeb",
+                            "on-secondary-fixed-variant": "#7c008e",
+                            "on-surface": "#e9dfeb",
+                            "on-tertiary-fixed": "#2b1700",
+                            "surface-dim": "#161219",
+                            "inverse-primary": "#803abd",
+                            "error": "#ffb4ab",
+                            "tertiary-fixed": "#ffddbb",
+                            "on-error-container": "#ffdad6",
+                            "surface-container": "#231e26",
+                            "on-primary": "#4a007f",
+                            "on-secondary-fixed": "#36003e",
+                            "surface-container-low": "#1f1a22",
+                            "inverse-surface": "#e9dfeb",
+                            "surface-container-lowest": "#110c14",
+                            "on-primary-container": "#d7a8ff",
+                            "secondary-container": "#ae05c6",
+                            "surface-container-high": "#2d2831",
+                            "tertiary": "#faba72",
+                            "tertiary-container": "#6d4100",
+                            "on-tertiary-container": "#eeaf68",
+                            "surface-container-highest": "#38333c",
+                            "primary": "#dfb7ff",
+                            "primary-container": "#6b21a8",
+                            "primary-fixed-dim": "#dfb7ff",
+                            "inverse-on-surface": "#342e37",
+                            "background": "#161219",
+                            "tertiary-fixed-dim": "#faba72",
+                            "primary-fixed": "#f1dbff",
+                            "on-error": "#690005",
+                            "outline": "#988d9e",
+                            "surface": "#161219",
+                            "on-surface-variant": "#cfc2d4",
+                            "on-primary-fixed": "#2d0050",
+                            "error-container": "#93000a",
+                            "secondary-fixed-dim": "#fbabff",
+                            "on-primary-fixed-variant": "#661aa3"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "margin-desktop": "64px",
+                            "margin-mobile": "16px",
+                            "gutter": "24px",
+                            "unit": "4px",
+                            "section-gap": "128px"
+                    },
+                    "fontFamily": {
+                            "label-mono": [
+                                    "Geist"
+                            ],
+                            "headline-lg-mobile": [
+                                    "Anybody"
+                            ],
+                            "display-xl": [
+                                    "Anybody"
+                            ],
+                            "body-regular": [
+                                    "Hanken Grotesk"
+                            ],
+                            "subheading": [
+                                    "Hanken Grotesk"
+                            ],
+                            "headline-lg": [
+                                    "Anybody"
+                            ]
+                    },
+                    "fontSize": {
+                            "label-mono": [
+                                    "12px",
+                                    {
+                                            "lineHeight": "16px",
+                                            "letterSpacing": "0.1em",
+                                            "fontWeight": "500"
+                                    }
+                            ],
+                            "headline-lg-mobile": [
+                                    "32px",
+                                    {
+                                            "lineHeight": "38px",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "display-xl": [
+                                    "80px",
+                                    {
+                                            "lineHeight": "88px",
+                                            "letterSpacing": "-0.04em",
+                                            "fontWeight": "800"
+                                    }
+                            ],
+                            "body-regular": [
+                                    "16px",
+                                    {
+                                            "lineHeight": "24px",
+                                            "fontWeight": "400"
+                                    }
+                            ],
+                            "subheading": [
+                                    "20px",
+                                    {
+                                            "lineHeight": "28px",
+                                            "letterSpacing": "0.05em",
+                                            "fontWeight": "500"
+                                    }
+                            ],
+                            "headline-lg": [
+                                    "48px",
+                                    {
+                                            "lineHeight": "56px",
+                                            "letterSpacing": "-0.02em",
+                                            "fontWeight": "700"
+                                    }
+                            ]
+                    }
+            },
+                },
+        }
+    </script>
+<style>
+        body {
+            background-color: #161219;
+            color: #e9dfeb;
+        }
+        
+        .card-glow {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .card-glow:hover {
+            border-color: #dfb7ff;
+            box-shadow: 0 0 15px rgba(223, 183, 255, 0.1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1f1a22; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4c4452; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #dfb7ff; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-regular min-h-screen custom-scrollbar">
+<!-- TopNavBar (JSON Data) -->
+<header class="bg-surface dark:bg-surface fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] z-40 border-b border-outline-variant flat no shadows flex justify-between items-center h-16 px-4 md:px-margin-desktop md:ml-64">
+<!-- Search (On Left) -->
+<div class="flex items-center space-x-2 w-1/3">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="bg-transparent border-b-2 border-outline-variant focus:border-primary text-on-surface font-label-mono text-label-mono py-1 px-0 w-full focus:ring-0 transition-colors placeholder:text-on-surface-variant" placeholder="Search orders, products..." type="text"/>
+</div>
+<!-- Trailing Icons -->
+<div class="flex items-center space-x-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dark_mode</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (JSON Data) -->
+<nav class="hidden md:flex bg-surface-container dark:bg-surface-container h-screen w-64 fixed left-0 top-0 border-r border-outline-variant flat no shadows flex-col py-8 z-50">
+<!-- Brand / Header -->
+<div class="px-6 mb-12">
+<h1 class="font-display-xl text-headline-lg-mobile text-primary tracking-tighter uppercase mb-1">KOYUMMI</h1>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase">Streetwear Admin</p>
+</div>
+<!-- Navigation Links -->
+<ul class="flex-1 space-y-2 overflow-y-auto custom-scrollbar px-4">
+<!-- Dashboard (Active) -->
+<li>
+<a class="flex items-center px-4 py-3 text-primary bg-primary-container/10 border-r-2 border-primary font-bold font-label-mono text-label-mono transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="uppercase tracking-widest">Dashboard</span>
+</a>
+</li>
+<!-- Orders -->
+<li>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high font-label-mono text-label-mono transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4" style="font-variation-settings: 'FILL' 0;">shopping_bag</span>
+<span class="uppercase tracking-widest">Orders</span>
+</a>
+</li>
+<!-- Products -->
+<li>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high font-label-mono text-label-mono transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+<span class="uppercase tracking-widest">Products</span>
+</a>
+</li>
+<!-- Collections -->
+<li>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high font-label-mono text-label-mono transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4" style="font-variation-settings: 'FILL' 0;">category</span>
+<span class="uppercase tracking-widest">Collections</span>
+</a>
+</li>
+<!-- Inventory -->
+<li>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high font-label-mono text-label-mono transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4" style="font-variation-settings: 'FILL' 0;">layers</span>
+<span class="uppercase tracking-widest">Inventory</span>
+</a>
+</li>
+<!-- Pricing -->
+<li>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high font-label-mono text-label-mono transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4" style="font-variation-settings: 'FILL' 0;">payments</span>
+<span class="uppercase tracking-widest">Pricing</span>
+</a>
+</li>
+<!-- Customers -->
+<li>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high font-label-mono text-label-mono transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4" style="font-variation-settings: 'FILL' 0;">group</span>
+<span class="uppercase tracking-widest">Customers</span>
+</a>
+</li>
+<!-- Discounts -->
+<li>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high font-label-mono text-label-mono transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4" style="font-variation-settings: 'FILL' 0;">sell</span>
+<span class="uppercase tracking-widest">Discounts</span>
+</a>
+</li>
+<!-- Analytics -->
+<li>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high font-label-mono text-label-mono transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="uppercase tracking-widest">Analytics</span>
+</a>
+</li>
+<!-- Settings -->
+<li class="mt-8">
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high font-label-mono text-label-mono transition-all duration-200 ease-in-out border-t border-outline-variant pt-6" href="#">
+<span class="material-symbols-outlined mr-4" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="uppercase tracking-widest">Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-24 px-4 md:px-margin-desktop pb-section-gap min-h-screen">
+<!-- Header -->
+<div class="mb-12">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tighter uppercase mb-2">GOOD EVENING, KOYUMMI.</h2>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">System Operational • Data current as of 18:04 JST</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-section-gap">
+<!-- Stat Cards Row (Col 1-12) -->
+<div class="col-span-1 md:col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Stat Card: Total Sales -->
+<div class="bg-surface-container-low p-6 rounded-none card-glow relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Total Sales</span>
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 0;">monitoring</span>
+</div>
+<div class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-1">$12,482</div>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 0;">arrow_upward</span>
+<span class="font-label-mono text-label-mono text-primary">+14.2%</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">vs last week</span>
+</div>
+</div>
+</div>
+<!-- Stat Card: Orders -->
+<div class="bg-surface-container-low p-6 rounded-none card-glow relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Orders</span>
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 0;">local_mall</span>
+</div>
+<div class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-1">186</div>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 0;">arrow_upward</span>
+<span class="font-label-mono text-label-mono text-primary">+5.8%</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">vs last week</span>
+</div>
+</div>
+</div>
+<!-- Stat Card: AOV -->
+<div class="bg-surface-container-low p-6 rounded-none card-glow relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">AOV</span>
+<span class="material-symbols-outlined text-on-surface-variant text-xl" style="font-variation-settings: 'FILL' 0;">receipt_long</span>
+</div>
+<div class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-1">$67.11</div>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-error text-sm" style="font-variation-settings: 'FILL' 0;">arrow_downward</span>
+<span class="font-label-mono text-label-mono text-error">-1.2%</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">vs last week</span>
+</div>
+</div>
+</div>
+<!-- Stat Card: Conversion -->
+<div class="bg-surface-container-low p-6 rounded-none card-glow relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Conversion</span>
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 0;">track_changes</span>
+</div>
+<div class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-1">3.8%</div>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 0;">arrow_upward</span>
+<span class="font-label-mono text-label-mono text-primary">+0.4%</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">vs last week</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Chart Area (Col 1-8) -->
+<div class="col-span-1 md:col-span-8 bg-surface-container-low p-6 relative card-glow h-[400px] flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-subheading text-subheading text-on-surface uppercase tracking-widest">Revenue Pulse</h3>
+<!-- 7D / 30D Toggle -->
+<div class="flex bg-surface-container border border-outline-variant p-1">
+<button class="px-4 py-1 bg-surface-variant text-on-surface font-label-mono text-label-mono uppercase tracking-widest">7D</button>
+<button class="px-4 py-1 text-on-surface-variant hover:text-on-surface font-label-mono text-label-mono uppercase tracking-widest transition-colors">30D</button>
+</div>
+</div>
+<!-- Chart Placeholder / Visualization -->
+<div class="flex-1 relative border-l border-b border-outline-variant/30 flex items-end pt-4">
+<!-- Y Axis Labels -->
+<div class="absolute left-[-40px] top-0 bottom-0 flex flex-col justify-between text-on-surface-variant font-label-mono text-label-mono text-right pr-2">
+<span>$5k</span>
+<span>$4k</span>
+<span>$3k</span>
+<span>$2k</span>
+<span>$1k</span>
+<span>0</span>
+</div>
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t-0 w-full"></div>
+</div>
+<!-- Bars / Graph Representation -->
+<div class="w-full flex justify-between items-end h-full px-2 gap-2 relative z-10">
+<div class="w-full bg-surface-variant hover:bg-primary-container transition-colors group relative" style="height: 40%">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-container border border-outline-variant px-2 py-1 font-label-mono text-label-mono opacity-0 group-hover:opacity-100 transition-opacity">$1.2k</div>
+</div>
+<div class="w-full bg-surface-variant hover:bg-primary-container transition-colors group relative" style="height: 65%"></div>
+<div class="w-full bg-surface-variant hover:bg-primary-container transition-colors group relative" style="height: 45%"></div>
+<div class="w-full bg-surface-variant hover:bg-primary-container transition-colors group relative" style="height: 80%"></div>
+<div class="w-full bg-surface-variant hover:bg-primary-container transition-colors group relative" style="height: 55%"></div>
+<div class="w-full bg-primary hover:bg-primary-fixed transition-colors group relative" style="height: 95%">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-container border border-primary px-2 py-1 font-label-mono text-label-mono text-primary opacity-100 transition-opacity z-20">$3.8k</div>
+</div>
+<div class="w-full bg-surface-variant hover:bg-primary-container transition-colors group relative" style="height: 70%"></div>
+</div>
+<!-- X Axis Labels -->
+<div class="absolute -bottom-8 left-0 right-0 flex justify-between px-2 text-on-surface-variant font-label-mono text-label-mono">
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span class="text-primary font-bold">Sat</span>
+<span>Sun</span>
+</div>
+</div>
+</div>
+<!-- Side Widgets (Col 9-12) -->
+<div class="col-span-1 md:col-span-4 flex flex-col gap-gutter">
+<!-- Low Stock Widget -->
+<div class="bg-surface-container-low p-6 relative card-glow flex-1 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-subheading text-subheading text-on-surface uppercase tracking-widest">Low Stock Alert</h3>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<div class="flex items-center space-x-4 mb-4">
+<div class="w-16 h-16 bg-cover bg-center border border-outline-variant bg-surface-container" data-alt="A close-up studio shot of a premium, heavy-weight black streetwear t-shirt with a subtle, stylized Oni demon graphic printed in dark grey on the chest. The lighting is moody and directional, highlighting the texture of the thick cotton fabric against a deep charcoal background. The aesthetic is raw, minimalist, and high-fashion streetwear." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFEugeUKtLbgIXlAZu4CbzxajXM7zpRG738WBGaYrJZAKA7gBdSVhlRFrc2BNWuT07YGIsNNqB4dSsiJdnE5RmLJab0cn8mE8yT7fL8KJvvqB3uMyq42Pv8qV8zITBiSNgm_xHdcB9jVNhfHfc488LsX5huEk_QPXwThr-to-F0ATNCZgViqKqkODG8mdBXEST3TSAreVKzl0BOyYh2pLgDJsjn_qb1ACN1ZWO3m-8ibvFxQ2_aHnB-g')"></div>
+<div>
+<h4 class="font-body-regular text-body-regular text-on-surface font-bold uppercase">Kuro Oni Tee</h4>
+<p class="font-label-mono text-label-mono text-on-surface-variant">Size: L • Black</p>
+</div>
+</div>
+<div class="bg-error-container/20 border border-error/30 p-4 flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-error uppercase tracking-widest">Units Remaining</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-error font-bold">7</span>
+</div>
+<button class="mt-6 w-full bg-gradient-to-r from-secondary-container to-primary-container hover:from-primary-container hover:to-primary py-3 px-4 font-label-mono text-label-mono text-on-primary uppercase tracking-widest transition-all duration-300 border border-transparent hover:border-primary">
+                            Reorder Inventory
+                        </button>
+</div>
+</div>
+<!-- Quick Action / Marketing Mini Card -->
+<div class="bg-surface-container-highest p-6 relative card-glow border border-outline-variant/50">
+<h3 class="font-subheading text-subheading text-on-surface uppercase tracking-widest mb-2">New Collection Launch</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant mb-4">Scheduled for Friday, 22:00 JST.</p>
+<a class="inline-flex items-center text-primary font-label-mono text-label-mono uppercase tracking-widest hover:text-primary-fixed transition-colors" href="#">
+                        Review Assets <span class="material-symbols-outlined ml-2 text-sm" style="font-variation-settings: 'FILL' 0;">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Recent Orders Table (Full Width) -->
+<div class="col-span-1 md:col-span-12 bg-surface-container-low p-6 relative card-glow overflow-x-auto custom-scrollbar">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-subheading text-subheading text-on-surface uppercase tracking-widest">Recent Orders</h3>
+<button class="text-on-surface-variant hover:text-primary font-label-mono text-label-mono uppercase tracking-widest transition-colors flex items-center">
+                        View All <span class="material-symbols-outlined ml-1 text-sm" style="font-variation-settings: 'FILL' 0;">open_in_new</span>
+</button>
+</div>
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr class="border-b-2 border-outline-variant/50">
+<th class="py-4 px-4 font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Order ID</th>
+<th class="py-4 px-4 font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Customer</th>
+<th class="py-4 px-4 font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Items</th>
+<th class="py-4 px-4 font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest text-right">Total</th>
+<th class="py-4 px-4 font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest text-right">Payment</th>
+<th class="py-4 px-4 font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest text-right">Fulfillment</th>
+</tr>
+</thead>
+<tbody class="font-body-regular text-body-regular divide-y divide-outline-variant/30">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high transition-colors group cursor-pointer">
+<td class="py-4 px-4 font-label-mono text-label-mono text-primary">#KYM-8924</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-bold">A. Nakamura</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant text-[10px]">Tokyo, JP</div>
+</td>
+<td class="py-4 px-4 text-on-surface-variant">2 items</td>
+<td class="py-4 px-4 text-right text-on-surface">$245.00</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-block px-2 py-1 bg-surface-container-highest border border-outline-variant text-on-surface font-label-mono text-label-mono text-[10px] uppercase tracking-widest group-hover:border-primary transition-colors">Paid</span>
+</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-block px-2 py-1 bg-[#1A1A1A] border border-[#333333] text-on-surface-variant font-label-mono text-label-mono text-[10px] uppercase tracking-widest">Processing</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-high transition-colors group cursor-pointer">
+<td class="py-4 px-4 font-label-mono text-label-mono text-primary">#KYM-8923</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-bold">M. Chen</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant text-[10px]">Vancouver, CA</div>
+</td>
+<td class="py-4 px-4 text-on-surface-variant">1 item</td>
+<td class="py-4 px-4 text-right text-on-surface">$120.00</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-block px-2 py-1 bg-surface-container-highest border border-outline-variant text-on-surface font-label-mono text-label-mono text-[10px] uppercase tracking-widest group-hover:border-primary transition-colors">Paid</span>
+</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-block px-2 py-1 bg-primary-container/20 border border-primary/50 text-primary font-label-mono text-label-mono text-[10px] uppercase tracking-widest shadow-[0_0_8px_rgba(223,183,255,0.2)]">Shipped</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high transition-colors group cursor-pointer">
+<td class="py-4 px-4 font-label-mono text-label-mono text-primary">#KYM-8922</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-bold">S. Reynolds</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant text-[10px]">London, UK</div>
+</td>
+<td class="py-4 px-4 text-on-surface-variant">4 items</td>
+<td class="py-4 px-4 text-right text-on-surface">$580.00</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-block px-2 py-1 bg-surface-container-highest border border-outline-variant text-on-surface font-label-mono text-label-mono text-[10px] uppercase tracking-widest group-hover:border-primary transition-colors">Paid</span>
+</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-block px-2 py-1 bg-primary-container/20 border border-primary/50 text-primary font-label-mono text-label-mono text-[10px] uppercase tracking-widest shadow-[0_0_8px_rgba(223,183,255,0.2)]">Shipped</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-high transition-colors group cursor-pointer opacity-70">
+<td class="py-4 px-4 font-label-mono text-label-mono text-on-surface-variant">#KYM-8921</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-bold">J. Smith</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant text-[10px]">New York, US</div>
+</td>
+<td class="py-4 px-4 text-on-surface-variant">1 item</td>
+<td class="py-4 px-4 text-right text-on-surface">$85.00</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-block px-2 py-1 bg-error-container/20 border border-error/50 text-error font-label-mono text-label-mono text-[10px] uppercase tracking-widest">Failed</span>
+</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-block px-2 py-1 bg-[#1A1A1A] border border-[#333333] text-on-surface-variant font-label-mono text-label-mono text-[10px] uppercase tracking-widest">Unfulfilled</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</body></html>

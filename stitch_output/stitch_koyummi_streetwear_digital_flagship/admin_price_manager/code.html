@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Koyummi Admin - Price Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800&amp;family=Geist:wght@500&amp;family=Hanken+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed-variant": "#673d00",
+                      "surface-tint": "#dfb7ff",
+                      "on-secondary-container": "#ffd8fd",
+                      "surface-bright": "#3d3740",
+                      "secondary-fixed": "#ffd6fd",
+                      "surface-variant": "#38333c",
+                      "outline-variant": "#4c4452",
+                      "on-secondary": "#580065",
+                      "on-tertiary": "#482900",
+                      "secondary": "#fbabff",
+                      "on-background": "#e9dfeb",
+                      "on-secondary-fixed-variant": "#7c008e",
+                      "on-surface": "#e9dfeb",
+                      "on-tertiary-fixed": "#2b1700",
+                      "surface-dim": "#161219",
+                      "inverse-primary": "#803abd",
+                      "error": "#ffb4ab",
+                      "tertiary-fixed": "#ffddbb",
+                      "on-error-container": "#ffdad6",
+                      "surface-container": "#231e26",
+                      "on-primary": "#4a007f",
+                      "on-secondary-fixed": "#36003e",
+                      "surface-container-low": "#1f1a22",
+                      "inverse-surface": "#e9dfeb",
+                      "surface-container-lowest": "#110c14",
+                      "on-primary-container": "#d7a8ff",
+                      "secondary-container": "#ae05c6",
+                      "surface-container-high": "#2d2831",
+                      "tertiary": "#faba72",
+                      "tertiary-container": "#6d4100",
+                      "on-tertiary-container": "#eeaf68",
+                      "surface-container-highest": "#38333c",
+                      "primary": "#dfb7ff",
+                      "primary-container": "#6b21a8",
+                      "primary-fixed-dim": "#dfb7ff",
+                      "inverse-on-surface": "#342e37",
+                      "background": "#161219",
+                      "tertiary-fixed-dim": "#faba72",
+                      "primary-fixed": "#f1dbff",
+                      "on-error": "#690005",
+                      "outline": "#988d9e",
+                      "surface": "#161219",
+                      "on-surface-variant": "#cfc2d4",
+                      "on-primary-fixed": "#2d0050",
+                      "error-container": "#93000a",
+                      "secondary-fixed-dim": "#fbabff",
+                      "on-primary-fixed-variant": "#661aa3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "unit": "4px",
+                      "section-gap": "128px"
+              },
+              "fontFamily": {
+                      "label-mono": [
+                              "Geist"
+                      ],
+                      "headline-lg-mobile": [
+                              "Anybody"
+                      ],
+                      "display-xl": [
+                              "Anybody"
+                      ],
+                      "body-regular": [
+                              "Hanken Grotesk"
+                      ],
+                      "subheading": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg": [
+                              "Anybody"
+                      ]
+              },
+              "fontSize": {
+                      "label-mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "38px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-xl": [
+                              "80px",
+                              {
+                                      "lineHeight": "88px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "body-regular": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "subheading": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .symbol-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #161219;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4c4452;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #dfb7ff;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-regular antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+<nav class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface-container dark:bg-surface-container flex flex-col h-full py-8 z-50">
+<div class="px-8 mb-12">
+<h1 class="font-display-xl text-display-xl text-primary tracking-tighter text-[40px] leading-none mb-1">KOYUMMI</h1>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase">Streetwear Admin</p>
+</div>
+<ul class="flex-1 overflow-y-auto space-y-1 w-full font-label-mono text-label-mono">
+<li>
+<a class="flex items-center px-8 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="uppercase">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-8 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="shopping_bag">shopping_bag</span>
+<span class="uppercase">Orders</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-8 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="inventory_2">inventory_2</span>
+<span class="uppercase">Products</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-8 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="category">category</span>
+<span class="uppercase">Collections</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-8 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="layers">layers</span>
+<span class="uppercase">Inventory</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-8 py-3 text-primary bg-primary-container/10 border-r-2 border-primary font-bold hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined symbol-filled mr-4 text-[20px]" data-icon="payments" data-weight="fill">payments</span>
+<span class="uppercase">Pricing</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-8 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="group">group</span>
+<span class="uppercase">Customers</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-8 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="sell">sell</span>
+<span class="uppercase">Discounts</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-8 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="analytics">analytics</span>
+<span class="uppercase">Analytics</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto pt-8 border-t border-outline-variant w-full">
+<a class="flex items-center px-8 py-3 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high transition-all duration-200 ease-in-out font-label-mono text-label-mono" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="settings">settings</span>
+<span class="uppercase">Settings</span>
+</a>
+</div>
+</nav>
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-surface dark:bg-surface border-b border-outline-variant flex justify-between items-center h-16 px-margin-desktop ml-64">
+<div class="flex items-center gap-4 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-[24px]" data-icon="search">search</span>
+<span class="font-label-mono text-label-mono uppercase">Search Data...</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 text-[24px]" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 text-[24px]" data-icon="dark_mode">dark_mode</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center overflow-hidden cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<main class="ml-64 mt-16 p-margin-desktop min-h-screen flex flex-col gap-gutter">
+<div class="flex justify-between items-end mb-8 border-b border-outline-variant pb-6">
+<div>
+<h2 class="font-display-xl text-display-xl text-on-surface tracking-tighter uppercase leading-none">Price Manager</h2>
+</div>
+<div class="flex gap-4">
+<button class="bg-transparent border border-on-surface text-on-surface font-label-mono text-label-mono uppercase px-6 py-3 hover:bg-on-surface hover:text-surface-dim transition-colors">
+                    Export CSV
+                </button>
+</div>
+</div>
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface-container p-6 flex flex-col justify-between h-32 border border-outline-variant/30 hover:border-primary-container transition-colors group">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase">Global Blended Margin</span>
+<div class="flex items-baseline gap-2 mt-auto">
+<span class="font-headline-lg text-headline-lg text-on-surface">68.4%</span>
+<span class="font-label-mono text-label-mono text-primary flex items-center"><span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span> +2.1%</span>
+</div>
+</div>
+<div class="bg-surface-container p-6 flex flex-col justify-between h-32 border border-outline-variant/30 hover:border-primary-container transition-colors group relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-secondary-container/20 blur-xl rounded-full"></div>
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase">Active Sale Value</span>
+<div class="flex items-baseline gap-2 mt-auto relative z-10">
+<span class="font-headline-lg text-headline-lg text-on-surface">$24,850</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">At risk</span>
+</div>
+</div>
+<div class="bg-surface-container p-6 flex flex-col justify-between h-32 border border-outline-variant/30 hover:border-primary-container transition-colors group">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase">Scheduled Changes</span>
+<div class="flex items-baseline gap-4 mt-auto">
+<div class="flex flex-col">
+<span class="font-headline-lg text-headline-lg text-on-surface leading-none">3</span>
+<span class="font-label-mono text-label-mono text-secondary mt-1">Active</span>
+</div>
+<div class="h-8 w-px bg-outline-variant"></div>
+<div class="flex flex-col">
+<span class="font-headline-lg text-headline-lg text-on-surface-variant leading-none">12</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant mt-1">Upcoming</span>
+</div>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mt-8">
+<div class="lg:col-span-2 bg-surface-container border border-outline-variant/30 p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-subheading text-subheading text-on-surface uppercase tracking-widest">Product Pricing Table</h3>
+<div class="flex gap-2">
+<div class="px-3 py-1 bg-surface border border-outline-variant font-label-mono text-label-mono text-on-surface-variant cursor-pointer hover:text-primary">ALL</div>
+<div class="px-3 py-1 bg-surface border border-outline-variant font-label-mono text-label-mono text-on-surface-variant cursor-pointer hover:text-primary">ON SALE</div>
+</div>
+</div>
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b-2 border-outline-variant">
+<th class="font-label-mono text-label-mono text-on-surface-variant uppercase pb-4 font-normal">Product</th>
+<th class="font-label-mono text-label-mono text-on-surface-variant uppercase pb-4 font-normal text-right">Cost</th>
+<th class="font-label-mono text-label-mono text-on-surface-variant uppercase pb-4 font-normal text-right">Current Price</th>
+<th class="font-label-mono text-label-mono text-on-surface-variant uppercase pb-4 font-normal text-right">Compare At</th>
+<th class="font-label-mono text-label-mono text-on-surface-variant uppercase pb-4 font-normal text-right">Margin</th>
+</tr>
+</thead>
+<tbody class="font-label-mono text-label-mono">
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-high transition-colors group">
+<td class="py-4 flex items-center gap-4">
+<div class="w-12 h-16 bg-surface-bright border border-outline-variant/30 relative">
+<img class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="A moody, high-contrast flat lay photograph of a heavy black streetwear hoodie with subtle metallic silver typographic screen prints. The background is a rough concrete texture illuminated by a single harsh, cool white spotlight, emphasizing the premium thickness of the cotton fabric. Minimalist, brutalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIK2GZFNzFSoX3DVB7ldZyWakt5f6huLTG2iF0yH1Ein2OEKt1qD-H8cqd7TQr-9sC4Fo5HFJWm9-eZOJ6yyu4FMrdvNsnBfJaBPKVF5TK7BQHIBnOMcj8eRw5IPluwEl0PLiHZFxA-pYc07-ovojYQIgX-HgYvY64K9Gcgjo1rrjfEFBD8tmMdAvmQS5-se98M1KebBYIdCGVpM2tYTMpIX5iVyX0_gvzqec8LfcpO9TMwwHQR8pwkw"/>
+</div>
+<div>
+<div class="text-on-surface text-[14px]">NEON-GLITCH HOODIE</div>
+<div class="text-on-surface-variant opacity-60">SKU: HD-099-BLK</div>
+</div>
+</td>
+<td class="py-4 text-right text-on-surface-variant">$16.00</td>
+<td class="py-4 text-right text-on-surface text-[14px]">$48.00</td>
+<td class="py-4 text-right text-outline-variant line-through">$55.00</td>
+<td class="py-4 text-right text-secondary">66.7%</td>
+</tr>
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-high transition-colors group">
+<td class="py-4 flex items-center gap-4">
+<div class="w-12 h-16 bg-surface-bright border border-outline-variant/30 relative">
+<img class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="A close-up product shot of utilitarian cargo pants in deep charcoal grey. The image focuses on heavy-duty metallic zippers and rigid nylon strapping. The lighting is low-key, creating deep shadows that highlight the technical construction and modern tactical streetwear vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyo0cGj6TeZhRJUQRPZcsbRtZCcZF7VG_wnyJq7_0zv0aTdhUgb-ID0Y78UGCt-8V7q5n-m0yMig0vdSZcNkFYdSfWZOq3bEvxF0TospLhTgEW07yVKA0jH-dEmXOjrWQHbseUGpjAtyT9qJt2T6jk2l89BPklB_517ooHr8rovtNA-FO3dT1znKjVfODyWLYscjPZBcNpGmHFN5floXR2x7ekRGBoJBIADaFRQ53-xIRjSXycBj-Xsw"/>
+</div>
+<div>
+<div class="text-on-surface text-[14px]">TACTICAL CARGO V2</div>
+<div class="text-on-surface-variant opacity-60">SKU: PT-204-GRY</div>
+</div>
+</td>
+<td class="py-4 text-right text-on-surface-variant">$22.50</td>
+<td class="py-4 text-right text-on-surface text-[14px]">$85.00</td>
+<td class="py-4 text-right text-outline-variant">-</td>
+<td class="py-4 text-right text-on-surface">73.5%</td>
+</tr>
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-high transition-colors group">
+<td class="py-4 flex items-center gap-4">
+<div class="w-12 h-16 bg-surface-bright border border-outline-variant/30 relative">
+<div class="absolute inset-0 bg-primary/20 z-10 mix-blend-overlay"></div>
+<img class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="A striking editorial image of an oversized graphic t-shirt featuring abstract distorted cybernetic imagery. The shirt is stark white against an absolute black void background. A faint, glowing magenta edge light hits the side of the garment, referencing Tokyo neon cyberpunk aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYtRrimGy5p2IiVFpGLqQzAWk8CfneXik_z1hebjnWIhQPhoRph1FaZSV1DSO0OHienKbxnfFIroAUW6UB_TF06UoXMn4AJ7dOtnT0M3KTm2IELFq4ty5YKvLsfMM72x1KVALfWkVHG1vEgCktzfhmLpO0-013zAYfAud8YBaZyC-pp483KsLhPvLhNIxmz1KDTFEm1PDYrXFr7iv1LM1CuMHadlOw4An403Dfda08n4wBriuqqTKZJA"/>
+</div>
+<div>
+<div class="text-primary text-[14px] flex items-center gap-2">CYBER-DOGMA TEE <span class="px-1.5 py-0.5 bg-primary-container text-on-primary-container text-[10px] rounded-sm">SALE</span></div>
+<div class="text-on-surface-variant opacity-60">SKU: TS-011-WHT</div>
+</div>
+</td>
+<td class="py-4 text-right text-on-surface-variant">$8.50</td>
+<td class="py-4 text-right text-primary font-bold text-[14px]">$24.00</td>
+<td class="py-4 text-right text-outline-variant line-through">$35.00</td>
+<td class="py-4 text-right text-secondary">64.6%</td>
+</tr>
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-high transition-colors group">
+<td class="py-4 flex items-center gap-4">
+<div class="w-12 h-16 bg-surface-bright border border-outline-variant/30 relative">
+<img class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="Minimalist product photography of a chunky silver chain necklace resting on a slab of rough obsidian stone. The lighting is extremely cold and sharp, creating high contrast reflections on the polished metal links against the matte black environment. High-end, brutalist jewelry aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMBBCHVNR6Dpyn4ZRZ0hVssh8FY-enaRydJWXmLsCA9uJB1WQwI2f-4Q1IUpapyxHusZdBquMJJzUoQMPTyNvLugYuD_CmH-Cfb7uxOcf_SIKjFWz2Jut2wgKdDFdDw3lMnA4kd6Puw08UMLCJex9PSpjeYiJXD_qksJ6tQeN3tEWuIKgSAV8pfwxvtgcIQmGaQlAM01tobxfqBdJkiDq70ty3NE77J00f1MhsQHXNLA1vsD30fU7a2Q"/>
+</div>
+<div>
+<div class="text-on-surface text-[14px]">HEAVY LINK CHAIN</div>
+<div class="text-on-surface-variant opacity-60">SKU: AC-500-SLV</div>
+</div>
+</td>
+<td class="py-4 text-right text-on-surface-variant">$14.00</td>
+<td class="py-4 text-right text-on-surface text-[14px]">$110.00</td>
+<td class="py-4 text-right text-outline-variant">-</td>
+<td class="py-4 text-right text-on-surface">87.3%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="flex flex-col gap-gutter">
+<div class="bg-surface-container border border-outline-variant/30 p-6 relative overflow-hidden group">
+<div class="absolute -right-12 -top-12 w-32 h-32 bg-primary-container/20 rounded-full blur-2xl group-hover:bg-primary-container/40 transition-all duration-500"></div>
+<h3 class="font-subheading text-subheading text-on-surface uppercase tracking-widest mb-6 border-b border-outline-variant pb-2">Bulk Price Editor</h3>
+<div class="space-y-6">
+<div>
+<label class="font-label-mono text-label-mono text-on-surface-variant uppercase block mb-2">Target Collection</label>
+<div class="relative">
+<select class="w-full bg-surface border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-on-surface font-label-mono text-label-mono py-2 appearance-none">
+<option>All T-Shirts</option>
+<option>Winter Outerwear</option>
+<option>Accessories</option>
+</select>
+<span class="material-symbols-outlined absolute right-0 top-2 text-on-surface-variant pointer-events-none" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="font-label-mono text-label-mono text-on-surface-variant uppercase block mb-2">Action</label>
+<select class="w-full bg-surface border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-on-surface font-label-mono text-label-mono py-2 appearance-none">
+<option>Decrease By</option>
+<option>Increase By</option>
+<option>Set Fixed Price</option>
+</select>
+</div>
+<div>
+<label class="font-label-mono text-label-mono text-on-surface-variant uppercase block mb-2">Value (%)</label>
+<input class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary focus:outline-none focus:ring-0 text-on-surface font-label-mono text-label-mono py-2 placeholder-outline-variant text-right" type="number" value="15"/>
+</div>
+</div>
+<div>
+<label class="flex items-center gap-3 cursor-pointer">
+<input checked="" class="form-checkbox bg-surface border-outline-variant text-primary focus:ring-primary focus:ring-offset-surface w-4 h-4" type="checkbox"/>
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase">Update Compare-At Price</span>
+</label>
+</div>
+<button class="w-full bg-gradient-to-r from-secondary-container to-primary-container text-on-surface font-label-mono text-label-mono uppercase px-6 py-4 mt-4 hover:opacity-90 transition-opacity border border-primary/50 relative overflow-hidden group">
+<span class="relative z-10 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="bolt">bolt</span>
+                                Execute Change
+                            </span>
+<div class="absolute inset-0 w-full h-full bg-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out skew-x-12"></div>
+</button>
+</div>
+</div>
+<div class="bg-surface-container border border-outline-variant/30 p-6 flex flex-col flex-1">
+<h3 class="font-subheading text-subheading text-on-surface uppercase tracking-widest mb-6 border-b border-outline-variant pb-2">Scheduled Events</h3>
+<div class="space-y-4 flex-1">
+<div class="flex flex-col gap-2 p-3 bg-surface border border-outline-variant relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
+<div class="flex justify-between items-start pl-2">
+<span class="font-label-mono text-label-mono text-secondary uppercase flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="radio_button_checked">radio_button_checked</span> Active Sale</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Ends in 2d</span>
+</div>
+<div class="font-body-regular text-body-regular text-on-surface pl-2">Flash: Cyber Week Drop</div>
+</div>
+<div class="flex flex-col gap-2 p-3 border border-outline-variant/50 hover:bg-surface transition-colors">
+<div class="flex justify-between items-start">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span> Upcoming</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Oct 31, 00:00</span>
+</div>
+<div class="font-body-regular text-body-regular text-on-surface">Midnight Archive Release</div>
+</div>
+<div class="flex flex-col gap-2 p-3 border border-outline-variant/50 hover:bg-surface transition-colors">
+<div class="flex justify-between items-start">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span> Upcoming</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Nov 15, 08:00</span>
+</div>
+<div class="font-body-regular text-body-regular text-on-surface">FW24 Base Markup Increase</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

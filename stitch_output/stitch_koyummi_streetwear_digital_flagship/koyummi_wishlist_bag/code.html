@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KOYUMMI - Wishlist &amp; Bag</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,100..900;1,100..900&amp;family=Geist:wght@100..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#3d3740",
+                      "surface-variant": "#38333c",
+                      "on-surface": "#e9dfeb",
+                      "on-tertiary-fixed-variant": "#673d00",
+                      "secondary-fixed": "#ffd6fd",
+                      "on-primary-fixed-variant": "#661aa3",
+                      "surface-container-high": "#2d2831",
+                      "on-secondary-fixed-variant": "#7c008e",
+                      "surface-dim": "#161219",
+                      "secondary-container": "#ae05c6",
+                      "primary-fixed-dim": "#dfb7ff",
+                      "surface-tint": "#dfb7ff",
+                      "outline-variant": "#4c4452",
+                      "background": "#161219",
+                      "on-secondary-container": "#ffd8fd",
+                      "surface-container": "#231e26",
+                      "secondary-fixed-dim": "#fbabff",
+                      "surface-container-highest": "#38333c",
+                      "outline": "#988d9e",
+                      "on-background": "#e9dfeb",
+                      "on-tertiary": "#482900",
+                      "surface-container-low": "#1f1a22",
+                      "primary-fixed": "#f1dbff",
+                      "inverse-on-surface": "#342e37",
+                      "on-surface-variant": "#cfc2d4",
+                      "on-secondary-fixed": "#36003e",
+                      "error": "#ffb4ab",
+                      "on-primary-container": "#d7a8ff",
+                      "primary-container": "#6b21a8",
+                      "on-tertiary-container": "#eeaf68",
+                      "surface": "#161219",
+                      "on-tertiary-fixed": "#2b1700",
+                      "on-error": "#690005",
+                      "inverse-primary": "#803abd",
+                      "on-primary": "#4a007f",
+                      "on-primary-fixed": "#2d0050",
+                      "on-error-container": "#ffdad6",
+                      "primary": "#dfb7ff",
+                      "inverse-surface": "#e9dfeb",
+                      "secondary": "#fbabff",
+                      "tertiary-container": "#6d4100",
+                      "tertiary-fixed": "#ffddbb",
+                      "tertiary-fixed-dim": "#faba72",
+                      "on-secondary": "#580065",
+                      "tertiary": "#faba72",
+                      "surface-container-lowest": "#110c14",
+                      "error-container": "#93000a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "gutter": "24px",
+                      "margin-desktop": "64px",
+                      "section-gap": "128px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "subheading": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-mono": [
+                              "Geist"
+                      ],
+                      "body-regular": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg-mobile": [
+                              "Anybody"
+                      ],
+                      "display-xl": [
+                              "Anybody"
+                      ],
+                      "headline-lg": [
+                              "Anybody"
+                      ]
+              },
+              "fontSize": {
+                      "subheading": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-regular": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "38px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-xl": [
+                              "80px",
+                              {
+                                      "lineHeight": "88px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .neon-glitch:hover {
+            box-shadow: inset 0 0 0 1px #dfb7ff, 0 0 10px rgba(223, 183, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .text-glitch:hover {
+            color: #dfb7ff;
+            text-shadow: 0 0 8px rgba(223, 183, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #dfb7ff 0%, #fbabff 100%);
+            color: #110c14;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #fbabff 0%, #dfb7ff 100%);
+        }
+        .btn-secondary {
+            border: 1px solid #e9dfeb;
+            color: #e9dfeb;
+        }
+        .btn-secondary:hover {
+            border-color: #dfb7ff;
+            color: #dfb7ff;
+        }
+        .input-line {
+            border-bottom: 2px solid #a0a0a0;
+        }
+        .input-line:focus {
+            border-bottom: 2px solid #dfb7ff;
+            outline: none;
+        }
+        
+        /* Drawer Animations */
+        #cart-drawer {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #cart-drawer.open {
+            transform: translateX(0);
+        }
+        #cart-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #cart-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col font-body-regular">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-40 bg-surface-dim/90 backdrop-blur-md border-b border-outline-variant flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop transition-all duration-300 ease-in-out">
+<nav class="hidden md:flex gap-8">
+<a class="font-subheading text-subheading uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-300" href="#">SHOP</a>
+<a class="font-subheading text-subheading uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-300" href="#">NEW DROPS</a>
+<a class="font-subheading text-subheading uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-300" href="#">COLLECTIONS</a>
+<a class="font-subheading text-subheading uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-300" href="#">GAMING</a>
+<a class="font-subheading text-subheading uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors hover:text-secondary duration-300" href="#">ABOUT</a>
+</nav>
+<div class="font-display-xl text-headline-lg-mobile md:text-headline-lg text-primary tracking-tighter italic">KOYUMMI</div>
+<div class="flex gap-4 items-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-300">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</button>
+<button class="text-primary hover:text-secondary transition-colors duration-300 relative" id="open-cart-btn">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+<span class="absolute -top-2 -right-2 bg-secondary-container text-on-secondary-container font-label-mono text-label-mono w-5 h-5 flex items-center justify-center rounded-full">3</span>
+</button>
+</div>
+</header>
+<!-- Main Content: Wishlist -->
+<main class="flex-grow pt-[104px] px-margin-mobile md:px-margin-desktop pb-section-gap">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12 flex justify-between items-end border-b border-outline-variant pb-4">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg tracking-tighter uppercase text-on-surface">SAVED FOR LATER</h1>
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase">4 Items</span>
+</div>
+<!-- Wishlist Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Item 1 -->
+<div class="group relative flex flex-col h-full neon-glitch bg-surface-container-lowest p-2">
+<button class="absolute top-4 right-4 z-10 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="relative w-full aspect-[3/4] mb-4 overflow-hidden bg-surface-container">
+<img class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="High-fashion streetwear jacket in deep charcoal with subtle neon purple piping. Worn by a model in a dark, atmospheric alleyway setting illuminated by stark cyan and magenta neon lights. High contrast cinematic lighting, sharp focus on fabric texture, modern brutalist fashion aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXt5qdeJk60Pzd0EFthNdmTaEKrcaDT0-psNro1HBzSbJmiM94KHkP6kGb24L1Cr_2zbT34PG2Ai0ZKKHDUyn_xhDnHXDG9BfkLqeJJPQhVFdLGhC-7gRKCfz22wUPfiIxMcJY-GZseuu4GfKgO5dDoFLfmJgqS7eMUXI03yURMXbqmAXM6HfVFYLX5KMeGYUKEqTIVpmubTx7nchDevnEH173wSp_DyUh8T8zjl069uEAYFGtnMD17w"/>
+</div>
+<div class="flex flex-col flex-grow justify-between">
+<div>
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-subheading text-subheading uppercase text-on-surface">NEON-DRIFT ANORAK</h3>
+</div>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase mb-4">Color: Void Black / Size: M</p>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<span class="font-label-mono text-label-mono text-primary">$285.00</span>
+<button class="font-label-mono text-label-mono uppercase border border-outline-variant px-4 py-2 hover:border-primary hover:text-primary transition-colors">Move to Bag</button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="group relative flex flex-col h-full neon-glitch bg-surface-container-lowest p-2">
+<button class="absolute top-4 right-4 z-10 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="relative w-full aspect-[3/4] mb-4 overflow-hidden bg-surface-container">
+<img class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Chunky futuristic sneakers in pristine off-white with metallic silver accents and a semi-translucent purple sole. Placed on a rough concrete block in a minimalist studio. High-key directional lighting casting sharp shadows. Minimalist fashion product photography, high-end design, stark contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABfdHQINoY6Ff_8JsOJ7YqmE_RqvVurkibjXKbanLim9eCROVWJwyd63Vf7_A4KK2D9h-WFlmDLjAVCzcuV18JJQByzN7qiM8_mpHbhxZbMTYb334MH0lxnvPTtFDgYe_y6-Q2efPesYhXlemXIKqvro-FYL9n6lY0qyET-0Mv0jfKhkn8HKcxC76HbJaoTyi6SmNf2wTpOkRvAqssSIjoCLUNs33_iZmPnNmR7DJ2BJ3n-xTaK2_YOw"/>
+</div>
+<div class="flex flex-col flex-grow justify-between">
+<div>
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-subheading text-subheading uppercase text-on-surface">SYNTH-STEP KICKS</h3>
+</div>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase mb-4">Color: Bone / Size: 10</p>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<span class="font-label-mono text-label-mono text-primary">$320.00</span>
+<button class="font-label-mono text-label-mono uppercase border border-outline-variant px-4 py-2 hover:border-primary hover:text-primary transition-colors">Move to Bag</button>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="group relative flex flex-col h-full neon-glitch bg-surface-container-lowest p-2">
+<button class="absolute top-4 right-4 z-10 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="relative w-full aspect-[3/4] mb-4 overflow-hidden bg-surface-container">
+<img class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A sleek, modular sling bag constructed from matte black technical fabric with heavy-duty metal hardware and a bright magenta inner lining partially visible. Hanging against a sheer concrete wall under a single cold spotlight. Urban tactical fashion, minimalist composition, deep shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMa63qWsUCZQTuIptFz519--euCy6pf8kH9_vQ6BJ2POTiAODi8EP4pvarfeXj4jXJwcYdkplP9keVRqKakhNk0VZYlQ2pMhxdnIwplNC98zTaquffHOvrwRzGST9ciPTNx8RPsVX2NJzmNReyY3uzeABJMcAofNEFClRpPSeHsqNdXkQDerKmBhMurjVOo_1PXacHns6YZiNTUXYmyrZ0Kqnpsjt1ZMBFh6H9Y6TEPOY-_6FI8zRriA"/>
+</div>
+<div class="flex flex-col flex-grow justify-between">
+<div>
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-subheading text-subheading uppercase text-on-surface">CORE TACTICAL SLING</h3>
+</div>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase mb-4">Color: Pitch / Size: OS</p>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<span class="font-label-mono text-label-mono text-primary">$150.00</span>
+<button class="font-label-mono text-label-mono uppercase border border-outline-variant px-4 py-2 hover:border-primary hover:text-primary transition-colors">Move to Bag</button>
+</div>
+</div>
+</div>
+<!-- Item 4 (Sold Out State) -->
+<div class="group relative flex flex-col h-full neon-glitch bg-surface-container-lowest p-2 opacity-60">
+<button class="absolute top-4 right-4 z-10 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="absolute top-4 left-4 z-10 bg-surface px-2 py-1">
+<span class="font-label-mono text-label-mono text-on-surface uppercase">SOLD OUT</span>
+</div>
+<div class="relative w-full aspect-[3/4] mb-4 overflow-hidden bg-surface-container grayscale">
+<img class="object-cover w-full h-full" data-alt="A heavy oversized graphic tee in washed black featuring a subtle, glitchy cyberpunk-inspired typographic print on the back. Draped over an industrial metal chair in a dark studio. Moody, low-key lighting, grunge aesthetic mixed with high-fashion streetwear." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrZQesehRcWx8Qx_uX_t0RRe_zPUnCTomQqgxXUPNRbrvpBODNje2nJPiJEnnHvZ02jiz3h2SjYxOYyQYEofqGndXmTuETLui3A4nKLIZl8pSayB8uGkdyvoHqvcFkNPtOHMfr69OYfyZtCGoYQLO8Uc5dEknMiFmj9-hQ_pZBAPjJ35yXu1dzIe81Q3tNVBCm-ApaTw5llo9d7EGIiDboEu09jEOob8Elg1hnlBjQY6eMAv_GN8U8sQ"/>
+</div>
+<div class="flex flex-col flex-grow justify-between">
+<div>
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-subheading text-subheading uppercase text-on-surface">GLITCH-TYPE TEE</h3>
+</div>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase mb-4">Color: Washed Black / Size: L</p>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<span class="font-label-mono text-label-mono text-on-surface-variant">$85.00</span>
+<button class="font-label-mono text-label-mono uppercase border border-outline-variant px-4 py-2 text-on-surface-variant cursor-not-allowed" disabled="">Unavailable</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Example Empty State (Hidden by default, useful for reference) -->
+<!--
+            <div class="flex flex-col items-center justify-center py-section-gap">
+                <span class="material-symbols-outlined text-[64px] text-surface-variant mb-6" style="font-variation-settings: 'wght' 100;">favorite</span>
+                <h2 class="font-subheading text-subheading uppercase text-on-surface mb-2">NOTHING SAVED YET</h2>
+                <p class="font-body-regular text-body-regular text-on-surface-variant mb-8 text-center max-w-md">Your wishlist is currently empty. Start exploring our collections to save your favorite pieces.</p>
+                <a href="#" class="btn-primary font-label-mono text-label-mono uppercase px-8 py-4 tracking-widest">DISCOVER DROPS</a>
+            </div>
+            -->
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest w-full mt-section-gap border-t border-outline-variant py-section-gap px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-gutter max-w-7xl mx-auto">
+<div class="md:col-span-4 flex flex-col justify-between">
+<div class="font-display-xl text-headline-lg text-on-surface italic tracking-tighter mb-8">KOYUMMI</div>
+<p class="font-body-regular text-body-regular text-primary opacity-80">© 2024 KOYUMMI ARCHIVE. ALL RIGHTS RESERVED.</p>
+</div>
+<div class="md:col-span-8 flex flex-wrap gap-8 md:justify-end">
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-secondary transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Newsletter</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-secondary transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Instagram</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-secondary transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Twitter</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-secondary transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Terms of Service</a>
+<a class="font-body-regular text-body-regular text-on-surface-variant hover:text-secondary transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Privacy Policy</a>
+</div>
+</footer>
+<!-- Cart Drawer Overlay -->
+<div class="fixed inset-0 bg-background/80 backdrop-blur-sm z-50" id="cart-overlay"></div>
+<!-- Cart Drawer -->
+<aside class="fixed top-0 right-0 h-full w-full sm:w-[480px] bg-surface-container-low border-l border-outline-variant z-50 flex flex-col shadow-[-10px_0_30px_rgba(0,0,0,0.5)]" id="cart-drawer">
+<!-- Drawer Header -->
+<div class="px-6 py-6 border-b border-outline-variant flex justify-between items-center bg-surface-dim">
+<h2 class="font-subheading text-subheading uppercase tracking-widest text-on-surface">YOUR BAG (3)</h2>
+<button class="text-on-surface-variant hover:text-primary transition-colors" id="close-cart-btn">
+<span class="material-symbols-outlined text-[28px]">close</span>
+</button>
+</div>
+<!-- Free Shipping Progress -->
+<div class="px-6 py-4 bg-surface-container-lowest border-b border-outline-variant">
+<p class="font-label-mono text-label-mono text-center text-on-surface-variant uppercase mb-2">You're <span class="text-primary">$57.00</span> away from FREE SHIPPING</p>
+<div class="w-full bg-surface-variant h-1 overflow-hidden">
+<div class="bg-primary h-full w-[75%]"></div>
+</div>
+</div>
+<!-- Cart Items -->
+<div class="flex-grow overflow-y-auto px-6 py-4 space-y-6">
+<!-- Cart Item 1 -->
+<div class="flex gap-4 group">
+<div class="w-24 aspect-[3/4] bg-surface-container flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up of a premium black denim jacket with raw edges and distinct, heavy stitching. Photographed against a dark seamless paper background with a single harsh side light highlighting the fabric weave. Moody, industrial fashion aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDyx_o09N3DZlVzwQbSoHbyr287yRBx8Yo9vWfiSxJPCGLdP2FkZpCCsdXgqwM411Kgk71dL5okBKi2WIaavDepeMNgz-w_LN_hQNvImy5NlXdoL6Kz4Y8ls9QWycNkgrR8rU-BsNnZ71__eW6tNRIMLMiua4p9pOQ0CDPuDaiyElG3K06GtP1RTYYi5m0tdDJfGtZjNfnEG0_hUCkpeWTHepEBW0GN5PiD4ICbRP-yUODjFFbc1te7Q"/>
+</div>
+<div class="flex flex-col flex-grow justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<h4 class="font-subheading text-[16px] uppercase text-on-surface leading-tight">RAW EDGE DENIM</h4>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<p class="font-label-mono text-[10px] text-on-surface-variant uppercase mt-1">Color: Onyx / Size: L</p>
+</div>
+<div class="flex justify-between items-end mt-4">
+<div class="flex items-center border border-outline-variant">
+<button class="px-2 py-1 text-on-surface hover:text-primary transition-colors">-</button>
+<span class="font-label-mono text-label-mono px-2 text-on-surface">1</span>
+<button class="px-2 py-1 text-on-surface hover:text-primary transition-colors">+</button>
+</div>
+<span class="font-label-mono text-label-mono text-primary">$180.00</span>
+</div>
+</div>
+</div>
+<!-- Cart Item 2 -->
+<div class="flex gap-4 group">
+<div class="w-24 aspect-[3/4] bg-surface-container flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A pair of wide-leg cargo pants in deep olive drab, featuring asymmetrical pockets and utilitarian straps. Hanging vertically against a sterile white concrete wall. Stark, clinical lighting, high contrast brutalist streetwear photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdvbnh4yxitUW1GMCXQqUY2HsczDng5ezp9ccWVWPHqnqafMavRi0lSMArAVrlEA4iLRBMZqvZBDKwmi1JKZs7p96J29NsOWwfyiCyfpe6XuDYMvMZAW-AFTlALhzb_odY1oZAERsVi-ggxRZ6M1bdYRVvYoSQuJwtoNjOeV3uhEPCMw_ztKffHFO1mM96cE-Y8NI_3d8WHQACYbPz39EwXOS9lN49vHIV69u9SjtWqK49PaaEc1Fkag"/>
+</div>
+<div class="flex flex-col flex-grow justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<h4 class="font-subheading text-[16px] uppercase text-on-surface leading-tight">ASYMMETRIC CARGO</h4>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<p class="font-label-mono text-[10px] text-on-surface-variant uppercase mt-1">Color: Olive / Size: 32</p>
+</div>
+<div class="flex justify-between items-end mt-4">
+<div class="flex items-center border border-outline-variant">
+<button class="px-2 py-1 text-on-surface hover:text-primary transition-colors">-</button>
+<span class="font-label-mono text-label-mono px-2 text-on-surface">1</span>
+<button class="px-2 py-1 text-on-surface hover:text-primary transition-colors">+</button>
+</div>
+<span class="font-label-mono text-label-mono text-primary">$210.00</span>
+</div>
+</div>
+</div>
+<!-- Cart Item 3 -->
+<div class="flex gap-4 group">
+<div class="w-24 aspect-[3/4] bg-surface-container flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A ribbed knit beanie in vibrant neon purple, folded neatly on a polished black glass surface. Reflections of subtle neon lights in the background. Close up product shot, sharp focus, cyberpunk fashion accessory." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB19C0-0AedLmHRtiTHoTrYnq22YGRZfTgBRPTIeeb_wnLfeC3oj9mix1C81XHUEbe00AQbeLnIL0gQiIlx5979n5IYO5PEQ-CViWjHXTJBZrC1E2rVzQeG2U2aWov8baMeuxJPjMKiUitugkd-VGeqJcg_0Mchlwjv5tM7Fi9ne6XsLc8ITshqViKpqlCG_RriPSmmwcFbvgMV9jCNAd48aVQHeMZLs1dxHFO8KroszD7YEb0P15s7dg"/>
+</div>
+<div class="flex flex-col flex-grow justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<h4 class="font-subheading text-[16px] uppercase text-on-surface leading-tight">NEON BEANIE</h4>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<p class="font-label-mono text-[10px] text-on-surface-variant uppercase mt-1">Color: Ultraviolet / Size: OS</p>
+</div>
+<div class="flex justify-between items-end mt-4">
+<div class="flex items-center border border-outline-variant">
+<button class="px-2 py-1 text-on-surface hover:text-primary transition-colors">-</button>
+<span class="font-label-mono text-label-mono px-2 text-on-surface">1</span>
+<button class="px-2 py-1 text-on-surface hover:text-primary transition-colors">+</button>
+</div>
+<span class="font-label-mono text-label-mono text-primary">$45.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Drawer Footer -->
+<div class="bg-surface-dim border-t border-outline-variant px-6 py-6 flex flex-col gap-6">
+<div class="relative">
+<input class="w-full bg-transparent input-line text-on-surface font-label-mono text-label-mono uppercase py-2 placeholder-on-surface-variant border-0 border-b-2 border-outline-variant focus:ring-0" placeholder="PROMO CODE" type="text"/>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 text-primary font-label-mono text-label-mono hover:text-secondary">APPLY</button>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-subheading text-subheading uppercase text-on-surface-variant">SUBTOTAL</span>
+<span class="font-subheading text-subheading text-primary">$435.00</span>
+</div>
+<p class="font-label-mono text-label-mono text-on-surface-variant text-center -mt-4">Shipping &amp; taxes calculated at checkout.</p>
+<button class="btn-primary w-full py-4 font-label-mono text-label-mono uppercase tracking-widest flex justify-center items-center gap-2">
+                CHECKOUT
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</aside>
+<script>
+        // Simple Drawer Logic
+        const openCartBtn = document.getElementById('open-cart-btn');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartOverlay = document.getElementById('cart-overlay');
+
+        function toggleCart() {
+            cartDrawer.classList.toggle('open');
+            cartOverlay.classList.toggle('open');
+            document.body.style.overflow = cartDrawer.classList.contains('open') ? 'hidden' : '';
+        }
+
+        openCartBtn.addEventListener('click', toggleCart);
+        closeCartBtn.addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
+    </script>
+</body></html>
